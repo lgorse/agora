@@ -10,6 +10,7 @@ gem 'oink'
 gem 'dalli'
 gem 'newrelic_rpm'
 gem 'unicorn'
+gem 'spreadsheet'
 
 
 # Gems used only for assets and not required
@@ -26,6 +27,7 @@ group :development do
 	gem 'faker'
 	gem 'annotate'
 	gem 'factory_girl_rails', :require => false
+	gem 'capybara'
 	gem 'debugger'
 end
 

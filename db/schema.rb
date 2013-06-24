@@ -11,6 +11,42 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 0) do
+ActiveRecord::Schema.define(:version => 20130624185156) do
+
+  create_table "accounts", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "noise_users", :force => true do |t|
+    t.integer  "noise_id"
+    t.integer  "user_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "noises", :force => true do |t|
+    t.integer  "created_by"
+    t.integer  "account_id"
+    t.time     "expires_at"
+    t.integer  "threshold"
+    t.string   "create_text"
+    t.string   "agree_text"
+    t.string   "cancel_text"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+    t.boolean  "email_sent"
+  end
+
+  create_table "users", :force => true do |t|
+    t.integer  "account_id"
+    t.string   "name"
+    t.string   "email"
+    t.string   "team"
+    t.integer  "admin"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
 end

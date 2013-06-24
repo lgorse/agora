@@ -1,0 +1,2 @@
+module NoiseUsersHelper
+end

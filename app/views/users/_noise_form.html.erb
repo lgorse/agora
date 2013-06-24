@@ -1,0 +1,17 @@
+<% if @current_user.account.has_active_noise %>
+	<% if @current_user.current_noise %>
+		<% @noise = @current_user.current_noise %>
+		<%= button_to 'Cancel', {:controller => :noise_users, :action => :destroy, :id => @noise.id}, :method => :delete %>
+	<% else %>
+		<% @noise_user = NoiseUser.new %>
+		<%= form_for @noise_user do |noise_user| %>
+			<%= noise_user.hidden_field :noise_id, :value => @noise.id %>
+			<%= noise_user.submit "Ssshhh" %>
+		<% end %>
+	<% end %>	
+<% else %>
+<%  %>
+	<%= form_for @noise do |noise| %>
+		<%= noise.submit "Ssshhh" %>
+	<% end %>
+<% end %>
