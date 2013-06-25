@@ -14,7 +14,7 @@ require 'spec_helper'
 describe NoiseUser do
   	before(:each) do
 		@user = FactoryGirl.create(:user)
-		@noise = FactoryGirl.create(:noise)
+		@noise = FactoryGirl.create(:noise, :threshold => 2)
 		@attr = {:noise_id => @noise.id, :user_id => @user.id}
 	end
 
@@ -51,16 +51,22 @@ describe NoiseUser do
 	end
 
 	describe "create" do
-
-		it "should have a check_threshold method" do
-			noise_user = NoiseUser.create(@attr)
-
-		end
+		
 
 		it "should check if the threshold is met" do
-			
+			noise_user = FactoryGirl.build(:noise_user, :noise_id => @noise.id)
+			noise_user.noise.should_receive(:threshold_met?)
+			noise_user.save!
+		end
 
-
+		it "should send an e-mail if threshold is met" do
+			while @noise.users.count <= (@noise.threshold - 1)
+				new_user = FactoryGirl.create(:user, :account_id => @user.account_id)
+				new_user.join(@noise)
+			end
+			noise_user = FactoryGirl.build(:noise_user, :user_id => 300, :noise_id => @noise.id)
+			noise_user.noise.should_receive(:send_email)
+			noise_user.save!
 		end
 
 	end

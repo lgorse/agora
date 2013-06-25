@@ -1,3 +1,4 @@
+
 FactoryGirl.define do
 	factory :account do 
 		name	{generate(:name)}
@@ -15,7 +16,7 @@ end
 FactoryGirl.define do
 	factory :user do
 		name		"tester"
-		email		"test@tester.com"
+		email		{generate(:email)}
 		team		"team"
 		admin		0
 		association :account
@@ -24,14 +25,32 @@ FactoryGirl.define do
 end
 
 FactoryGirl.define do
+
+	sequence :email do |n|
+		"test#{n}@tester.com"
+	end
+
+end
+
+FactoryGirl.define do
 	factory :noise do 
 		association	:account
 		created_by	2
-		expires_at	Time.now.since(5.minutes)
+		expires_at	{Time.now.since(5.minutes)}
 		threshold		10
 		create_text	"Create"
 		agree_text	"Join"
 		cancel_text	"Cancel"
+		email_sent	false
+		email_time	""
 	end
 
 end
+
+FactoryGirl.define do
+	factory :noise_user do
+		user_id		12
+		noise_id	2
+	end
+
+	end

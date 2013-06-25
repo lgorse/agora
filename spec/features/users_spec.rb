@@ -60,6 +60,21 @@ describe "Users" do
 
     end
 
+    describe "when the noise e-mail has been sent" do
+      before(:each) do
+        @noise = FactoryGirl.create(:noise, :account_id => @account.id)
+        @noise.send_email
+        
+      end
+
+      it "should show text and no button" do
+        click_button 'Sign in'
+        expect(page).to have_content('Quiet!')
+
+      end
+
+    end
+
   end
 end
 

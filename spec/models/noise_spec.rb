@@ -5,14 +5,15 @@
 #  id          :integer          not null, primary key
 #  created_by  :integer
 #  account_id  :integer
-#  expires_at  :time
 #  threshold   :integer
 #  create_text :string(255)
 #  agree_text  :string(255)
 #  cancel_text :string(255)
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
-#  email_sent  :boolean
+#  email_sent  :boolean          default(FALSE)
+#  expires_at  :datetime
+#  email_time  :datetime
 #
 
 
@@ -131,23 +132,45 @@ describe Noise do
 
 	end
 
+	describe "check threshold" do
+		before(:each) do
+			@user = FactoryGirl.create(:user)
+			@noise = FactoryGirl.create(:noise, :account_id => @user.account_id, :threshold => 2)
+			@user2 = FactoryGirl.create(:user, :account_id => @user.account_id)
+		end
+
+		it "should have a check threshold method" do
+			@noise.should respond_to(:threshold_met?)
+		end
+
+		it "should return true if the threshold is met" do
+			@user.join(@noise)
+			@user2.join(@noise)
+			@noise.threshold_met?.should == true
+		end
+
+		it "should return false if the threshold is not met" do
+			@user.join(@noise)
+			@noise.threshold_met?.should == false
+		end
+
+
+	end
+
 	describe "e-mail" do
 		before(:each) do
 			@user = FactoryGirl.create(:user)
 			@noise = FactoryGirl.create(:noise, :account_id => @user.account_id, :threshold => 2)
-		end
-
-		it "should have a check threshold method" do
-			@noise.should respond_to(:check_threshold)
+			@user.join(@noise)
 		end
 
 		it "should have a send_email method" do
 			@noise.should respond_to(:send_email)
 		end
 
-		it "should send an e-mail if threshold is met" do
+		it "should send an e-mail" do
 			@noise.send_email
-			ActionMailer::Base.deliveries.last.to.should == @user1.email
+			ActionMailer::Base.deliveries.last.to.should == [@user.email]
 		end
 
 		it "should not send an e-mail if one has already been sent" do
@@ -161,6 +184,22 @@ describe Noise do
 
 		it "should have an e-mail sent attribute" do
 			@noise.should respond_to(:email_sent)
+		end
+
+		it "should have a email_time attribute" do
+			@noise.should respond_to(:email_time)
+
+		end
+
+		it "should have a nil email_time if no e-mail has been sent" do
+			@noise.email_time.should == nil
+		end
+
+		it "should fill email_time iwth the e-mail time if an e-mail has been sent" do
+			Timecop.freeze
+			lambda do
+				@noise.send_email
+			end.should change(@noise, :email_time).from(nil).to(Time.now)
 
 		end
 
@@ -172,7 +211,6 @@ describe Noise do
 
 		it "e-mail sent attribute should be false if an e-mail has not been sent" do
 			@noise.email_sent.should == false
-
 		end
 
 	end

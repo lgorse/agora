@@ -9,6 +9,7 @@
 #
 
 require 'spec_helper'
+require 'debugger'
 
 describe Account do
 
@@ -85,6 +86,21 @@ describe Account do
 
     it "should return nil if there is no active noise" do
         @account.active_noise.should == nil
+    end
+
+  end
+
+  describe "noises of the day" do
+    before(:each) do
+      @account = FactoryGirl.create(:account)
+      @user = FactoryGirl.create(:user, :account_id =>@account.id)
+      @noise = FactoryGirl.create(:noise, :account_id => @account.id)
+      @user.join(@noise)
+      @noise.send_email
+    end
+
+    it "should return the sent noises of the day" do
+    @account.noises_of_the_day.count.should > 0
     end
 
   end

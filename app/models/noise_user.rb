@@ -20,11 +20,18 @@ class NoiseUser < ActiveRecord::Base
   belongs_to :noise
 
   after_destroy :check_remaining_users
+  after_create :check_threshold_and_send_email
 
 
   def check_remaining_users
   	noise = Noise.find(noise_id)
   	noise.destroy if noise.users.blank?
+  end
+
+  def check_threshold_and_send_email
+    if noise.threshold_met?
+      noise.send_email
+    end
   end
 
 

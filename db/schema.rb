@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130624185156) do
+ActiveRecord::Schema.define(:version => 20130625003042) do
 
   create_table "accounts", :force => true do |t|
     t.string   "name"
@@ -29,14 +29,15 @@ ActiveRecord::Schema.define(:version => 20130624185156) do
   create_table "noises", :force => true do |t|
     t.integer  "created_by"
     t.integer  "account_id"
-    t.time     "expires_at"
     t.integer  "threshold"
     t.string   "create_text"
     t.string   "agree_text"
     t.string   "cancel_text"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
-    t.boolean  "email_sent"
+    t.datetime "created_at",                     :null => false
+    t.datetime "updated_at",                     :null => false
+    t.boolean  "email_sent",  :default => false
+    t.datetime "expires_at"
+    t.datetime "email_time"
   end
 
   create_table "users", :force => true do |t|

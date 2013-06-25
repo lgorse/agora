@@ -22,4 +22,8 @@ class Account < ActiveRecord::Base
 		noises.first(:conditions => ["expires_at >= ?", Time.now])
 	end
 
+	def noises_of_the_day
+		noises.where(:email_time => Time.now.beginning_of_day()..Time.now)
+	end
+
 end
