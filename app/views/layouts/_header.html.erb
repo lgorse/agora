@@ -1,5 +1,11 @@
-<div id = "header">
-	<% if session[:user_id] %>
-<%= link_to "Log out", logout_path %>
+<% if session[:user_id] %>
+	<div class = "header">
+	<nav class = "header_left">
+		<%= link_to APP_NAME, root_path, {:class => "app_name_header"} %>
+	</nav>
+	<nav class = "header_right">
+	<%= link_to @current_user.name, @current_user %>
+	<%= link_to "Log out", logout_path %>
+</nav>
+	</div>
 <% end %>
-</div>

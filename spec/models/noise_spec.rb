@@ -145,12 +145,11 @@ describe Noise do
 
 		it "should return true if the threshold is met" do
 			@user.join(@noise)
-			@user2.join(@noise)
+			#@user2.join(@noise)
 			@noise.threshold_met?.should == true
 		end
 
 		it "should return false if the threshold is not met" do
-			@user.join(@noise)
 			@noise.threshold_met?.should == false
 		end
 

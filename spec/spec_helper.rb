@@ -5,10 +5,12 @@ require 'rspec/rails'
 require 'rspec/autorun'
 require 'capybara/rails'
 require 'timecop'
+require 'database_cleaner'
 
 # Requires supporting ruby files with custom matchers and macros, etc,
 # in spec/support/ and its subdirectories.
 Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
+DatabaseCleaner.strategy = :truncation
 
 RSpec.configure do |config|
   # ## Mock Framework
@@ -41,6 +43,16 @@ RSpec.configure do |config|
   config.before(:each) do
     Timecop.return
   end
+
+  #Database_cleaner
+  config.use_transactional_fixtures = false
+  config.before(:each) { DatabaseCleaner.start }
+  config.after(:each) { DatabaseCleaner.clean }
+
+  Capybara.register_driver :selenium do |app|
+    Capybara::Selenium::Driver.new(app, :browser => :chrome)
+  end
+
 
   def test_sign_in(user)
     session[:user_id] = user.id

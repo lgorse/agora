@@ -7,9 +7,9 @@ before_filter :authenticate
 							  :account_id => @current_user.account.id, 
 							  :expires_at => Time.now.since(5.minutes),
 							  :threshold => 5,
-							  :create_text => "hi",
-							  :agree_text => 'boo',
-							  :cancel_text => 'bye')
+							  :create_text => "It\'s too noisy here!",
+							  :agree_text => 'It\'s too noisy here!',
+							  :cancel_text => 'It\'s too noisy here!')
 	end
 
 	def destroy

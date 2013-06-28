@@ -1,0 +1,22 @@
+<tr class = "noise_row">	
+	<% if @current_user.account.has_active_noise %>
+	<% if @current_user.current_noise %>
+	<%= render 'noises/button/cancel' %>
+	<% else %>
+	<%= render 'noises/button/join' %>
+	<% end %>	
+<% else %>
+<%= render 'noises/button/create' %>
+<% end %>
+</tr>
+<tr >
+	<td class = "joiners" threshold = "<%= @noise.threshold %>">
+	<% if @noise.new_record? %>
+	<%= "Start a noise notice now" %>
+	<% else %>
+	<%= "#{@noise.users.count} members agree" %>
+	<% end %>
+</td>
+<td></td>
+</tr>
+

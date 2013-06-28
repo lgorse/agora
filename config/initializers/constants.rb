@@ -1,1 +1,2 @@
 MAX_BUTTON_TEXT = 140
+APP_NAME = "Agora"

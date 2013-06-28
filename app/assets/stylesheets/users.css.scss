@@ -1,3 +1,64 @@
 // Place all the styles related to the users controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+
+.user_bar{
+	border-right: 1px solid black;
+	width: 275px;
+	height: 100%;
+	float: left;
+	padding: 15px 0px;
+
+	.welcome_user{
+		margin-bottom: 20px;
+		margin-left: 15px;
+	}
+
+	#noise{
+		display: inline-block;
+		width: 275px;
+
+		.text{
+			padding-left: 20px;
+			vertical-align: middle;
+			width: 200px;
+		}
+
+		.joiners{
+			padding-left: 20px;
+		}
+
+		div, form{
+			display: inline-block;
+			
+			vertical-align: middle;
+
+		}
+
+		form{
+			width: 75px;
+		}
+
+		tbody{
+			background-color: white;
+			width: 100%;
+		}
+
+		tbody:hover{
+			background-color: #DBDFF7;
+		}
+	}
+
+
+}
+
+#page_content{
+	float: left;
+
+	.activity_info{
+	width: 400px;
+	border: 1px solid black;
+	margin: 30px 100px;
+	}
+}

@@ -50,6 +50,7 @@ GEM
     coffee-script-source (1.6.2)
     columnize (0.3.6)
     dalli (2.6.4)
+    database_cleaner (1.0.1)
     debugger (1.6.0)
       columnize (>= 0.3.1)
       debugger-linecache (~> 1.2.0)
@@ -128,7 +129,7 @@ GEM
       rspec-core (~> 2.13.0)
       rspec-expectations (~> 2.13.0)
       rspec-mocks (~> 2.13.0)
-    ruby-ole (1.2.11.6)
+    ruby-ole (1.2.11.7)
     sass (3.2.9)
     sass-rails (3.2.6)
       railties (~> 3.2.0)
@@ -167,6 +168,7 @@ DEPENDENCIES
   capybara
   coffee-rails (~> 3.2.1)
   dalli
+  database_cleaner
   debugger
   factory_girl_rails
   faker

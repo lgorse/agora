@@ -13,17 +13,18 @@ describe "Users" do
 
       it "should feature a noise button" do
         click_button 'Sign in'
-        expect(page).to have_button('Ssshhh')	     
+        expect(page).to have_button('Create')	     
       end
 
       describe "when there is no noise session" do
 
          it "noise button should link to create a new noise" do
           click_button 'Sign in'
-          click_button('Ssshhh')
+          click_button('Create')
           current_path.should == '/noises'
-
         end
+
+        
 
      end
 
@@ -34,7 +35,7 @@ describe "Users" do
 
       it "noise button should link to join a new noise" do
         click_button 'Sign in'
-        click_button('Ssshhh')
+        click_button('Join')
         current_path.should == '/noise_users'
       end
     end
@@ -43,7 +44,7 @@ describe "Users" do
       before(:each) do
         @noise = FactoryGirl.create(:noise, :account_id => @account.id)
         click_button 'Sign in'
-        click_button 'Ssshhh'
+        click_button 'Join'
         visit root_path
         
       end

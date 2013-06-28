@@ -1,3 +1,26 @@
 // Place all the styles related to the sessions controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+
+.welcome_body{
+	width: 600px;
+	margin: 50px auto;
+
+	.welcome_message{
+		width: 350px;
+		margin: auto;
+	}
+
+	.welcome_explain{
+	width: 550px;
+	margin: auto
+;	}
+}
+
+.login_form{
+
+	
+	width: 400px;
+	margin: 75px auto 50px;
+}
