@@ -14,7 +14,7 @@
 	<% if @noise.new_record? %>
 	<%= "Start a noise notice now" %>
 	<% else %>
-	<%= "#{@noise.users.count} members agree" %>
+	<%= pluralize(@noise.users.count, "member") + " has joined" %>
 	<% end %>
 </td>
 <td></td>

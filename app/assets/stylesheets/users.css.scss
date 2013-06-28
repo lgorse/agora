@@ -25,10 +25,6 @@
 			width: 200px;
 		}
 
-		.joiners{
-			padding-left: 20px;
-		}
-
 		div, form{
 			display: inline-block;
 			
@@ -53,6 +49,12 @@
 
 }
 
+.joiners{
+			padding-left: 20px;
+			font-size: 90%;
+			color: #820000;
+		}
+
 #page_content{
 	float: left;
 
@@ -60,5 +62,10 @@
 	width: 400px;
 	border: 1px solid black;
 	margin: 30px 100px;
+	padding: 10px;
+
+	h4, h5{
+		margin-left: 20px;
+	}
 	}
 }
