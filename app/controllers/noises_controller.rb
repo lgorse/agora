@@ -8,7 +8,7 @@ before_filter :authenticate
 							  :expires_at => Time.now.since(5.minutes),
 							  :threshold => 5,
 							  :create_text => "It\'s too noisy here!",
-							  :agree_text => 'It\'s too noisy here!',
+							  :join_text => 'It\'s too noisy here!',
 							  :cancel_text => 'It\'s too noisy here!')
 	end
 

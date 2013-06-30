@@ -39,7 +39,7 @@ FactoryGirl.define do
 		expires_at	{Time.now.since(5.minutes)}
 		threshold		10
 		create_text	"Create"
-		agree_text	"Join"
+		join_text	"Join"
 		cancel_text	"Cancel"
 		email_sent	false
 		email_time	""

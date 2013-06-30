@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130625003042) do
+ActiveRecord::Schema.define(:version => 20130628165426) do
 
   create_table "accounts", :force => true do |t|
     t.string   "name"
@@ -31,7 +31,7 @@ ActiveRecord::Schema.define(:version => 20130625003042) do
     t.integer  "account_id"
     t.integer  "threshold"
     t.string   "create_text"
-    t.string   "agree_text"
+    t.string   "join_text"
     t.string   "cancel_text"
     t.datetime "created_at",                     :null => false
     t.datetime "updated_at",                     :null => false

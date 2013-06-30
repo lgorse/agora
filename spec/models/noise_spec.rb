@@ -7,7 +7,7 @@
 #  account_id  :integer
 #  threshold   :integer
 #  create_text :string(255)
-#  agree_text  :string(255)
+#  join_text   :string(255)
 #  cancel_text :string(255)
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
@@ -32,7 +32,7 @@ describe Noise do
 				:expires_at => Time.now.since(5.minutes),
 				:threshold => 5,
 				:create_text => "Create",
-				:agree_text => "Join",
+				:join_text => "Join",
 				:cancel_text => "Cancel"
 			}
 			@text = 'a' * (MAX_BUTTON_TEXT+1)
@@ -75,13 +75,13 @@ describe Noise do
 			noise.should_not be_valid
 		end
 
-		it "must have an agree_text" do
-			noise = Noise.new(@attr.merge(:agree_text => ""))
+		it "must have an join_text" do
+			noise = Noise.new(@attr.merge(:join_text => ""))
 			noise.should_not be_valid
 		end
 
 		it "must not exceed the maximum characters" do
-			noise = Noise.new(@attr.merge(:agree_text => @text))
+			noise = Noise.new(@attr.merge(:join_text => @text))
 			noise.should_not be_valid
 		end
 
