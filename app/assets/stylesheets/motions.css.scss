@@ -1,3 +1,20 @@
 // Place all the styles related to the noises controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+
+#page_content{
+	float: left;
+
+	.motion_info{
+		width: 400px;
+		border: 1px solid black;
+		margin: 30px 100px;
+		padding: 10px;
+
+		h4, h5{
+			margin-left: 20px;
+		}
+	}
+}
+

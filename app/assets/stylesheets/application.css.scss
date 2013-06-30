@@ -13,49 +13,56 @@
  */
 
 
-.header{
-	height: 40px;
-	width: auto;
-	position: relative;
-	background-color: #F9E0AF;
-	padding-top: 10px;
-	
-
-	.header_left{
-		width: auto;
-		display: inline-block;
-		margin-left: 50px;
-		
-
-		.app_name_header{
-			font-size: 150%;
-			font-weight: bold;
-		}
-
-	}
-
-	.header_right{
-		width: auto;
-		display: inline-block;
-		float: right;
-		margin-right: 50px;
-		margin-top: 5px;
+ .header{
+ 	height: 40px;
+ 	width: auto;
+ 	position: relative;
+ 	background-color: #F9E0AF;
+ 	padding-top: 10px;
 
 
-		a{
-		padding: 0px 6px;
-		border-left: 1px solid black;
-	}
+ 	.header_left{
+ 		width: auto;
+ 		display: inline-block;
+ 		margin-left: 50px;
 
-	}
 
-}
+ 		.app_name_header{
+ 			font-size: 150%;
+ 			font-weight: bold;
+ 		}
 
-.round{
-    -moz-border-radius: 10px;
-    -webkit-border-radius: 10px;
-    border-radius: 10px;
-    box-shadow: 0px;
-}
+ 	}
+
+ 	.header_right{
+ 		width: auto;
+ 		display: inline-block;
+ 		float: right;
+ 		margin-right: 50px;
+ 		margin-top: 5px;
+
+
+ 		a, form{
+ 			padding: 0px 6px;
+ 			border-left: 1px solid black;
+ 			float: left;
+ 			height: 25px;
+ 			vertical-align: middle;
+ 		}
+
+ 		a{
+ 			padding-top: 5px;
+ 		}
+
+ 	}
+
+ }
+
+ .round{
+ 	-moz-border-radius: 10px;
+ 	-webkit-border-radius: 10px;
+ 	border-radius: 10px;
+ 	box-shadow: 0px;
+ }
 
 

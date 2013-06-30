@@ -1,0 +1,3 @@
+<% @motion = @current_user.current_motion %>
+
+<%= button_to 'Cancel', {:controller => :motion_users, :action => :destroy, :id => @motion.id}, :method => :delete, :remote => true %>

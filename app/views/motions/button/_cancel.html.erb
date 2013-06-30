@@ -1,5 +1,0 @@
-<% @motion = @current_user.current_motion %>
-<td class = 'text'><%= @motion.cancel_text %>
-</td>
-<td>
-<%= button_to 'Cancel', {:controller => :motion_users, :action => :destroy, :id => @motion.id}, :method => :delete, :remote => true %></td>
