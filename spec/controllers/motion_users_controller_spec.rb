@@ -1,20 +1,20 @@
 require 'spec_helper'
 
-describe NoiseUsersController do
+describe MotionUsersController do
 	render_views
 
 	describe "DELETE 'destroy'" do
 		before(:each) do
 			@user = FactoryGirl.create(:user)
-			@noise = FactoryGirl.create(:noise, :account_id => @user.account_id)
+			@motion = FactoryGirl.create(:motion, :account_id => @user.account_id)
 			test_sign_in(@user)
-			@user.join(@noise)
+			@user.join(@motion)
 		end
 
-		it "should reduce the Noise_User count by 1" do
+		it "should reduce the motion_User count by 1" do
 			lambda do
-				delete :destroy, :id => @noise.id
-			end.should change(NoiseUser, :count).by(-1)
+				delete :destroy, :id => @motion.id
+			end.should change(MotionUser, :count).by(-1)
 		end
 
 	end
@@ -23,9 +23,9 @@ describe NoiseUsersController do
 		before(:each) do
 			@user = FactoryGirl.create(:user)
 			@user2 = FactoryGirl.create(:user, :account_id => @user.account_id)
-			@noise = FactoryGirl.create(:noise, :account_id => @user.account_id, :threshold => 2)
+			@motion = FactoryGirl.create(:motion, :account_id => @user.account_id, :threshold => 2)
 			test_sign_in(@user)
-			@user.join(@noise)
+			@user.join(@motion)
 		end
 
 		it "should check the threshold"  do

@@ -33,7 +33,7 @@ FactoryGirl.define do
 end
 
 FactoryGirl.define do
-	factory :noise do 
+	factory :motion do 
 		association	:account
 		created_by	2
 		expires_at	{Time.now.since(5.minutes)}
@@ -48,9 +48,9 @@ FactoryGirl.define do
 end
 
 FactoryGirl.define do
-	factory :noise_user do
+	factory :motion_user do
 		user_id		12
-		noise_id	2
+		motion_id	2
 	end
 
 	end

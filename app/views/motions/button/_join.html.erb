@@ -1,0 +1,7 @@
+<% @motion_user = MotionUser.new %>
+<td class = 'text'><%= @current_user.account.active_motion.join_text %>
+</td>
+<td><%= form_for @motion_user, :remote => true do |motion_user| %>
+	<%= motion_user.hidden_field :motion_id, :value => @motion.id %>
+	<%= motion_user.submit "Join" %>
+<% end %></td>

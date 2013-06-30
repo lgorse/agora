@@ -70,52 +70,52 @@ describe User do
 			@user.should respond_to(:account)
 		end
 
-		it "should have a noise attribute" do
-			@user.should respond_to(:noises)
+		it "should have a motion attribute" do
+			@user.should respond_to(:motions)
 		end
 
-		it "should join a noise" do
-			@noise = FactoryGirl.create(:noise)
+		it "should join a motion" do
+			@motion = FactoryGirl.create(:motion)
 			lambda do
-				@user.join(@noise)
-			end.should change(NoiseUser, :count).by(1)
+				@user.join(@motion)
+			end.should change(MotionUser, :count).by(1)
 		end
 
-		it "should not join the same noise twice" do
-			@noise = FactoryGirl.create(:noise)
-			@user.join(@noise)
-			@user.join(@noise).should_not be_valid
+		it "should not join the same motion twice" do
+			@motion = FactoryGirl.create(:motion)
+			@user.join(@motion)
+			@user.join(@motion).should_not be_valid
 		end
 
-		it "should unjoin a noise" do
-			@noise = FactoryGirl.create(:noise)
-			@user.join(@noise)
+		it "should unjoin a motion" do
+			@motion = FactoryGirl.create(:motion)
+			@user.join(@motion)
 			lambda do
-				@user.unjoin(@noise)
-			end.should change(NoiseUser, :count).by(-1)
+				@user.unjoin(@motion)
+			end.should change(MotionUser, :count).by(-1)
 		end
 
 	end
 
-	describe "method current_noise" do
+	describe "method current_motion" do
 		before(:each) do
 			@user = FactoryGirl.create(:user)
-			@noise = FactoryGirl.create(:noise)
+			@motion = FactoryGirl.create(:motion)
 		end
 
-		it "should respond to a current_noise method" do
-			@user.join(@noise)
-			@user.should respond_to(:current_noise)
+		it "should respond to a current_motion method" do
+			@user.join(@motion)
+			@user.should respond_to(:current_motion)
 		end
 
-		it "should return the current noise if there is one" do
-			@user.join(@noise)
-			@user.current_noise.should == @noise
+		it "should return the current motion if there is one" do
+			@user.join(@motion)
+			@user.current_motion.should == @motion
 
 		end
 
 		it "should return nil if there is none" do
-			@user.current_noise.should == nil
+			@user.current_motion.should == nil
 		end
 
 

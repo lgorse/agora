@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: noises
+# Table name: motions
 #
 #  id          :integer          not null, primary key
 #  created_by  :integer
@@ -20,7 +20,7 @@
 
 require 'spec_helper'
 
-describe Noise do
+describe Motion do
 
 	describe "validations" do
 
@@ -40,94 +40,94 @@ describe Noise do
 		end
 
 		it "must be created by a user" do
-			noise = Noise.new(@attr.merge(:created_by => ""))
-			noise.should_not be_valid
+			motion = Motion.new(@attr.merge(:created_by => ""))
+			motion.should_not be_valid
 		end
 
 		it "must be linked to an account" do
-			noise = Noise.new(@attr.merge(:account_id => ""))
-			noise.should_not be_valid
+			motion = Motion.new(@attr.merge(:account_id => ""))
+			motion.should_not be_valid
 		end
 
 		it "must have an expiration" do
-			noise = Noise.new(@attr.merge(:expires_at => ""))
-			noise.should_not be_valid
+			motion = Motion.new(@attr.merge(:expires_at => ""))
+			motion.should_not be_valid
 		end
 
 		it "must not expire in the past"  do
-			noise = Noise.new(@attr.merge(:expires_at => Time.now.ago(5.minutes)))
-			noise.should_not be_valid
+			motion = Motion.new(@attr.merge(:expires_at => Time.now.ago(5.minutes)))
+			motion.should_not be_valid
 
 		end
 
 		it "must have a threshold" do
-			noise = Noise.new(@attr.merge(:threshold => ""))
-			noise.should_not be_valid
+			motion = Motion.new(@attr.merge(:threshold => ""))
+			motion.should_not be_valid
 		end
 
 		it "must have a create_text" do
-			noise = Noise.new(@attr.merge(:create_text => ""))
-			noise.should_not be_valid
+			motion = Motion.new(@attr.merge(:create_text => ""))
+			motion.should_not be_valid
 		end
 
 		it "must not exceed the maximum characters" do
-			noise = Noise.new(@attr.merge(:create_text => @text))
-			noise.should_not be_valid
+			motion = Motion.new(@attr.merge(:create_text => @text))
+			motion.should_not be_valid
 		end
 
 		it "must have an join_text" do
-			noise = Noise.new(@attr.merge(:join_text => ""))
-			noise.should_not be_valid
+			motion = Motion.new(@attr.merge(:join_text => ""))
+			motion.should_not be_valid
 		end
 
 		it "must not exceed the maximum characters" do
-			noise = Noise.new(@attr.merge(:join_text => @text))
-			noise.should_not be_valid
+			motion = Motion.new(@attr.merge(:join_text => @text))
+			motion.should_not be_valid
 		end
 
 		it "must have a cancel_text" do
-			noise = Noise.new(@attr.merge(:cancel_text => ""))
-			noise.should_not be_valid
+			motion = Motion.new(@attr.merge(:cancel_text => ""))
+			motion.should_not be_valid
 		end
 
 		it "must not exceed the maximum characters" do
-			noise = Noise.new(@attr.merge(:cancel_text => @text))
-			noise.should_not be_valid
+			motion = Motion.new(@attr.merge(:cancel_text => @text))
+			motion.should_not be_valid
 		end
 
-		it "should not allow a second noise if there is a first one still active" do
-			noise1 = FactoryGirl.create(:noise, :account_id => @attr[:account_id])
-			noise2 = Noise.new(@attr)
-			noise2.should_not be_valid
+		it "should not allow a second motion if there is a first one still active" do
+			motion1 = FactoryGirl.create(:motion, :account_id => @attr[:account_id])
+			motion2 = Motion.new(@attr)
+			motion2.should_not be_valid
 		end
 
 	end
 
-	describe "associations noise_user" do
+	describe "associations motion_user" do
 		before(:each) do
 			@user = FactoryGirl.create(:user)
-			@noise = FactoryGirl.create(:noise, :created_by => @user.id)
+			@motion = FactoryGirl.create(:motion, :created_by => @user.id)
 		end
 
-		it "should create a noise relationship with the creator user" do
-			noise_user = NoiseUser.find_by_user_id(@user.id)
-			noise_user.should_not be_nil
+		it "should create a motion relationship with the creator user" do
+			motion_user = MotionUser.find_by_user_id(@user.id)
+			motion_user.should_not be_nil
 		end
 
 
 		it "should have a users method" do
-			noise_user = NoiseUser.create(:noise_id => @noise.id, :user_id => @user.id)
-			@noise.should respond_to(:users)
+			motion_user = MotionUser.create(:motion_id => @motion.id, :user_id => @user.id)
+			@motion.should respond_to(:users)
 		end
 
 		it "should have users" do
-			noise_user = NoiseUser.create(:noise_id => @noise.id, :user_id => @user.id)
-			@noise.users.should include(@user)
+			motion_user = MotionUser.create(:motion_id => @motion.id, :user_id => @user.id)
+			@motion.users.should include(@user)
 		end
 
 		it "must be destroyed if it has 0 users" do
-			NoiseUser.destroy_all
-			Noise.all.should be_blank
+			MotionUser.destroy_all
+			Motion.all.should be_blank
 		end
 
 	end
@@ -135,22 +135,22 @@ describe Noise do
 	describe "check threshold" do
 		before(:each) do
 			@user = FactoryGirl.create(:user)
-			@noise = FactoryGirl.create(:noise, :account_id => @user.account_id, :threshold => 2)
+			@motion = FactoryGirl.create(:motion, :account_id => @user.account_id, :threshold => 2)
 			@user2 = FactoryGirl.create(:user, :account_id => @user.account_id)
 		end
 
 		it "should have a check threshold method" do
-			@noise.should respond_to(:threshold_met?)
+			@motion.should respond_to(:threshold_met?)
 		end
 
 		it "should return true if the threshold is met" do
-			@user.join(@noise)
-			#@user2.join(@noise)
-			@noise.threshold_met?.should == true
+			@user.join(@motion)
+			#@user2.join(@motion)
+			@motion.threshold_met?.should == true
 		end
 
 		it "should return false if the threshold is not met" do
-			@noise.threshold_met?.should == false
+			@motion.threshold_met?.should == false
 		end
 
 
@@ -159,57 +159,57 @@ describe Noise do
 	describe "e-mail" do
 		before(:each) do
 			@user = FactoryGirl.create(:user)
-			@noise = FactoryGirl.create(:noise, :account_id => @user.account_id, :threshold => 2)
-			@user.join(@noise)
+			@motion = FactoryGirl.create(:motion, :account_id => @user.account_id, :threshold => 2)
+			@user.join(@motion)
 		end
 
 		it "should have a send_email method" do
-			@noise.should respond_to(:send_email)
+			@motion.should respond_to(:send_email)
 		end
 
 		it "should send an e-mail" do
-			@noise.send_email
+			@motion.send_email
 			ActionMailer::Base.deliveries.last.to.should == [@user.email]
 		end
 
 		it "should not send an e-mail if one has already been sent" do
-			@noise.send_email
+			@motion.send_email
 			lambda do
-				@noise.send_email
+				@motion.send_email
 			end.should change(ActionMailer::Base.deliveries, :count).by(0)
 
 
 		end
 
 		it "should have an e-mail sent attribute" do
-			@noise.should respond_to(:email_sent)
+			@motion.should respond_to(:email_sent)
 		end
 
 		it "should have a email_time attribute" do
-			@noise.should respond_to(:email_time)
+			@motion.should respond_to(:email_time)
 
 		end
 
 		it "should have a nil email_time if no e-mail has been sent" do
-			@noise.email_time.should == nil
+			@motion.email_time.should == nil
 		end
 
 		it "should fill email_time iwth the e-mail time if an e-mail has been sent" do
 			Timecop.freeze
 			lambda do
-				@noise.send_email
-			end.should change(@noise, :email_time).from(nil).to(Time.now)
+				@motion.send_email
+			end.should change(@motion, :email_time).from(nil).to(Time.now)
 
 		end
 
 		it "e-mail sent attribute should be true if an e-mail has been sent" do
-			@noise.send_email
-			@noise.email_sent.should == true
+			@motion.send_email
+			@motion.email_sent.should == true
 
 		end
 
 		it "e-mail sent attribute should be false if an e-mail has not been sent" do
-			@noise.email_sent.should == false
+			@motion.email_sent.should == false
 		end
 
 	end

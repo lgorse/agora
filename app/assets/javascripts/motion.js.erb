@@ -1,5 +1,5 @@
 $(function(){
-	$("#noise").hover(function(){
+	$("#motion").hover(function(){
 		var threshold = $(this).find(".joiners").attr('threshold');
 		var activity = $(this).attr("id");
 		show_activity_instructions(threshold, activity);
@@ -17,7 +17,7 @@ function show_activity_instructions(threshold, activity){
 		threshold = "enough";
 	}
 	title.contents().replaceWith("Too noisy in the studio?");
-	subtitle.contents().replaceWith("Create a noise notice");
+	subtitle.contents().replaceWith("Create a motion notice");
 	content.contents().replaceWith("Your community will get a polite e-mail when "+ threshold + " members have joined.");
 }
 

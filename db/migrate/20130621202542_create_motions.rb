@@ -1,6 +1,6 @@
-class CreateNoises < ActiveRecord::Migration
+class CreateMotions < ActiveRecord::Migration
   def change
-    create_table :noises do |t|
+    create_table :motions do |t|
       t.integer :created_by
       t.integer :account
       t.time :expires_at

@@ -1,0 +1,6 @@
+<td class = "text"><%= "It's too noisy here!" %></td>
+<td>
+<%= form_for @motion, :remote => true do |motion| %>
+	<%= motion.submit "Create" %>
+<% end %>
+</td>

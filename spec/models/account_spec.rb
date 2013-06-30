@@ -39,68 +39,68 @@ describe Account do
       @account.should respond_to(:users)
     end
 
-    it "should have a noise attribute" do
-      @account.should respond_to(:noises)
+    it "should have a motion attribute" do
+      @account.should respond_to(:motions)
     end
 
-    it "should have the correct noise attribute" do
-      @noise = FactoryGirl.create(:noise, :account_id => @account.id)
-      @account.noises.first.should == @noise
+    it "should have the correct motion attribute" do
+      @motion = FactoryGirl.create(:motion, :account_id => @account.id)
+      @account.motions.first.should == @motion
     end
 
-    it "should destroy all noises if destroyed" do
-      @noise = FactoryGirl.create(:noise, :account_id => @account.id)
+    it "should destroy all motions if destroyed" do
+      @motion = FactoryGirl.create(:motion, :account_id => @account.id)
       @account.destroy
-      Noise.find_by_id(@noise.id).should be_nil
+      Motion.find_by_id(@motion.id).should be_nil
     end
 
   end
 
-  describe "has active noise" do
+  describe "has active motion" do
     before(:each) do
       @account = FactoryGirl.create(:account)
       
     end
 
-    it 'should return true if there is an active noise' do
-      @noise = FactoryGirl.create(:noise, :account_id =>  @account.id)
-      @account.has_active_noise.should == true
+    it 'should return true if there is an active motion' do
+      @motion = FactoryGirl.create(:motion, :account_id =>  @account.id)
+      @account.has_active_motion.should == true
     end
 
-    it 'should return false if there is not an active noise ' do
-      @account.has_active_noise.should == false
+    it 'should return false if there is not an active motion ' do
+      @account.has_active_motion.should == false
 
     end
 
   end
 
-  describe "active noise" do
+  describe "active motion" do
     before(:each) do
       @account = FactoryGirl.create(:account)
     end
 
-    it "should return the current active noise" do
-       @noise = FactoryGirl.create(:noise, :account_id =>  @account.id)
-       @account.active_noise.should == @noise
+    it "should return the current active motion" do
+       @motion = FactoryGirl.create(:motion, :account_id =>  @account.id)
+       @account.active_motion.should == @motion
     end
 
-    it "should return nil if there is no active noise" do
-        @account.active_noise.should == nil
+    it "should return nil if there is no active motion" do
+        @account.active_motion.should == nil
     end
 
   end
 
-  describe "noises of the day" do
+  describe "motions of the day" do
     before(:each) do
       @account = FactoryGirl.create(:account)
       @user = FactoryGirl.create(:user, :account_id =>@account.id)
-      @noise = FactoryGirl.create(:noise, :account_id => @account.id)
-      @user.join(@noise)
-      @noise.send_email
+      @motion = FactoryGirl.create(:motion, :account_id => @account.id)
+      @user.join(@motion)
+      @motion.send_email
     end
 
-    it "should return the sent noises of the day" do
-    @account.noises_of_the_day.count.should > 0
+    it "should return the sent motions of the day" do
+    @account.motions_of_the_day.count.should > 0
     end
 
   end

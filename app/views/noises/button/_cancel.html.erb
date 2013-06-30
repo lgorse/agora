@@ -1,5 +1,0 @@
-<% @noise = @current_user.current_noise %>
-<td class = 'text'><%= @noise.cancel_text %>
-</td>
-<td>
-<%= button_to 'Cancel', {:controller => :noise_users, :action => :destroy, :id => @noise.id}, :method => :delete, :remote => true %></td>

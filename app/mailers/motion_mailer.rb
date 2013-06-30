@@ -1,7 +1,7 @@
-class NoiseMailer < ActionMailer::Base
+class MotionMailer < ActionMailer::Base
   default from: "lgorse@mac.com"
 
-  def noise_email(user)
+  def motion_email(user)
   	@user = user
   	mail(:to => @user.email,  :subject => "Hello, world")
   end

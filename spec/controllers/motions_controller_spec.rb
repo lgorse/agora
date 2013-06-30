@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe NoisesController do
+describe MotionsController do
 
 	describe 'POST "create"' do
 		before(:each) do
@@ -8,10 +8,10 @@ describe NoisesController do
 			test_sign_in(@user)
 		end
 
-		it "should create a new noise" do
+		it "should create a new motion" do
 			lambda do
 				post :create
-			end.should change(Noise, :count).by(1)
+			end.should change(Motion, :count).by(1)
 		end
 
 	end

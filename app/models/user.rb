@@ -22,20 +22,20 @@ class User < ActiveRecord::Base
   validates :account, :presence => true
   
 
-  has_many :noise_users
-  has_many :noises, :through => :noise_users
+  has_many :motion_users
+  has_many :motions, :through => :motion_users
   belongs_to :account
 
-  def join(noise)
-  	NoiseUser.create(:user_id => id, :noise_id => noise.id)
+  def join(motion)
+  	MotionUser.create(:user_id => id, :motion_id => motion.id)
   end
 
-  def unjoin(noise)
-    noise_users.find_by_noise_id(noise).destroy
+  def unjoin(motion)
+    motion_users.find_by_motion_id(motion).destroy
   end
 
-  def current_noise
-    noises.first(:conditions => ["expires_at >= ?", Time.now])
+  def current_motion
+    motions.first(:conditions => ["expires_at >= ?", Time.now])
   end
 
 end

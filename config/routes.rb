@@ -2,7 +2,7 @@ Agora::Application.routes.draw do
 
 	root :to => 'sessions#new'
 
-	resources :accounts, :users, :noises, :noise_users
+	resources :accounts, :users, :motions, :motion_users
 
 	resources :sessions do
 		collection do

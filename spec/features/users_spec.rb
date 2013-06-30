@@ -11,38 +11,38 @@ describe "Users" do
       end
 
 
-      it "should feature a noise button" do
+      it "should feature a motion button" do
         click_button 'Sign in'
         expect(page).to have_button('Create')	     
       end
 
-      describe "when there is no noise session" do
+      describe "when there is no motion session" do
 
-         it "noise button should link to create a new noise" do
+         it "motion button should link to create a new motion" do
           click_button 'Sign in'
           click_button('Create')
-          current_path.should == '/noises'
+          current_path.should == '/motions'
         end
 
         
 
      end
 
-    describe "when there is a noise session" do
+    describe "when there is a motion session" do
        before(:each) do
-        @noise = FactoryGirl.create(:noise, :account_id => @account.id)
+        @motion = FactoryGirl.create(:motion, :account_id => @account.id)
        end
 
-      it "noise button should link to join a new noise" do
+      it "motion button should link to join a new motion" do
         click_button 'Sign in'
         click_button('Join')
-        current_path.should == '/noise_users'
+        current_path.should == '/motion_users'
       end
     end
 
-    describe "when the user has already joined a noise" do
+    describe "when the user has already joined a motion" do
       before(:each) do
-        @noise = FactoryGirl.create(:noise, :account_id => @account.id)
+        @motion = FactoryGirl.create(:motion, :account_id => @account.id)
         click_button 'Sign in'
         click_button 'Join'
         visit root_path
@@ -53,18 +53,18 @@ describe "Users" do
         expect(page).to have_button('Cancel')
       end
 
-      it 'cancel button should link to noise_user destroy' do
-        noise_user = @user.current_noise
+      it 'cancel button should link to motion_user destroy' do
+        motion_user = @user.current_motion
         click_button 'Cancel'
-        current_path.should == '/noise_users/' + @noise.id.to_s
+        current_path.should == '/motion_users/' + @motion.id.to_s
       end
 
     end
 
-    describe "when the noise e-mail has been sent" do
+    describe "when the motion e-mail has been sent" do
       before(:each) do
-        @noise = FactoryGirl.create(:noise, :account_id => @account.id)
-        @noise.send_email
+        @motion = FactoryGirl.create(:motion, :account_id => @account.id)
+        @motion.send_email
         
       end
 

@@ -12,18 +12,18 @@ class Account < ActiveRecord::Base
 	attr_accessible :name
 	validates :name, :presence => true, :uniqueness => true
 	has_many :users
-	has_many :noises, :dependent => :destroy
+	has_many :motions, :dependent => :destroy
 
-	def has_active_noise
-		noises.where("expires_at >= :now", :now => Time.now).exists?
+	def has_active_motion
+		motions.where("expires_at >= :now", :now => Time.now).exists?
 	end
 
-	def active_noise
-		noises.first(:conditions => ["expires_at >= ?", Time.now])
+	def active_motion
+		motions.first(:conditions => ["expires_at >= ?", Time.now])
 	end
 
-	def noises_of_the_day
-		noises.where(:email_time => Time.now.beginning_of_day()..Time.now)
+	def motions_of_the_day
+		motions.where(:email_time => Time.now.beginning_of_day()..Time.now)
 	end
 
 end

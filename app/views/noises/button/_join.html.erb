@@ -1,7 +1,0 @@
-<% @noise_user = NoiseUser.new %>
-<td class = 'text'><%= @current_user.account.active_noise.join_text %>
-</td>
-<td><%= form_for @noise_user, :remote => true do |noise_user| %>
-	<%= noise_user.hidden_field :noise_id, :value => @noise.id %>
-	<%= noise_user.submit "Join" %>
-<% end %></td>
