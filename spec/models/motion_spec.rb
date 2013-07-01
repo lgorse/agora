@@ -31,12 +31,11 @@ describe Motion do
 				:account_id => @account.id,
 				:expires_at => Time.now.since(5.minutes),
 				:threshold => 5,
-				:create_text => "Create",
-				:join_text => "Join",
-				:cancel_text => "Cancel"
+				:title => "Create",
+				:details => "Join",
 			}
-			@text = 'a' * (MAX_BUTTON_TEXT+1)
-
+			@title = 'a' * (TITLE_CHAR_MAX+1)
+			@details = 'a' * (DETAILS_CHAR_MAX + 1)
 		end
 
 		it "must be created by a user" do
@@ -65,36 +64,23 @@ describe Motion do
 			motion.should_not be_valid
 		end
 
-		it "must have a create_text" do
-			motion = Motion.new(@attr.merge(:create_text => ""))
+		it "must have a title" do
+			motion = Motion.new(@attr.merge(:title => ""))
 			motion.should_not be_valid
 		end
 
-		it "must not exceed the maximum characters" do
-			motion = Motion.new(@attr.merge(:create_text => @text))
+		it "must not exceed the maximum characters in the title" do
+			motion = Motion.new(@attr.merge(:title => @title))
 			motion.should_not be_valid
 		end
 
-		it "must have an join_text" do
-			motion = Motion.new(@attr.merge(:join_text => ""))
+
+		it "must not exceed the maximum characters in the details" do
+			motion = Motion.new(@attr.merge(:details => @details))
 			motion.should_not be_valid
 		end
 
-		it "must not exceed the maximum characters" do
-			motion = Motion.new(@attr.merge(:join_text => @text))
-			motion.should_not be_valid
-		end
-
-		it "must have a cancel_text" do
-			motion = Motion.new(@attr.merge(:cancel_text => ""))
-			motion.should_not be_valid
-		end
-
-		it "must not exceed the maximum characters" do
-			motion = Motion.new(@attr.merge(:cancel_text => @text))
-			motion.should_not be_valid
-		end
-
+	
 		it "should not allow a second motion if there is a first one still active" do
 			motion1 = FactoryGirl.create(:motion, :account_id => @attr[:account_id])
 			motion2 = Motion.new(@attr)

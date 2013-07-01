@@ -9,7 +9,6 @@ class MotionUsersController < ApplicationController
 
 	def destroy
 		@current_user.unjoin(Motion.find(params[:id]))
-		reset_motion_variables
 	end
 
 end

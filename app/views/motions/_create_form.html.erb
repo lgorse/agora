@@ -1,0 +1,9 @@
+<%= form_for @motion do |motion| %>
+<p><%= motion.label :title %></p>
+<p><%= motion.text_field :title %>
+<%= "Maximum characters: #{TITLE_CHAR_MAX}" %></p>
+<p><%= motion.label :details %></p>
+<p><%= motion.text_area :details %>
+<%= "Maximum characters: #{DETAILS_CHAR_MAX}" %></p>
+<p><%= motion.submit "Create" %></p>
+<% end %>

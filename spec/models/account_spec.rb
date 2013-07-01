@@ -64,11 +64,11 @@ describe Account do
 
     it 'should return true if there is an active motion' do
       @motion = FactoryGirl.create(:motion, :account_id =>  @account.id)
-      @account.has_active_motion.should == true
+      @account.has_active_motions.should == true
     end
 
     it 'should return false if there is not an active motion ' do
-      @account.has_active_motion.should == false
+      @account.has_active_motions.should == false
 
     end
 
@@ -81,11 +81,11 @@ describe Account do
 
     it "should return the current active motion" do
        @motion = FactoryGirl.create(:motion, :account_id =>  @account.id)
-       @account.active_motion.should == @motion
+       @account.active_motions.first.should == @motion
     end
 
     it "should return nil if there is no active motion" do
-        @account.active_motion.should == nil
+        @account.active_motions.should be_blank
     end
 
   end

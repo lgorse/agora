@@ -17,7 +17,7 @@
 #
 
 class Motion < ActiveRecord::Base
-  attr_accessible :account_id, :join_text, :cancel_text, :create_text, 
+  attr_accessible :account_id, :title,  :details, 
                   :created_by, :expires_at, :threshold, :email_sent,
                   :email_time
 
@@ -25,9 +25,8 @@ class Motion < ActiveRecord::Base
   validates :account, :presence => true
   validates :expires_at, :presence => true
   validates :threshold, :presence => true
-  validates :create_text, :presence => true, :length => {:within => 1..MAX_BUTTON_TEXT}
-  validates :join_text, :presence => true, :length => {:within => 1..MAX_BUTTON_TEXT}
-  validates :cancel_text, :presence => true, :length => {:within => 1..MAX_BUTTON_TEXT}
+  validates :title, :presence => true, :length => {:within => 1..TITLE_CHAR_MAX}
+  validates :details, :presence => true, :length => {:within => 1..DETAILS_CHAR_MAX}
   validate :expires_at_cannot_be_in_the_past, :on => :create
   validate :cannot_have_two_unexpired_motions_in_same_account, :unless => "account.nil?", :on => :create
 

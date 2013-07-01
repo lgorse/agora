@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130630200510) do
+ActiveRecord::Schema.define(:version => 20130630233632) do
 
   create_table "accounts", :force => true do |t|
     t.string   "name"
@@ -30,12 +30,11 @@ ActiveRecord::Schema.define(:version => 20130630200510) do
     t.integer  "created_by"
     t.integer  "account_id"
     t.integer  "threshold"
-    t.string   "create_text"
-    t.string   "join_text"
-    t.string   "cancel_text"
-    t.datetime "created_at",                     :null => false
-    t.datetime "updated_at",                     :null => false
-    t.boolean  "email_sent",  :default => false
+    t.string   "details"
+    t.string   "title"
+    t.datetime "created_at",                    :null => false
+    t.datetime "updated_at",                    :null => false
+    t.boolean  "email_sent", :default => false
     t.datetime "expires_at"
     t.datetime "email_time"
   end

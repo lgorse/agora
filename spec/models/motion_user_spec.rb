@@ -3,7 +3,7 @@
 # Table name: motion_users
 #
 #  id         :integer          not null, primary key
-#  motion_id   :integer
+#  motion_id  :integer
 #  user_id    :integer
 #  created_at :datetime         not null
 #  updated_at :datetime         not null

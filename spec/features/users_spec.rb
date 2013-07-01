@@ -11,20 +11,18 @@ describe "Users" do
       end
 
 
-      it "should feature a motion button" do
+      it "should feature a create motion button" do
         click_button 'Sign in'
-        expect(page).to have_button('Create')	     
+        expect(page).to have_link('Start a motion')	     
       end
 
       describe "when there is no motion session" do
 
          it "motion button should link to create a new motion" do
           click_button 'Sign in'
-          click_button('Create')
-          current_path.should == '/motions'
+          click_link('Start a motion')
+          current_path.should == '/motions/new'
         end
-
-        
 
      end
 
@@ -61,20 +59,6 @@ describe "Users" do
 
     end
 
-    describe "when the motion e-mail has been sent" do
-      before(:each) do
-        @motion = FactoryGirl.create(:motion, :account_id => @account.id)
-        @motion.send_email
-        
-      end
-
-      it "should show text and no button" do
-        click_button 'Sign in'
-        expect(page).to have_content('Quiet!')
-
-      end
-
-    end
 
   end
 end

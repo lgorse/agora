@@ -14,12 +14,13 @@ class Account < ActiveRecord::Base
 	has_many :users
 	has_many :motions, :dependent => :destroy
 
-	def has_active_motion
+
+	def has_active_motions
 		motions.where("expires_at >= :now", :now => Time.now).exists?
 	end
 
-	def active_motion
-		motions.first(:conditions => ["expires_at >= ?", Time.now])
+	def active_motions
+		motions.where("expires_at >= :now", :now => Time.now)
 	end
 
 	def motions_of_the_day

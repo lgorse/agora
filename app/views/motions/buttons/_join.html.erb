@@ -1,5 +1,0 @@
-<% @motion_user = MotionUser.new %>
-<%= form_for @motion_user, :remote => true do |motion_user| %>
-	<%= motion_user.hidden_field :motion_id, :value => @motion.id %>
-	<%= motion_user.submit "Join" %>
-<% end %>

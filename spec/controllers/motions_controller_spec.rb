@@ -16,4 +16,17 @@ describe MotionsController do
 
 	end
 
+	describe 'GET "new"' do
+		before(:each) do
+			@user = FactoryGirl.create(:user)
+			test_sign_in(@user)
+		end
+
+		it "should create a new motion object" do
+			get :new
+			assigns(:motion).new_record?.should == true
+		end
+
+	end
+
 end

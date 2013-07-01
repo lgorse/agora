@@ -7,12 +7,15 @@ before_filter :authenticate
 							  :account_id => @current_user.account.id, 
 							  :expires_at => Time.now.since(5.minutes),
 							  :threshold => 5,
-							  :create_text => "It\'s too noisy here!",
-							  :join_text => 'It\'s too noisy here!',
-							  :cancel_text => 'It\'s too noisy here!')
+							  :title => "It\'s too noisy here!",
+							  :details => 'It\'s too noisy here!')
 	end
 
 	def destroy
 		
+	end
+
+	def new
+		@motion = Motion.new
 	end
 end
