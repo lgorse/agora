@@ -11,29 +11,43 @@ describe "Motions" do
 			click_link ('Start a motion')
 		end
 
+		it "should have the content" do
+			expect(page).to have_content("This is where the magic happens")
+		end
+
 		it "should feature a title input" do
-			expect(page).to have_input.for(:motion => :title)
+			expect(page).to have_field("Title")
 		end
 
-		it "should prefill with explanations about the title" do
-			expect(page).to have_input.value(MOTION_TITLE_EXPLAIN)
-
-		end
+		#it "should prefill with explanations about the title" do
+		#	expect(page).to have_field("motion_title", :with => MOTION_TITLE_EXPLAIN)
+		#end
 
 		it "should feature a character limit number for the title" do
 			expect(page).to have_content(TITLE_CHAR_MAX)
 		end
 
 		it "should feature a details input" do
-			expect(page).to have_input.for(:motion => :details)
+			expect(page).to have_field("Details")
 		end
 
-		it "should prefill with explanations about the details" do
-			expect(page).to have_input.value(MOTION_DETAILS_EXPLAIN)
-		end
+		#it "should prefill with explanations about the details" do
+		#	expect(page).to have_field("motion_details", :with => MOTION_DETAILS_EXPLAIN)
+		#end
 
 		it "should feature a character limit number for the details" do
 			expect(page).to have_content(DETAILS_CHAR_MAX)
+		end
+
+		it 'should feature a threshold input' do
+			expect(page).to have_field("Threshold")
+		end
+
+		it "should redirect to root path if the create button is clicked" do
+			fill_in 'Title', :with => 'Hello'
+			click_button 'Create'
+			current_path.should == '/users/' + @user.id.to_s
+
 		end
 
 	end

@@ -18,12 +18,34 @@
 	}
 }
 
+#motion_explanations{
+	margin: 20px auto 30px 100px;
+}
+
 .new_motion{
 	margin-left: 150px;
-	float: left;
+	
 
-	#motion_title{
+	li{
 		margin-bottom: 20px;
 	}
+
+	label{
+		font-weight: bold;
+	}
+
+	label[for = "motion_threshold"]{
+		margin-right: 5px;
+	}
+
+	#motion_threshold{
+		margin-bottom: 5px;
+	}
+
+	#threshold_explain{
+		font-style: italic;
+	}
+
+
 }
 

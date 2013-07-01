@@ -81,12 +81,6 @@ describe Motion do
 		end
 
 	
-		it "should not allow a second motion if there is a first one still active" do
-			motion1 = FactoryGirl.create(:motion, :account_id => @attr[:account_id])
-			motion2 = Motion.new(@attr)
-			motion2.should_not be_valid
-		end
-
 	end
 
 	describe "associations motion_user" do

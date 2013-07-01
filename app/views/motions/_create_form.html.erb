@@ -1,9 +1,22 @@
 <%= form_for @motion do |motion| %>
+<ul>
+	<li>
 <p><%= motion.label :title %></p>
-<p><%= motion.text_field :title %>
-<%= "Maximum characters: #{TITLE_CHAR_MAX}" %></p>
-<p><%= motion.label :details %></p>
-<p><%= motion.text_area :details %>
-<%= "Maximum characters: #{DETAILS_CHAR_MAX}" %></p>
-<p><%= motion.submit "Create" %></p>
+<p><%= motion.text_field :title, :placeholder => MOTION_TITLE_EXPLAIN %>
+<div id = "title_char_max"><%= "Maximum characters: #{TITLE_CHAR_MAX}" %></div>
+</p>
+</li>
+<li><p><%= motion.label :details %></p>
+<p><%= motion.text_area :details, :placeholder => MOTION_DETAILS_EXPLAIN %>
+<div id = "details_char_max"><%= "Maximum characters: #{DETAILS_CHAR_MAX}" %></div>
+</p>
+</li>
+<li>
+<p><%= motion.label :threshold %>
+	<%= motion.select(:threshold, (DEFAULT_THRESHOLD..(@member_count)).step(5))%>
+	<div id = "threshold_explain"><%= "Your community has #{@member_count} users. How many should join your motion before the e-mail is sent?" %></div>
+</p></li>
+<li>
+<p><%= motion.submit "Create" %></p></li>
+</ul>
 <% end %>

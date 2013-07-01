@@ -26,9 +26,8 @@ class Motion < ActiveRecord::Base
   validates :expires_at, :presence => true
   validates :threshold, :presence => true
   validates :title, :presence => true, :length => {:within => 1..TITLE_CHAR_MAX}
-  validates :details, :presence => true, :length => {:within => 1..DETAILS_CHAR_MAX}
+  validates :details, :length => {:within => 1..DETAILS_CHAR_MAX}
   validate :expires_at_cannot_be_in_the_past, :on => :create
-  validate :cannot_have_two_unexpired_motions_in_same_account, :unless => "account.nil?", :on => :create
 
   has_many :motion_users
   has_many :users, :through => :motion_users
@@ -58,12 +57,6 @@ class Motion < ActiveRecord::Base
       if expires_at < Time.now
         errors.add(:expires_at, "can't be in the past")
       end
-    end
-  end
-
-  def cannot_have_two_unexpired_motions_in_same_account
-    if account.motions.where("expires_at >= :now", :now => Time.now).exists?
-      errors.add(:expires_at, "can't be earlier than a current motion")
     end
   end
 
