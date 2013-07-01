@@ -1,4 +1,5 @@
 <%= form_for @motion do |motion| %>
+<%= render 'layouts/error_messages', :object => motion.object %>
 <ul>
 	<li>
 <p><%= motion.label :title %></p>
@@ -13,8 +14,8 @@
 </li>
 <li>
 <p><%= motion.label :threshold %>
-	<%= motion.select(:threshold, (DEFAULT_THRESHOLD..(@member_count)).step(5))%>
-	<div id = "threshold_explain"><%= "Your community has #{@member_count} users. How many should join your motion before the e-mail is sent?" %></div>
+	<%= motion.select(:threshold, (DEFAULT_THRESHOLD..(account_users_count)).step(5))%>
+	<div id = "threshold_explain"><%= "Your community has #{account_users_count} users. How many should join your motion before the e-mail is sent?" %></div>
 </p></li>
 <li>
 <p><%= motion.submit "Create" %></p></li>

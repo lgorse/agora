@@ -26,7 +26,7 @@ class Motion < ActiveRecord::Base
   validates :expires_at, :presence => true
   validates :threshold, :presence => true
   validates :title, :presence => true, :length => {:within => 1..TITLE_CHAR_MAX}
-  validates :details, :length => {:within => 1..DETAILS_CHAR_MAX}
+  validates :details, :length => {:within => 0..DETAILS_CHAR_MAX}
   validate :expires_at_cannot_be_in_the_past, :on => :create
 
   has_many :motion_users
