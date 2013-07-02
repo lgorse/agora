@@ -11,10 +11,6 @@ describe "Motions" do
 			click_link ('Start a motion')
 		end
 
-		it "should have the content" do
-			expect(page).to have_content("This is where the magic happens")
-		end
-
 		it "should feature a title input" do
 			expect(page).to have_field("Title")
 		end
@@ -46,7 +42,7 @@ describe "Motions" do
 		it "should redirect to root path if the create button is clicked" do
 			fill_in 'Title', :with => 'Hello'
 			click_button 'Create'
-			current_path.should == '/users/' + @user.id.to_s
+			current_path.should == '/motions'
 
 		end
 

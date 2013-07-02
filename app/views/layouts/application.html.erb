@@ -1,19 +1,20 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Agora</title>
-  <%= stylesheet_link_tag    "application", :media => "all" %>
-  <%= javascript_include_tag "application" %>
-  <%= csrf_meta_tags %>
+	<title>Agora</title>
+	<%= stylesheet_link_tag    "application", :media => "all" %>
+	<%= javascript_include_tag "application" %>
+	<%= csrf_meta_tags %>
 </head>
 <body>
-	<% if session[:user_id] %>
+<% if session[:user_id] %>
 	<%= render 'layouts/header' %>
 	<%= render 'layouts/user_bar' %>
-	<% end %>
-
-<%= yield %>
-
-
+	<div id = "page_content">
+		<%= yield %>
+	</div>
+<% else %>
+	<%= yield %>
+<% end %>
 </body>
 </html>

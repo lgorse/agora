@@ -2,18 +2,17 @@
 #
 # Table name: motions
 #
-#  id          :integer          not null, primary key
-#  created_by  :integer
-#  account_id  :integer
-#  threshold   :integer
-#  create_text :string(255)
-#  join_text   :string(255)
-#  cancel_text :string(255)
-#  created_at  :datetime         not null
-#  updated_at  :datetime         not null
-#  email_sent  :boolean          default(FALSE)
-#  expires_at  :datetime
-#  email_time  :datetime
+#  id         :integer          not null, primary key
+#  created_by :integer
+#  account_id :integer
+#  threshold  :integer
+#  details    :string(255)
+#  title      :string(255)
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#  email_sent :boolean          default(FALSE)
+#  expires_at :datetime
+#  email_time :datetime
 #
 
 class Motion < ActiveRecord::Base
@@ -25,7 +24,7 @@ class Motion < ActiveRecord::Base
   validates :account, :presence => true
   validates :expires_at, :presence => true
   validates :threshold, :presence => true
-  validates :title, :presence => true, :length => {:within => 1..TITLE_CHAR_MAX}
+  validates :title, :presence => true, :length => {:maximum => TITLE_CHAR_MAX}
   validates :details, :length => {:within => 0..DETAILS_CHAR_MAX}
   validate :expires_at_cannot_be_in_the_past, :on => :create
 
@@ -35,6 +34,8 @@ class Motion < ActiveRecord::Base
 
   after_create :first_user
 
+  default_scope :order => 'expires_at'
+
 
   def first_user
     MotionUser.create!(:user_id => self.created_by, :motion_id => self.id)
@@ -42,6 +43,10 @@ class Motion < ActiveRecord::Base
 
   def threshold_met?
     users.count >= threshold
+  end
+
+  def current?
+    expires_at >= Time.now
   end
 
   def send_email

@@ -19,7 +19,7 @@ time, mark, audio, video {
     padding:0;
     border:0;
     outline:0;
-    font-size:100%;
+    font-size: 14px;
     font-family: "Helvetica Neue", arial, sans-serif;
     vertical-align:baseline;
     background:transparent;
@@ -41,15 +41,7 @@ time, mark, audio, video {
         line-height: 150%;
     }
 
-    a{
-        text-decoration: none;
-        color: black;
-    }
-
-    a:hover{
-        text-decoration: underline;
-        color: blue;
-    }
+    
 }
 
 li{

@@ -34,8 +34,8 @@ class User < ActiveRecord::Base
     motion_users.find_by_motion_id(motion).destroy
   end
 
-  def current_motion
-    motions.first(:conditions => ["expires_at >= ?", Time.now])
+  def joined?(motion)
+    motion.users.include?(self)
   end
 
 end

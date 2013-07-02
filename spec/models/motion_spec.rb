@@ -2,18 +2,17 @@
 #
 # Table name: motions
 #
-#  id          :integer          not null, primary key
-#  created_by  :integer
-#  account_id  :integer
-#  threshold   :integer
-#  create_text :string(255)
-#  join_text   :string(255)
-#  cancel_text :string(255)
-#  created_at  :datetime         not null
-#  updated_at  :datetime         not null
-#  email_sent  :boolean          default(FALSE)
-#  expires_at  :datetime
-#  email_time  :datetime
+#  id         :integer          not null, primary key
+#  created_by :integer
+#  account_id :integer
+#  threshold  :integer
+#  details    :string(255)
+#  title      :string(255)
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#  email_sent :boolean          default(FALSE)
+#  expires_at :datetime
+#  email_time :datetime
 #
 
 
@@ -80,6 +79,13 @@ describe Motion do
 			motion.should_not be_valid
 		end
 
+		it "must be ordered by expiration date" do
+			motion1 = FactoryGirl.create(:motion, :account_id => @user.account_id, :expires_at => Time.now.since(5.minutes))
+			motion2 = FactoryGirl.create(:motion, :account_id => @user.account_id, :expires_at => Time.now.since(2.minutes))
+			Motion.first.should == motion2
+
+		end
+
 	
 	end
 
@@ -105,10 +111,6 @@ describe Motion do
 			@motion.users.should include(@user)
 		end
 
-		it "must be destroyed if it has 0 users" do
-			MotionUser.destroy_all
-			Motion.all.should be_blank
-		end
 
 	end
 
@@ -132,9 +134,31 @@ describe Motion do
 		it "should return false if the threshold is not met" do
 			@motion.threshold_met?.should == false
 		end
+	end
 
+	describe "current?" do
+		before(:each) do
+			@motion = FactoryGirl.create(:motion)
+		end
+
+		it "should respond to a current? method" do
+			@motion.should respond_to(:current?)
+
+		end
+
+		it "should return true if the motion has not expired yet" do
+			@motion.current?.should == true
+		end
+
+		it "should return false if the motion has expired" do
+			motion = FactoryGirl.create(:motion, :expires_at => Time.now.since(1.seconds))
+			new_time = Time.now.since(5.minutes)
+			Timecop.freeze(new_time)
+			motion.current?.should == false
+		end
 
 	end
+
 
 	describe "e-mail" do
 		before(:each) do

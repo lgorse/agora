@@ -37,4 +37,35 @@ describe MotionsController do
 
 	end
 
+	describe 'GET "index"' do
+		before(:each) do
+			@user = FactoryGirl.create(:user)
+			test_sign_in(@user)
+		end
+
+		it "should be successful" do
+			get :index
+			response.should be_successful
+		end
+
+		it "should respond to the active motions variable" do
+			get :index
+			assigns(:active_motions).should_not == nil
+		end
+
+		it "should respond to the past motions variable" do
+			get :index
+			assigns(:expired_motions).should_not == nil
+		end
+
+		it "should show the motions title" do
+			motion = FactoryGirl.create(:motion, :account_id => @user.account_id)
+			@user.join(motion)
+			get :index
+			response.body.should have_content(motion.title)
+		end
+
+
+	end
+
 end

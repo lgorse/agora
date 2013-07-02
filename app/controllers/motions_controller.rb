@@ -24,4 +24,21 @@ class MotionsController < ApplicationController
 	def new
 		@motion = Motion.new
 	end
+
+	def index
+		@active_motions = @current_user.account.active_motions		
+	end
+
+	def show
+		@motion = Motion.find(params[:id])
+
+	end
+
+	def current
+		@active_motions = @current_user.account.active_motions
+	end
+
+	def expired
+		@expired_motions = @current_user.account.past_motions.reverse
+	end
 end

@@ -2,7 +2,14 @@ Agora::Application.routes.draw do
 
 	root :to => 'sessions#new'
 
-	resources :accounts, :users, :motions, :motion_users
+	resources :accounts, :users, :motion_users
+
+	resources :motions do
+		collection do
+			get :expired, :current
+		end
+
+	end
 
 	resources :sessions do
 		collection do
@@ -10,7 +17,13 @@ Agora::Application.routes.draw do
 		end
 	end
 
-	match '/logout' => 'sessions#destroy'
+	resources :pages, :only => [] do
+		collection do
+			get 'faq'
+		end
+	end
 
+	match '/logout' => 'sessions#destroy'
+	match '/faq' => 'pages#faq'
 
 end

@@ -1,0 +1,4 @@
+$(function(){
+	var motion = $(".motion#<%= @motion.id %>");
+	motion.find(".details").html('<%= escape_javascript(word_wrap(@motion.details, :line_width => 20)) %>');
+});

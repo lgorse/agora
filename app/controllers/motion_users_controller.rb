@@ -4,11 +4,13 @@ class MotionUsersController < ApplicationController
 	before_filter :authenticate
 
 	def create
-		@current_user.join(Motion.find(params[:motion_user][:motion_id]))
+		@motion = Motion.find(params[:motion_user][:motion_id])
+		@current_user.join(@motion)
 	end
 
 	def destroy
-		@current_user.unjoin(Motion.find(params[:id]))
+		@motion = MotionUser.find(params[:id]).motion
+		@current_user.unjoin(@motion)
 	end
 
 end

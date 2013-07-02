@@ -33,7 +33,7 @@ describe SessionsController do
 
 			it 'should redirect straight to the home page if there is a session' do
 				get :new
-				response.should redirect_to user_path(@user)
+				response.should redirect_to motions_path
 			end
 
 		end
@@ -65,7 +65,7 @@ describe SessionsController do
 
 			it "should redirect to the user's page" do
 				post :create, :session => @attr
-				response.should redirect_to(user_path(@user1))
+				response.should redirect_to motions_path
 
 			end
 

@@ -19,14 +19,7 @@ class MotionUser < ActiveRecord::Base
   belongs_to :user
   belongs_to :motion
 
-  after_destroy :check_remaining_users
   after_create :check_threshold_and_send_email
-
-
-  def check_remaining_users
-  	motion = Motion.find(motion_id)
-  	motion.destroy if motion.users.blank?
-  end
 
   def check_threshold_and_send_email
     if motion.threshold_met?

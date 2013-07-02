@@ -97,27 +97,23 @@ describe User do
 
 	end
 
-	describe "method current_motion" do
+	describe "method joined?" do
 		before(:each) do
 			@user = FactoryGirl.create(:user)
-			@motion = FactoryGirl.create(:motion)
+			@motion = FactoryGirl.create(:motion, :account_id => @user.id)
 		end
 
-		it "should respond to a current_motion method" do
+		it "should be true if the user has joined the motion" do
 			@user.join(@motion)
-			@user.should respond_to(:current_motion)
+			@user.joined?(@motion).should == true
 		end
 
-		it "should return the current motion if there is one" do
-			@user.join(@motion)
-			@user.current_motion.should == @motion
+		it "should be false if the user has not joined the motion" do
+			@user.joined?(@motion).should == false
 
 		end
-
-		it "should return nil if there is none" do
-			@user.current_motion.should == nil
-		end
-
 
 	end
+
+
 end

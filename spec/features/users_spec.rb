@@ -52,9 +52,9 @@ describe "Users" do
       end
 
       it 'cancel button should link to motion_user destroy' do
-        motion_user = @user.current_motion
+        motion_user = @user.motion_users.find_by_motion_id(@motion.id)
         click_button 'Cancel'
-        current_path.should == '/motion_users/' + @motion.id.to_s
+        current_path.should == '/motion_users/' + motion_user.id.to_s
       end
 
     end

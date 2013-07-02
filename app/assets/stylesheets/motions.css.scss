@@ -46,6 +46,60 @@
 		font-style: italic;
 	}
 
+}
 
+.motion{
+	width: 450px;
+	border: 1px solid black;
+	margin: 10px auto 20px 30px;
+	padding: 5px 5px 5px 10px;
+
+	.top_row, .bottom_row{
+		div{
+			display: inline-block;
+		}
+	}
+
+	.top_row{
+		
+
+	}
+
+	.bottom_row{
+
+		color: #606366;
+
+			div{
+			font-size: 85%;
+		}
+	}
+
+	.details{
+		margin: 7px 10px 7px 15px;
+		word-wrap: break-word;
+		font-size: 95%;
+
+		a{
+			color: #104E8B;
+		}
+	}
+
+	.title{
+		font-weight: bold;
+		width: 300px;
+	}
+
+	.created_at{
+		width: 150px;
+	}
+
+	.expires_at{
+		width: 175px;
+	}
+
+	.voter_count{
+		width: 65px;
+		font-size: 90%;
+	}
 }
 

@@ -1,14 +1,14 @@
 class SessionsController < ApplicationController
 
 	def new
-		redirect_to user_path(session[:user_id]) if session[:user_id]
+		redirect_to motions_path if session[:user_id]
 	end
 
 	def create
 		@user = User.find_by_email(params[:session][:email])
 		if @user
 			session[:user_id] = @user.id
-			redirect_to user_path(@user)
+			redirect_to motions_path
 		else
 			flash.now[:error] = "Invalid email."
 			render "new"

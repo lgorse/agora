@@ -20,6 +20,16 @@
  	background-color: #F9E0AF;
  	padding-top: 10px;
 
+ 	a{
+        text-decoration: none;
+        color: black;
+    }
+
+    a:hover{
+        text-decoration: underline;
+        color: blue;
+    }
+
 
  	.header_left{
  		width: auto;
