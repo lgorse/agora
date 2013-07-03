@@ -1,0 +1,12 @@
+<div id = "account_show">
+<nav>
+	<%= link_to "Add member", new_user_path %>
+
+</nav>
+<h5 id = 'account_members_title'>Account members</h5>
+
+<ul id = "account_members"><%= render :partial => 'accounts/user_summary', :collection => @account.users, :as => :user %></ul>
+
+
+
+</div>

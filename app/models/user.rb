@@ -7,9 +7,9 @@
 #  name       :string(255)
 #  email      :string(255)
 #  team       :string(255)
-#  admin      :integer
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
+#  admin      :boolean          default(FALSE)
 #
 
 class User < ActiveRecord::Base

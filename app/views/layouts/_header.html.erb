@@ -4,6 +4,9 @@
 	</nav>
 	<nav class = "header_right">
 	<%= link_to "Start a motion", new_motion_path %>
+	<% if @current_user.admin? %>
+	<%= link_to 'Admin', @current_user.account %>
+	<% end %>
 	<%= link_to @current_user.name, @current_user %>
 	<%= link_to "Log out", logout_path %>
 </nav>

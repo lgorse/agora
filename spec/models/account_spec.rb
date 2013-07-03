@@ -74,19 +74,45 @@ describe Account do
 
   end
 
-  describe "active motion" do
+  
+  describe "active motions" do
     before(:each) do
       @account = FactoryGirl.create(:account)
+      @motion_active = FactoryGirl.create(:motion, :expires_at => Time.now.since(10.minutes), :account_id => @account.id)
+      @motion_expired = FactoryGirl.create(:motion, :expires_at => Time.now.since(1.seconds), :account_id => @account.id)
+      new_time = Time.now.since(5.minutes)
+      Timecop.freeze(new_time)
     end
 
-    it "should return the current active motion" do
-       @motion = FactoryGirl.create(:motion, :account_id =>  @account.id)
-       @account.active_motions.first.should == @motion
+    it "should respond to an active_motions method" do
+      @account.should respond_to(:active_motions)
+
     end
 
-    it "should return nil if there is no active motion" do
-        @account.active_motions.should be_blank
+    it "should contain only the active motions" do
+      @account.active_motions.should_not include(@motion_expired)
     end
+
+  end
+
+  describe "expired motions" do
+    before(:each) do
+      @account = FactoryGirl.create(:account)
+      @motion_active = FactoryGirl.create(:motion, :expires_at => Time.now.since(10.minutes), :account_id => @account.id)
+      @motion_expired = FactoryGirl.create(:motion, :expires_at => Time.now.since(1.seconds), :account_id => @account.id)
+      new_time = Time.now.since(5.minutes)
+      Timecop.freeze(new_time)
+    end
+
+    it 'should respond to an expired_motions method' do
+      @account.should respond_to(:expired_motions)
+    end
+
+    it "should contain only the expired motions" do
+      @account.expired_motions.should_not include(@motion_active)
+
+    end
+
 
   end
 

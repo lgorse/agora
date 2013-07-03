@@ -31,4 +31,36 @@ describe UsersController do
 
 	end
 
+	describe "admins" do
+
+		describe "admin" do
+			before(:each) do
+				@user = FactoryGirl.create(:user, :admin => 1)
+				test_sign_in(@user)
+			end
+
+			it 'should have an admin button on his header' do
+				get :show, :id => @user.id
+				response.body.should have_link('Admin')
+
+			end
+
+
+		end
+
+		describe "non-admin" do
+			before(:each) do
+				@user = FactoryGirl.create(:user, :admin => 0)
+				test_sign_in(@user)
+			end
+
+			it 'should not show the admin button' do
+				get :show, :id => @user.id
+				response.body.should_not have_link('Admin')
+			end
+
+		end
+
+	end
+
 end

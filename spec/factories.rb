@@ -18,7 +18,7 @@ FactoryGirl.define do
 		name		"tester"
 		email		{generate(:email)}
 		team		"team"
-		admin		0
+		admin		false
 		association :account
 	end
 

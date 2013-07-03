@@ -8,6 +8,9 @@ Agora::Application.routes.draw do
 		collection do
 			get :expired, :current
 		end
+	end
+
+	resources :users do
 
 	end
 

@@ -7,9 +7,9 @@
 #  name       :string(255)
 #  email      :string(255)
 #  team       :string(255)
-#  admin      :integer
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
+#  admin      :boolean          default(FALSE)
 #
 
 require 'spec_helper'
@@ -19,7 +19,7 @@ describe User do
 	describe "validation" do
 		before(:each) do
 			@account = FactoryGirl.create(:account)
-			@attr = {:name => "tester", :email => "test@tester.com", :team => "team", :admin => 0, :account_id => @account.id}
+			@attr = {:name => "tester", :email => "test@tester.com", :team => "team", :admin => false, :account_id => @account.id}
 		end
 
 		it "must have an account number" do

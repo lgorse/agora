@@ -39,6 +39,6 @@ class MotionsController < ApplicationController
 	end
 
 	def expired
-		@expired_motions = @current_user.account.past_motions.reverse
+		@expired_motions = @current_user.account.expired_motions.reverse
 	end
 end

@@ -25,7 +25,7 @@ class Account < ActiveRecord::Base
 		motions.where("expires_at >= :now", :now => Time.now)
 	end
 
-	def past_motions
+	def expired_motions
 		motions.where("expires_at < :now", :now => Time.now)
 	end
 
