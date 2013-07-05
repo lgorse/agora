@@ -11,6 +11,9 @@ Agora::Application.routes.draw do
 	end
 
 	resources :users do
+		collection do
+			post 'create_batch_members'
+		end
 
 	end
 

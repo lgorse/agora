@@ -1,7 +1,12 @@
 module SessionsHelper
 
 	def authenticate
-		@current_user = User.find_by_id(session[:user_id])
+		begin
+			@current_user = User.find(session[:user_id])
+		rescue
+			session[:user_id] = nil
+			redirect_to root_path
+		end
 	end
 
 	def authenticate_admin

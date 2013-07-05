@@ -115,5 +115,34 @@ describe User do
 
 	end
 
+	describe "method create_from_csv" do
+		before(:each) do
+			file = File.open('/home/lgorse/www/agora/doc/sample.csv')
+			@file_path = ActionDispatch::Http::UploadedFile.new(:tempfile => file, :filename => File.basename(file))
+			@account = FactoryGirl.create(:account)
+		end
+
+		it "should create a user if the file is properly formed" do
+			lambda do
+				User.create_from_csv(@file_path, @account)
+			end.should change(User, :count).by(2)
+
+		end
+
+		# it "should go through the users even if one user is not properly formed" do
+		# 	bad_file = File.open('/home/lgorse/www/agora/doc/bad_sample.csv')
+		# 	bad_file_path = ActionDispatch::Http::UploadedFile.new(:tempfile => bad_file, :filename => File.basename(bad_file))
+		# 	lambda do
+		# 		User.create_from_csv(bad_file_path, @account)
+		# 	end.should change(User, :count).by(1)
+		# end
+
+		it "should return the list of new users" do
+			user_list = User.create_from_csv(@file_path, @account)
+			user_list.count.should == 2
+		end
+
+	end
+
 
 end

@@ -1,0 +1,9 @@
+<h4>Import a csv file with your members</h4>
+<h5>Warning: be sure your file is properly formed</h5>
+
+<%= form_tag({:action => :create_batch_members, :controller => :users}, :multipart => true) do  %>
+<%= label_tag 'CSV file' %>
+<%= file_field_tag :csv, :id => 'batch_members' %>
+<%= hidden_field_tag :account_id, @account.id %>
+<%= submit_tag 'Upload' %>
+<% end %>

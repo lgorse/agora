@@ -13,6 +13,7 @@
 #
 
 class User < ActiveRecord::Base
+ require 'csv'
   attr_accessible :account_id, :admin, :email, :name, :team
 
   email_format = /[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
@@ -36,6 +37,20 @@ class User < ActiveRecord::Base
 
   def joined?(motion)
     motion.users.include?(self)
+  end
+
+  def self.create_from_csv(uploaded_file, account)
+    @account = account;
+    @new_user_list = []
+    file_name = uploaded_file.tempfile.to_path.to_s
+    file = File.read(file_name)
+    csv = CSV.parse(file, :headers => false, :col_sep => "\t")
+    csv.each do |row|
+      attribute = {:account_id => @account.id, :name => row[1].to_s, :email => row[3].to_s, :team => row[0].to_s, :admin => false}
+      new_user = User.create(attribute)
+      @new_user_list << new_user
+    end
+    @new_user_list
   end
 
 end

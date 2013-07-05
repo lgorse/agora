@@ -63,6 +63,30 @@ describe UsersController do
 
 	end
 
+	describe "create_batch_members" do
+		before(:each) do
+			file = File.open('/home/lgorse/www/agora/doc/sample.csv')
+			@file_path = ActionDispatch::Http::UploadedFile.new(:tempfile => file, :filename => File.basename(file))
+			@account = FactoryGirl.create(:account)
+			@user = FactoryGirl.create(:user, :account_id => @account.id, :admin => true)
+			test_sign_in(@user)
+		end
+
+		it "should add users to the database" do
+			lambda do
+				post :create_batch_members, :csv => @file_path, :account_id => @account.id
+			end.should change(User, :count).by(2)
+
+		end
+
+		it "should list the users" do
+			post :create_batch_members, :csv => @file_path, :account_id => @account.id
+			response.body.should have_content(assigns(:new_user_list).first.name)
+
+		end
+
+	end
+
 	
 
 end
