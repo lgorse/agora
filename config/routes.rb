@@ -20,6 +20,13 @@ Agora::Application.routes.draw do
 		end
 	end
 
+	resources :accounts do
+		member do
+			get :batch_members
+		end
+
+	end
+
 	resources :pages, :only => [] do
 		collection do
 			get 'faq'

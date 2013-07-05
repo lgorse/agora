@@ -5,7 +5,7 @@ describe AccountsController do
 
 	describe 'Admin' do
 
-		describe 'if the user is an admin' do
+		describe 'if the user is an admin of this account' do
 			before(:each) do
 				@user = FactoryGirl.create(:user, :admin => true)
 				@account = @user.account
@@ -15,6 +15,20 @@ describe AccountsController do
 			it "should allow the user to be on an account page page" do
 				get :show, :id => @account.id
 				response.should be_successful
+			end
+
+		end
+
+		describe 'if the user is an admin but not of this account' do
+			before(:each) do
+				@user = FactoryGirl.create(:user, :admin => true)
+				@account = FactoryGirl.create(:account)
+				test_sign_in(@user)
+			end
+
+			it "should not allow a user to be on an account page" do
+				get :show, :id => @account.id
+				response.should_not be_successful
 			end
 
 		end
@@ -69,6 +83,20 @@ describe AccountsController do
 
 		end
 
+	end
+
+	describe 'GET /account/batch_members' do
+
+		before(:each) do
+			@account = FactoryGirl.create(:account)
+			@user = FactoryGirl.create(:user, :account_id => @account.id, :admin => true)
+			test_sign_in(@user)
+			get :batch_members, :id => @account.id
+		end
+
+		it "should be successful" do
+			response.should be_successful
+		end
 
 	end
 
