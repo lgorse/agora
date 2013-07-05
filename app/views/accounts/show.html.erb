@@ -5,9 +5,5 @@
 
 </nav>
 <h5 id = 'account_members_title'>Account members</h5>
-
-<ul id = "account_members"><%= render :partial => 'users/user_summary', :collection => @account.users, :as => :user %></ul>
-
-
-
+<%= render 'users/user_list', :user_list => @account.users %>
 </div>
