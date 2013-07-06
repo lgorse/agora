@@ -39,6 +39,10 @@ class User < ActiveRecord::Base
     motion.users.include?(self)
   end
 
+  def created_motions
+    Motion.where(:created_by => self.id)
+  end
+
   def self.create_from_csv(uploaded_file, account)
     @account = account;
     @new_user_list = []

@@ -8,26 +8,88 @@ describe UsersController do
 		before(:each) do
 			@user = FactoryGirl.create(:user)
 			test_sign_in(@user)
+			@motion1 = FactoryGirl.create(:motion, 
+				:created_by => @user.id, 
+				:account_id => @user.account_id)
+			@motion2 = FactoryGirl.create(:motion, 
+				:account_id => @user.account_id)
+			@user.join(@motion2)
+			get :show, :id => session[:user_id]
 		end
 
 		it 'should be successful' do
-			get :show, :id => session[:user_id]
 			response.should be_success
-
 		end
 
-		it "should get the user from the session" do
-			get :show, :id => session[:user_id]
+		it "should get the user from the session" do			
 			@user.id.should == session[:user_id]			
 		end
 
 		it 'should show the logout button' do
-			get :show, :id => session[:user_id]
 			response.body.should have_link('Log out', href: logout_path)
-
 		end
 
-		
+		it "should feature the user name" do
+			response.body.should have_css("h3", @user.name)
+		end
+
+		it "should have an 'about' link that links to show" do
+			response.body.should have_link("About", user_path(@user))
+		end
+
+		it "should have a link to the user's created motions" do
+			response.body.should have_link("Motions created", created_user_path(@user.id))
+		end
+
+		it "should have a link to the user's joined motions" do
+			response.body.should have_link("Motions joined", motions_user_path(@user))
+		end
+
+	end
+
+	describe 'GET "user/created' do
+		before(:each) do
+			@user = FactoryGirl.create(:user)
+			test_sign_in(@user)
+			@motion1 = FactoryGirl.create(:motion, 
+				:created_by => @user.id, 
+				:account_id => @user.account_id)
+			@motion2 = FactoryGirl.create(:motion, 
+				:account_id => @user.account_id)
+			@user.join(@motion2)
+			get :created, :id => session[:user_id]
+		end
+
+		it "should have the number of motions the user has created" do
+			response.body.should have_content(@user.created_motions.count)
+		end
+
+		it "should list the motions created by the user" do
+			assigns(:user_created_motions).should == @user.created_motions
+		end
+
+	end
+
+	describe 'GET "user/joined"' do
+		before(:each) do
+			@user = FactoryGirl.create(:user)
+			test_sign_in(@user)
+			@motion1 = FactoryGirl.create(:motion, 
+				:created_by => @user.id, 
+				:account_id => @user.account_id)
+			@motion2 = FactoryGirl.create(:motion, 
+				:account_id => @user.account_id)
+			@user.join(@motion2)
+			get :motions, :id => session[:user_id]
+		end
+
+		it "should have the number of motions the user has joined" do
+			response.body.should have_content(@user.motions.count)
+		end
+
+		it "should list the motions created by the user" do
+			assigns(:user_joined_motions).should == @user.motions
+		end
 
 	end
 

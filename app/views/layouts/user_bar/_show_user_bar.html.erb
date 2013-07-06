@@ -1,0 +1,6 @@
+<ul>
+	<li><%= link_to "About", user_path(@user) %></li>
+	<li><%= link_to "Motions created", created_user_path(@user.id) %></li>
+	<li><%= link_to "Motions joined", motions_user_path(@user.id) %></li>
+	<li><%= link_to "How it works", faq_path %></li>
+</ul>

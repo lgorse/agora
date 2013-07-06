@@ -29,7 +29,20 @@ class UsersController < ApplicationController
 		else
 			render 'new'
 		end
+	end
 
+	def show
+		@user = User.find(params[:id])
+	end
+
+	def created
+		@user = User.find(params[:id])
+		@user_created_motions = @user.created_motions
+	end
+
+	def motions
+		@user = User.find(params[:id])
+		@user_joined_motions = @user.motions
 	end
 
 

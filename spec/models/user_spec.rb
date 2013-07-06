@@ -144,5 +144,22 @@ describe User do
 
 	end
 
+	describe "created motions" do
+		before(:each) do
+			@user = FactoryGirl.create(:user)
+			@motion1 = FactoryGirl.create(:motion, 
+										  :created_by => @user.id, 
+										  :account_id => @user.account_id)
+			@motion2 = FactoryGirl.create(:motion, 
+										  :account_id => @user.account_id)
+			@user.join(@motion2)
+		end
+
+		it "should show only the motions created by the user" do
+			@user.created_motions.count.should == 1
+		end
+
+	end
+
 
 end

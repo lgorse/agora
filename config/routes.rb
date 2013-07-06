@@ -14,6 +14,10 @@ Agora::Application.routes.draw do
 		collection do
 			post 'create_batch_members'
 		end
+		member do
+			get 'created', 'motions'
+
+		end
 
 	end
 
