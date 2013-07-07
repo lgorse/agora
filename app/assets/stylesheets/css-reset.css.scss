@@ -125,3 +125,10 @@ hr {
 input, select {
     vertical-align:middle;
 }
+
+ .round{
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    box-shadow: 0px;
+ }

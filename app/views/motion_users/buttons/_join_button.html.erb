@@ -1,4 +1,4 @@
 <%= form_for @current_user.motion_users.build(:motion_id => motion.id), :remote => true do |f| %>
 <%= f.hidden_field :motion_id %>
-<%= f.submit "Join" %>
+<%= f.submit "Join", :class => "round" %>
 <% end %>
