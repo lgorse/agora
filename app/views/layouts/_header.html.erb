@@ -3,7 +3,7 @@
 		<%= link_to APP_NAME, root_path, {:class => "app_name_header"} %>
 	</nav>
 	<nav class = "header_right">
-	<%= link_to "Start a motion", new_motion_path %>
+	<%= link_to "Start a motion", new_motion_path, :id => "new_motion" %>
 	<% if @current_user.admin? %>
 	<%= link_to 'Admin', @current_user.account %>
 	<% end %>

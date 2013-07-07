@@ -1,2 +1,2 @@
-<div id = "active_motions_title">Active motions</div>
-<div id = "active_motions"><%= render :partial => 'motions/motion', :collection => @active_motions, :as => :motion %></div>
+<h3 id = "current_motions_title">Active motions</h3>
+<div id = "current_motions" class = "motions"><%= render :partial => 'motions/motion', :collection => @active_motions, :as => :motion %></div>

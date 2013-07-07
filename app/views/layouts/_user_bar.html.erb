@@ -1,4 +1,5 @@
 <div class = "user_bar">
+	<div class = "welcome_user"><%= "Welcome, " + @current_user.name %></div>
 <% if controller.controller_name == "users" && ["show", "created", "motions"].include?(controller.action_name)  %>
 <%= render 'layouts/user_bar/show_user_bar'%>
 <% else %>

@@ -14,22 +14,20 @@
 
 
  .header{
- 	height: 40px;
- 	width: auto;
+ 	height: 30px;
+ 	min-width: 800px;
  	position: relative;
- 	background-color: white;
- 	padding-top: 10px;
- 	box-shadow: 0px 1px 3px black;
+ 	background-color: #DDEBDD;
+ 	padding: 5px 0px;
+ 	//box-shadow: 0px 1px 3px black;
+ 	border-bottom: 1px solid #C2C2CF;
 
  	a{
         text-decoration: none;
         color: black;
     }
 
-    a:hover{
-        text-decoration: underline;
-        color: blue;
-    }
+  
 
 
  	.header_left{
@@ -58,9 +56,35 @@
  			border-left: 1px solid black;
  		}
 
+ 		#new_motion{
+ 			font-weight: bold;
+ 		}
+
  	}
 
  }
+
+ .user_bar{
+	border-right: 1px solid black;
+	width: 200px;
+	height: 100%;
+	float: left;
+	padding: 15px 0px 0px 50px;
+
+	.welcome_user{
+		margin-bottom: 30px;
+		margin-left: -5px;
+	}
+
+	ul{
+		margin-left: 10px;
+	}
+
+	li{
+		margin-bottom: 10px;
+	}
+
+}
 
  .round{
  	-moz-border-radius: 10px;
@@ -71,6 +95,8 @@
 
 #page_content{
 	float: left;
+	min-width: 200px;
 	margin-top: 10px;
+	padding: 15px 0px 0px 35px;
 }
 

@@ -24,7 +24,11 @@ time, mark, audio, video {
     vertical-align:baseline;
     background:transparent;
 
-
+    h3{
+        font-size: 110%;
+        border-bottom: 1px solid #C2C2CF;
+        padding-bottom: 5px;
+    }
 
     h2{
         font-size: 200%;
@@ -54,7 +58,7 @@ html, body{
     
 body {
     line-height:1;
-    
+    min-width: 800px;    
 }
 article,aside,details,figcaption,figure,
 footer,header,hgroup,menu,nav,section { 
@@ -77,6 +81,13 @@ a {
     font-size:100%;
     vertical-align:baseline;
     background:transparent;
+    color: #19558d;
+    text-decoration: none;
+}
+
+a:hover{
+    text-decoration: underline;
+    color: #19558d;
 }
 /* change colours to suit your needs */
 ins {

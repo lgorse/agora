@@ -1,2 +1,2 @@
-<div id = "expired_motions_title">Expired motions</div>
-<div id = "expired_motions"><%= render :partial => 'motions/motion', :collection => @expired_motions[0..4], :as => :motion %></div>
+<h3 id = "expired_motions_title">Expired motions</h3>
+<div id = "expired_motions" class = 'motions'><%= render :partial => 'motions/motion', :collection => @expired_motions[0..4], :as => :motion %></div>
