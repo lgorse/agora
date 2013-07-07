@@ -51,7 +51,7 @@ class Motion < ActiveRecord::Base
 
   def send_email
     unless email_sent == true
-      users.each {|user| MotionMailer.motion_email(user).deliver}
+      users.each {|user| MotionMailer.motion_email(user, self).deliver}
       update_attributes(:email_sent => true, 
                         :email_time => Time.now)
     end
