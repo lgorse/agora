@@ -9,10 +9,12 @@
 <body>
 <% if session[:user_id] %>
 	<%= render 'layouts/header' %>
+	
 	<%= render 'layouts/user_bar' %>
 	<div id = "page_content">
 		<%= yield %>
 	</div>
+
 <% else %>
 	<%= yield %>
 <% end %>
