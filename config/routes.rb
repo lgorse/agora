@@ -42,5 +42,6 @@ Agora::Application.routes.draw do
 
 	match '/logout' => 'sessions#destroy'
 	match '/faq' => 'pages#faq'
+	match '/motions' => 'motions#current'
 
 end

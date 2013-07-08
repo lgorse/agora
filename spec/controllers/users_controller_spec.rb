@@ -45,6 +45,24 @@ describe UsersController do
 			response.body.should have_link("Motions joined", motions_user_path(@user))
 		end
 
+		it "should say which account the user is with" do
+			response.body.should have_css("p", :text => /#{@user.account.name}/i)
+		end
+
+		it "should say when the user joined the account" do
+			response.body.should have_css("p", :text => /#{@user.created_at.strftime('%A %B %d %Y')}/i)
+
+		end
+
+		it "should show the user's created motion count" do
+			response.body.should have_css("p", :text => /#{@user.created_motions.count}/i)
+
+		end
+
+		it "should show the user's joined motions count" do
+			response.body.should have_css("p", :text => /#{@user.motions.count}/i)
+		end
+
 	end
 
 	describe 'GET "user/created' do

@@ -1,6 +1,7 @@
 	<div class = "header">
 	<nav class = "header_left">
-		<%= link_to APP_NAME, root_path, {:class => "app_name_header"} %>
+		<%= link_to APP_NAME, root_path, {:id => "app_name_header"} %>
+		<%= link_to "for #{@current_user.account.name}", root_path, {:id => "account_name_header"} %>
 	</nav>
 	<nav class = "header_right">
 	<%= link_to "Start a motion", new_motion_path, :id => "new_motion" %>
