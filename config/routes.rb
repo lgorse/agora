@@ -2,7 +2,8 @@ Agora::Application.routes.draw do
 
 	root :to => 'sessions#new'
 
-	resources :accounts, :users, :motion_users
+	resources :motion_users
+
 
 	resources :motions do
 		collection do
@@ -40,6 +41,13 @@ Agora::Application.routes.draw do
 		end
 	end
 
+	resources :mailer_previews do
+		collection do
+			get :preview_motion_mail
+		end
+	end
+
+	
 	match '/logout' => 'sessions#destroy'
 	match '/faq' => 'pages#faq'
 	match '/motions' => 'motions#current'

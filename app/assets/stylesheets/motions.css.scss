@@ -108,25 +108,34 @@
 .join{
 
 	input{
-	width: 55px;
-	height: 25px;
-	font-weight: bold;
-	padding: 2px 5px;
-	
-}
+		width: 55px;
+		height: 25px;
+		font-weight: bold;
+		padding: 2px 5px;
 
- .round{
-    -moz-border-radius: 5px;
-    -webkit-border-radius: 5px;
-    border-radius: 5px;
-    box-shadow: 0px;
- }
+	}
+
+	.round{
+		-moz-border-radius: 5px;
+		-webkit-border-radius: 5px;
+		border-radius: 5px;
+		box-shadow: 0px;
+	}
+
+	.expired{
+		font-weight: bold;
+		color: #76787A;
+	}
+
+	.email_sent{
+		font-weight: bold;
+	}
 }
 
 .new_motion_user{  
-			
-		input{
-			
+
+	input{
+
 			//background-color: black;
 
 			color: #3D7508;
@@ -140,12 +149,12 @@
 			background:-ms-linear-gradient(top,#D4F2B8 0%,#B4F07D 100%);
 			background:linear-gradient(top,#D4F2B8 0%,#B4F07D 100%);
 		}
-	
-}
 
-.edit_motion_user{
+	}
 
-	input{
+	.edit_motion_user{
+
+		input{
 			
 			//background-color: black;
 
@@ -161,11 +170,11 @@
 			//background:linear-gradient(top,#E3C5BC 0%,#E39178 100%);
 		}
 
-}
-
-.no_motions{
-	p{
-		margin: 15px 10px 15px;
 	}
-}
+
+	.no_motions{
+		p{
+			margin: 15px 10px 15px;
+		}
+	}
 

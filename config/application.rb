@@ -58,5 +58,11 @@ module Agora
 
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
+
+    #Default URL for action mailer
+    config.action_mailer.default_url_options = { :host => "#{Rails.root}" }
+
+   
+
   end
 end

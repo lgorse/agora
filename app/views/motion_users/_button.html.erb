@@ -1,5 +1,5 @@
 <% if motion.email_sent %>
-<div class = "email_sent"><%= "Email sent" %></div>
+<div class = "email_sent "><%= "Email sent" %></div>
 <% elsif motion.current? %>
 <% if @current_user.joined?(motion) %>
 		<%= render 'motion_users/buttons/cancel_button', :motion => motion %>

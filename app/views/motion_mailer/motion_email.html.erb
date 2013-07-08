@@ -1,1 +1,17 @@
-<%= @motion.details %>
+<div class = "email_body" style = "p{line-height:150%}">
+<p class = "email_intro_header" style = "font-weight: bold">
+	This is a motion from Agora
+</p>
+<div class = "email_intro">
+	<p>Members of your community have voted anonymously on this motion.
+	</p>
+	<p>This is their voice.</p>
+</div>
+<p class = "email_motion_content" style = 'font-weight:bold'><%= "\"#{@motion.details}\"" %>
+</p>
+<p class = "email_votes" style = "font-style:italic"><%= "#{pluralize(@motion.users.count, "member")} voted for this" %>
+</p>
+<%= link_to "Get your voice heard: start a new motion now.",  FULL_ROOT_URL, :class => "email_start_motion" %>
+</div>
+
+
