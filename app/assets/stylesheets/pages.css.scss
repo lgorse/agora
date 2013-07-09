@@ -4,10 +4,17 @@
 
 
 .faq_explain{
-	float: left;
-	margin-left: 15px;	
+	
+	margin: auto;	
+	width: 550px;
+
+
 }
 
 .example_motions{
-	float: left;
+	.motion{
+		float: left;
+		
+	}
+
 }
