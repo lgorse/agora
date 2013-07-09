@@ -2,7 +2,7 @@ class CreateMotionUsers < ActiveRecord::Migration
   def change
   	
     create_table :motion_users do |t|
-      t.integer :noise_id
+      t.integer :motion_id
       t.integer :user_id
 
       t.timestamps
