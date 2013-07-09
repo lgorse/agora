@@ -61,7 +61,15 @@ module Agora
 
     #Default URL for action mailer
     config.action_mailer.default_url_options = { :host => "#{Rails.root}" }
-
+    config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+    :address  =>"smtp.mac.com",
+    :port     => 587,
+    :domain   =>  'mac.com',
+    :user_name    => 'lgorse@mac.com',
+    :password   => '3times69',
+    :authentication => 'plain',
+    :enable_starttls_auto => true }
    
 
   end
