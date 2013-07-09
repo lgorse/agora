@@ -1,3 +1,50 @@
 // Place all the styles related to the noise_users controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+.new_motion_user{  
+
+input{
+
+		//background-color: black;
+
+		color: #3D7508;
+		border: 1px solid #B3CF99;
+		border-bottom-color: #83AB5E;
+		background: #B4F07D;
+		background: -moz-linear-gradient(top, #B4F07D 0%, #B4F07D 100%);
+		background: -webkit-gradient(linear, left top, left bottom, color(0%, #D4F2B8), color(100%, #B4F07D));
+		background:-webkit-linear-gradient(top,#D4F2B8 0%,#B4F07D 100%);
+		background:-o-linear-gradient(top,#D4F2B8 0%,#B4F07D 100%);
+		background:-ms-linear-gradient(top,#D4F2B8 0%,#B4F07D 100%);
+		background:linear-gradient(top,#D4F2B8 0%,#B4F07D 100%);
+	}
+
+}
+
+.edit_motion_user{
+
+	input{
+		
+		//background-color: black;
+
+		color: #F04E1D;
+		border: 1px solid #F2C0B1;
+		border-bottom-color: #F2A088;
+		background: #E39178;
+		//background: -moz-linear-gradient(top, #E39178 0%, #E39178 100%);
+		//background: -webkit-gradient(linear, left top, left bottom, color(0%, #E3C5BC), color(100%, #E39178));
+		background:-webkit-linear-gradient(top,#F2DAD3 0%,#F7CCBE 100%);
+		//background:-o-linear-gradient(top,#E3C5BC 0%,#E39178 100%);
+		//background:-ms-linear-gradient(top,#E3C5BC 0%,#E39178 100%);
+		//background:linear-gradient(top,#E3C5BC 0%,#E39178 100%);
+	}
+
+}
+
+.edit_motion_user, .new_motion_user{
+	
+	input:hover{
+		cursor: pointer;
+	}
+}
