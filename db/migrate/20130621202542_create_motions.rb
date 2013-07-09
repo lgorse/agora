@@ -8,6 +8,7 @@ class CreateMotions < ActiveRecord::Migration
       t.string :create_text
       t.string :agree_text
       t.string :cancel_text
+      t.boolean :email_sent
 
       t.timestamps
     end
