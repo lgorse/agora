@@ -1,11 +1,11 @@
 class CreateUsers < ActiveRecord::Migration
   def change
     create_table :users do |t|
-      t.integer :account
+      t.integer :account_id
       t.string :name
       t.string :email
       t.string :team
-      t.integer :admin
+      t.boolean :admin
 
       t.timestamps
     end

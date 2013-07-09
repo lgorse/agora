@@ -3,13 +3,12 @@ class CreateMotions < ActiveRecord::Migration
     create_table :motions do |t|
       t.integer :created_by
       t.integer :account_id
-      t.time :expires_at
+      t.datetime :expires_at
       t.integer :threshold
-      t.string :create_text
-      t.string :agree_text
-      t.string :cancel_text
+      t.string :details
+      t.string :title
       t.boolean :email_sent
-
+      t.datetime  :email_time, :default => nil
       t.timestamps
     end
   end
