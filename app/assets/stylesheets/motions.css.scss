@@ -16,7 +16,7 @@
 }
 
 #motion_explanations{
-	margin: 20px auto 30px 100px;
+	margin: 0px auto 30px 100px;
 }
 
 .new_motion{
@@ -29,6 +29,8 @@
 
 	label{
 		font-weight: bold;
+		margin-right: 10px;
+		margin-bottom: 5px;
 	}
 
 	label[for = "motion_threshold"]{
@@ -37,10 +39,15 @@
 
 	#motion_threshold{
 		margin-bottom: 5px;
+		margin-right: 10px;
 	}
 
 	#threshold_explain{
 		font-style: italic;
+	}
+
+	#motion_expires_at{
+		margin-right: 10px;
 	}
 
 }
@@ -103,6 +110,8 @@
 		font-size: 90%;
 		margin-left: 15px;
 	}
+
+
 }
 
 .join{

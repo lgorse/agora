@@ -3,18 +3,18 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 
-.faq_explain{
-	
-	margin: auto;	
-	width: 550px;
+.faq_explain{	
+	margin: auto 100px;	
+	width: 650px;
 
+	h5{
+		line-height: 200%;
+	}
 
 }
 
 .example_motions{
-	.motion{
-		float: left;
-		
-	}
-
+	margin: 50px 100px;	
+	
 }
+

@@ -1,7 +1,4 @@
-<div class = "example_motions">
-	<%= render 'pages/example_motion' %>
-	
-</div>
+
 <div class = "faq_explain">
 	<h4><%= APP_NAME + " is a feedback tool for your community" %></h4>
 	<h5>Wish people cleaned up the office fridge?</h5>
@@ -10,8 +7,13 @@
 	
 	<h4><%= "#{APP_NAME} gives you a voice" %></h4>
 	<h5>A motion is like a proposition that your community can vote on.</h5>
-	<h5>Each motion is anonymous. All votes are anonymous.</h5>
-	<h5>When enough members have voted, your motion is e-mailed to your community.</h5>
+	<h5>When enough members have voted, an e-mail announces the vote to your community.</h5>
+	<h5>Each motion is anonymous. All votes are anonymous. The e-mail is anonymous.</h5>
 	<h4>Let your voice be heard. <%= link_to "Start a motion on Agora now", new_motion_path %></h4>
+</div>
+<div class = "example_motions">
+	<h3>Example motions:</h3>
+<%= render :partial => 'pages/example_motion', :collection => @example_motions, :as => :motion %>
+	
 </div>
 

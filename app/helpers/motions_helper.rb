@@ -10,5 +10,9 @@ module MotionsHelper
 		 [distance_of_time_in_words(from_time, from_time + 1.week), Time.now.since(1.week)]
 		]
 	end
+
+	def threshold_selection
+		(DEFAULT_THRESHOLD..(account_users_count)).step(5).map {|count| [pluralize(count, "vote"), count]}
+	end
 	
 end

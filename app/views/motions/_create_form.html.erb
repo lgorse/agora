@@ -2,25 +2,25 @@
 <%= render 'layouts/error_messages', :object => motion.object %>
 <ul>
 	<li>
-<p><%= motion.label :title %></p>
-<p><%= motion.text_field :title, :placeholder => MOTION_TITLE_EXPLAIN %>
+<p><%= motion.label :title %><%= "(This will go in the subject of your e-mail)" %></p>
+<p><%= motion.text_field :title, :placeholder => MOTION_TITLE_EXPLAIN %></p>
 <div id = "title_char_max"><%= "Maximum characters: #{TITLE_CHAR_MAX}" %></div>
-</p>
-</li>
-<li><p><%= motion.label :details %></p>
-<p><%= motion.text_area :details, :placeholder => MOTION_DETAILS_EXPLAIN, :size => '50x10' %>
-<div id = "details_char_max"><%= "Maximum characters: #{DETAILS_CHAR_MAX}" %></div>
-</p>
+
 </li>
 <li>
-<p><%= motion.label :threshold %>
-	<%= motion.select(:threshold, (DEFAULT_THRESHOLD..(account_users_count)).step(5))%>
-	<div id = "threshold_explain"><%= "Your community has #{account_users_count} users. How many should join your motion before the e-mail is sent?" %></div>
-</p></li>
+	<p><%= motion.label :details %><%= "(This will go in the body of your e-mail)" %></p>
+	<p><%= motion.text_area :details, :placeholder => MOTION_DETAILS_EXPLAIN, :size => '50x10' %></p>
+	<div id = "details_char_max"><%= "Maximum characters: #{DETAILS_CHAR_MAX}" %></div>
+</li>
+<li>
+	<p><%= motion.label :threshold %>
+	<%= motion.select(:threshold, threshold_selection)%><%= "Minimum votes to pass the motion and e-mail your community." %></p>
+	<div id = "threshold_explain"><%= "Your community has #{account_users_count} users." %></div>
+</li>
 <li>
 	<p>
 		<%= motion.label :expires_at %>
-		<%= motion.select(:expires_at, expiration_times) %>
+		<%= motion.select(:expires_at, expiration_times) %><%= "When should voting end?" %>
 	</p>
 </li>
 <li>

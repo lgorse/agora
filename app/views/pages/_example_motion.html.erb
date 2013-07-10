@@ -1,10 +1,10 @@
 <div class = 'motion' >
 	<div class = "top_row">
-		<div class = 'title'><%= "Let\'s keep the studio clean!" %></div>
+		<div class = 'title'><%= motion.title %></div>
 		<div class = 'voter_count'><%= pluralize(rand(3..10), "voter") %></div>
 	</div>
 	<div class = "details">
-		<%= "Vote for this if you\'d like folks to clean up after themselves a little better - starting with the week-old pizza in the fridge!" %>
+		<%= motion.details %>
 
 	</div>
 	<div class = "bottom_row">
@@ -12,26 +12,7 @@
 		<div class = "expires_at">
 			<%= "Expires in #{distance_of_time_in_words(Time.now, Time.now.since(1.hour))}" %>
 		</div>
-		<div class = 'threshold'><%= "Threshold 5" %></div>
-	</div>
-
-</div>
-
-<div class = 'motion' >
-	<div class = "top_row">
-		<div class = 'title'><%= "Anyone up for a regular happy hour at the studio?" %></div>
-		<div class = 'voter_count'><%= pluralize(rand(3..10), "voter") %></div>
-	</div>
-	<div class = "details">
-		<%= "Vote if you\'d like us to organize regular happy hour at the studio!" %>
-
-	</div>
-	<div class = "bottom_row">
-		<div class = 'created_at'><%= Time.now.strftime("%A %B %d %Y") %></div>
-		<div class = "expires_at">
-			<%= "Expires in #{distance_of_time_in_words(Time.now, Time.now.since(1.hour))}" %>
-		</div>
-		<div class = 'threshold'><%= "Threshold 10" %></div>
+		<div class = 'threshold'><%= "Threshold #{rand(5..25)}" %></div>
 	</div>
 
 </div>
