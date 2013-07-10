@@ -15,10 +15,6 @@ describe "Motions" do
 			expect(page).to have_field("Title")
 		end
 
-		#it "should prefill with explanations about the title" do
-		#	expect(page).to have_field("motion_title", :with => MOTION_TITLE_EXPLAIN)
-		#end
-
 		it "should feature a character limit number for the title" do
 			expect(page).to have_content(TITLE_CHAR_MAX)
 		end
@@ -27,16 +23,16 @@ describe "Motions" do
 			expect(page).to have_field("Details")
 		end
 
-		#it "should prefill with explanations about the details" do
-		#	expect(page).to have_field("motion_details", :with => MOTION_DETAILS_EXPLAIN)
-		#end
-
 		it "should feature a character limit number for the details" do
 			expect(page).to have_content(DETAILS_CHAR_MAX)
 		end
 
 		it 'should feature a threshold input' do
 			expect(page).to have_field("Threshold")
+		end
+
+		it 'should feature an expiration input' do
+			expect(page).to have_field("Expires at")
 		end
 
 		it "should redirect to root path if the create button is clicked" do

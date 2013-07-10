@@ -37,6 +37,13 @@ describe User do
 			user.should_not be_valid
 		end
 
+		it 'e-mail must always be downcased' do
+			up_email = "TEST@TESTER.COM"
+			user = User.new(@attr.merge(:email => up_email))
+			user.save
+			user.email.should == up_email.downcase
+		end
+
 		it "should have a properly formed e-mail" do
 			addresses = ["test@test", "test.test", "test@test."]
 			addresses.each do |address|

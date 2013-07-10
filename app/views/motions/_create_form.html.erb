@@ -18,6 +18,12 @@
 	<div id = "threshold_explain"><%= "Your community has #{account_users_count} users. How many should join your motion before the e-mail is sent?" %></div>
 </p></li>
 <li>
+	<p>
+		<%= motion.label :expires_at %>
+		<%= motion.select(:expires_at, expiration_times) %>
+	</p>
+</li>
+<li>
 <p><%= motion.submit "Create" %></p></li>
 </ul>
 <% end %>

@@ -1,12 +1,12 @@
 class MotionsController < ApplicationController
-	include AccountsHelper
+	include AccountsHelper, MotionsHelper
 	
 	before_filter :authenticate
 
 	def create
 		@motion = Motion.new(:created_by => @current_user.id, 
 			:account_id => @current_user.account.id, 
-			:expires_at => Time.now.since(3.hours),
+			:expires_at => params[:motion][:expires_at],
 			:threshold => params[:motion][:threshold],
 			:title => params[:motion][:title],
 			:details => params[:motion][:details])

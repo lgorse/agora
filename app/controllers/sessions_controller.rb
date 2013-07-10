@@ -5,7 +5,8 @@ class SessionsController < ApplicationController
 	end
 
 	def create
-		@user = User.find_by_email(params[:session][:email])
+		user_email = params[:session][:email]
+		@user = User.find_by_email(user_email.downcase)
 		if @user
 			session[:user_id] = @user.id
 			redirect_to motions_path

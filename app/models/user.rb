@@ -21,6 +21,8 @@ class User < ActiveRecord::Base
   validates :email, :presence => true, :uniqueness => {:case_sensitive => false}, :format => {:with => email_format}
   validates :name, :presence => true
   validates :account, :presence => true
+
+  before_validation :downcase_email
   
 
   has_many :motion_users
@@ -55,6 +57,10 @@ class User < ActiveRecord::Base
       @new_user_list << new_user
     end
     @new_user_list
+  end
+
+  def downcase_email
+    self.email = self.email.downcase if self.email.present?
   end
 
 end
