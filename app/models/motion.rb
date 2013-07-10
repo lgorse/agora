@@ -39,6 +39,7 @@ class Motion < ActiveRecord::Base
 
   def first_user
     MotionUser.create!(:user_id => self.created_by, :motion_id => self.id)
+    #ExpirationWorker.perform_at(self.expires_at, self.id)
   end
 
   def threshold_met?

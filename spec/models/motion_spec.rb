@@ -86,7 +86,7 @@ describe Motion do
 
 		end
 
-	
+
 	end
 
 	describe "associations motion_user" do
@@ -217,5 +217,42 @@ describe Motion do
 		end
 
 	end
+
+	describe "delayed e-mail job" do
+		before(:each) do
+			@user = FactoryGirl.create(:user)
+		end
+
+		it "should add the e-mail send to the queue" do
+			lambda do
+				@motion = FactoryGirl.create(:motion, :account_id => @user.account_id, :threshold => 2)
+			end.should change(ExpirationWorker.jobs, :size).by(1)
+		end
+
+		describe "when executed" do
+			before(:each) do
+				@user2 = FactoryGirl.create(:user, :account_id => @user.account_id)
+				@motion = FactoryGirl.create(:motion, :account_id => @user.account_id, :threshold => 2)
+				@email_sender = ExpirationWorker.new
+			end
+
+			it "should send an e-mail if the threshold is met" do
+				@user2.join(@motion)
+				lambda do
+					@email_sender.perform(@motion.id)
+				end.should change(ActionMailer::Base.deliveries, :count).by(1)
+
+			end
+
+			it "should not send an e-mail if the threshold is not met" do
+				lambda do
+					@email_sender.perform(@motion.id)
+				end.should change(ActionMailer::Base.deliveries, :count).by(0)
+			end
+
+		end
+
+	end
+
 
 end

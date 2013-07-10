@@ -10,7 +10,8 @@ gem 'oink'
 gem 'dalli'
 gem 'newrelic_rpm'
 gem 'unicorn'
-gem 'spreadsheet'
+gem 'sidekiq'
+gem 'redis'
 
 
 # Gems used only for assets and not required
