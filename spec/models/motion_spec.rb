@@ -163,6 +163,7 @@ describe Motion do
 	describe "e-mail" do
 		before(:each) do
 			@user = FactoryGirl.create(:user)
+			@user2 = FactoryGirl.create(:user, :account_id => @user.account_id)
 			@motion = FactoryGirl.create(:motion, :account_id => @user.account_id, :threshold => 2)
 			@user.join(@motion)
 		end
@@ -171,9 +172,10 @@ describe Motion do
 			@motion.should respond_to(:send_email)
 		end
 
-		it "should send an e-mail" do
+		it "should send an e-mail to every user in the account" do
+			lambda do
 			@motion.send_email
-			ActionMailer::Base.deliveries.last.to.should == [@user.email]
+		end.should change(ActionMailer::Base.deliveries, :count).by(@motion.account.users.count)
 		end
 
 		it "should not send an e-mail if one has already been sent" do
@@ -225,14 +227,23 @@ describe Motion do
 
 		it "should add the e-mail send to the queue" do
 			lambda do
-				@motion = FactoryGirl.create(:motion, :account_id => @user.account_id, :threshold => 2)
+				@motion = FactoryGirl.create(:motion, :account_id => @user.account_id, 
+											 :created_by => @user.id, :threshold => 2)
 			end.should change(ExpirationWorker.jobs, :size).by(1)
+		end
+
+		it "should time the e-mail to the expires_at value of the motion" do
+			@motion = FactoryGirl.create(:motion, :account_id => @user.account_id, 
+											 :created_by => @user.id, :threshold => 2)
+			ExpirationWorker.should have_queued_job_at(@motion.expires_at, 1)
+
 		end
 
 		describe "when executed" do
 			before(:each) do
 				@user2 = FactoryGirl.create(:user, :account_id => @user.account_id)
-				@motion = FactoryGirl.create(:motion, :account_id => @user.account_id, :threshold => 2)
+				@motion = FactoryGirl.create(:motion, :account_id => @user.account_id, 
+											 :created_by => @user.id, :threshold => 2)
 				@email_sender = ExpirationWorker.new
 			end
 
@@ -240,7 +251,7 @@ describe Motion do
 				@user2.join(@motion)
 				lambda do
 					@email_sender.perform(@motion.id)
-				end.should change(ActionMailer::Base.deliveries, :count).by(1)
+				end.should change(ActionMailer::Base.deliveries, :count).by(@motion.account.users.count)
 
 			end
 

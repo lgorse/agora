@@ -12,6 +12,7 @@ gem 'newrelic_rpm'
 gem 'unicorn'
 gem 'sidekiq'
 gem 'redis'
+gem 'subelsky_power_tools'
 
 
 # Gems used only for assets and not required

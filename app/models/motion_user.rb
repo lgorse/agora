@@ -19,13 +19,4 @@ class MotionUser < ActiveRecord::Base
   belongs_to :user
   belongs_to :motion
 
-  after_create :check_threshold_and_send_email
-
-  def check_threshold_and_send_email
-    if motion.threshold_met?
-      motion.send_email
-    end
-  end
-
-
 end

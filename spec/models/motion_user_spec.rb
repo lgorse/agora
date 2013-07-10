@@ -49,27 +49,5 @@ describe MotionUser do
 		end
 
 	end
-
-	describe "create" do
-		
-
-		it "should check if the threshold is met" do
-			motion_user = FactoryGirl.build(:motion_user, :motion_id => @motion.id)
-			motion_user.motion.should_receive(:threshold_met?)
-			motion_user.save!
-		end
-
-		it "should send an e-mail if threshold is met" do
-			while @motion.users.count <= (@motion.threshold - 1)
-				new_user = FactoryGirl.create(:user, :account_id => @user.account_id)
-				new_user.join(@motion)
-			end
-			motion_user = FactoryGirl.build(:motion_user, :user_id => 300, :motion_id => @motion.id)
-			motion_user.motion.should_receive(:send_email)
-			motion_user.save!
-		end
-
-	end
-
 	
 end

@@ -3,6 +3,7 @@ module MotionsHelper
 	def expiration_times
 		from_time = Time.now
 		expiration_times = [
+			[distance_of_time_in_words(from_time, from_time + 5.seconds), Time.now.since(5.seconds)],
 		 [distance_of_time_in_words(from_time, from_time + 1.hour), Time.now.since(1.hour)],
 		 [distance_of_time_in_words(from_time, from_time + 6.hours), Time.now.since(6.hours)],
 		 [distance_of_time_in_words(from_time, from_time + 1.day), Time.now.since(1.day)],

@@ -37,12 +37,6 @@ describe MotionUsersController do
 
 			end
 
-			it "should send an e-mail if threshold has been met" do
-				lambda do
-					post :create, :motion_user => @motion_user
-				end.should change(ActionMailer::Base.deliveries, :count).by(@motion.account.users.count)
-			end
-
 		end
 
 		describe 'if threshold has not been met' do

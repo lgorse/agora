@@ -32,14 +32,16 @@ class Motion < ActiveRecord::Base
   has_many :users, :through => :motion_users
   belongs_to :account
 
-  after_create :first_user
+  after_create :add_motion_to_email_queue, :first_user
 
   default_scope :order => 'expires_at'
 
-
   def first_user
     MotionUser.create!(:user_id => self.created_by, :motion_id => self.id)
-    #ExpirationWorker.perform_at(self.expires_at, self.id)
+  end
+
+  def add_motion_to_email_queue
+    ExpirationWorker.perform_at(self.expires_at, self.id)
   end
 
   def threshold_met?
@@ -52,7 +54,7 @@ class Motion < ActiveRecord::Base
 
   def send_email
     unless email_sent == true
-      users.each {|user| MotionMailer.motion_email(user, self).deliver}
+      account.users.each {|user| MotionMailer.motion_email(user, self).deliver}
       update_attributes(:email_sent => true, 
                         :email_time => Time.now)
     end
@@ -63,6 +65,12 @@ class Motion < ActiveRecord::Base
       if expires_at < Time.now
         errors.add(:expires_at, "can't be in the past")
       end
+    end
+  end
+
+  def check_threshold_and_send_email
+    if threshold_met?
+      send_email
     end
   end
 
