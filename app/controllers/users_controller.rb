@@ -35,6 +35,20 @@ class UsersController < ApplicationController
 		@user = User.find(params[:id])
 	end
 
+	def update
+		if @current_user.update_attributes(params[:user])
+			redirect_to @current_user
+		else
+			render 'edit'
+		end
+
+	end
+
+	def edit
+		@user = User.find(params[:id])
+
+	end
+
 	def created
 		@user = User.find(params[:id])
 		@user_created_motions = @user.created_motions

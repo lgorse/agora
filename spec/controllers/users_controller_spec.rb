@@ -294,6 +294,45 @@ describe UsersController do
 
 	end
 
+	describe "PUT 'update'" do
+		before(:each) do
+			@user = FactoryGirl.create(:user)
+			test_sign_in(@user)
+			@attr = {:name => @user.name, :email => @user.email, :email_notify => true}
+		end
+
+		describe "failure" do
+			before(:each) do
+				put :update, :id => @user.id, :user => @attr.merge(:name => "")
+			end
+
+			it 'should render the edit page' do
+				response.body.should render_template('edit')
+			end
+
+		end
+
+		describe "success" do
+			before(:each) do
+				put :update, :id => @user.id, :user => @attr.merge(:email_notify => false)
+			end
+
+			it 'should update the user\'s attributes' do
+			put :update, :id => @user.id, :user => @attr.merge(:email_notify => false)
+			user = assigns(:user)
+			@user.reload
+			@user.email_notify.should == @user.email_notify
+		end
+
+		it "should redirect to the show page if successful" do
+			response.should redirect_to(@user)
+
+		end
+
+	end
+
+	end
+
 
 end
 

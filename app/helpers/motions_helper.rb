@@ -12,7 +12,7 @@ module MotionsHelper
 	end
 
 	def threshold_selection
-		(DEFAULT_THRESHOLD..(account_users_count)).step(5).map {|count| [pluralize(count, "vote"), count]}
+		(DEFAULT_THRESHOLD..(account_users_count)).step(10).map {|count| [pluralize(count, "vote"), count]}
 	end
 	
 end

@@ -35,12 +35,43 @@
 
 #about{
 
+	#about_title{
+		display: inline-block;
+		border-bottom: 1px solid #C2C2CF;
+       
+
+		h3, a{
+			display: inline-block;
+			margin-bottom: 0px;
+			border-bottom: none;
+		}
+
+		a{
+			margin-left: 50px;
+
+		}
+	}
+
 	h3{
 		margin-bottom: 15px;
 	}
 	p{
 		margin: 15px 10px 15px;
 	}
+}
+
+.edit_user_page{
+	#edit_user_title{
+		margin-bottom: 20px;
+	}
+
+	.edit_user{
+		li{
+			margin-bottom: 10px;
+		}
+	}
+
+
 }
 
 

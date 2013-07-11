@@ -1,0 +1,10 @@
+<%= form_for @current_user do |user| %>
+<%= render 'layouts/error_messages', :object => user.object %>
+<ul>
+<li>
+<%= user.check_box :email_notify %>
+<%= user.label :email_notify, "Notify me when a motion is created" %>
+</li>
+<li><%= user.submit 'Update' %></li>
+</ul>
+<% end %>
