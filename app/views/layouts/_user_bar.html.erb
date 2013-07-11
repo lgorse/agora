@@ -1,8 +1,8 @@
 <div class = "user_bar">
 	<div class = "welcome_user"><%= "Welcome, " + @current_user.name %></div>
-<% if controller.controller_name == "users" %>
+<% if controller.controller_name == "users" && ["show", "created", "joined", "edit"].include?(controller.action_name) %>
 <%= render 'layouts/user_bar/show_user_bar'%>
 <% else %>
 <%= render 'layouts/user_bar/default_bar' %>
 <% end %>
-</div>
+</div>`
