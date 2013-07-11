@@ -43,7 +43,7 @@ Agora::Application.routes.draw do
 
 	resources :mailer_previews do
 		collection do
-			get :preview_motion_mail
+			get :preview_motion_mail, :preview_notification_mail
 		end
 	end
 

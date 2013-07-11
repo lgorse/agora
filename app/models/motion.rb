@@ -32,7 +32,7 @@ class Motion < ActiveRecord::Base
   has_many :users, :through => :motion_users
   belongs_to :account
 
-  after_create :add_motion_to_email_queue, :first_user
+  after_create :add_motion_expiration_to_email_queue, :first_user, :add_motion_notification_to_email_queue
 
   default_scope :order => 'expires_at'
 
@@ -40,9 +40,14 @@ class Motion < ActiveRecord::Base
     MotionUser.create!(:user_id => self.created_by, :motion_id => self.id)
   end
 
-  def add_motion_to_email_queue
+  def add_motion_expiration_to_email_queue
     ExpirationWorker.perform_at(self.expires_at, self.id)
   end
+
+  def add_motion_notification_to_email_queue
+    NewMotionWorker.perform_async(self.id)
+  end
+  
 
   def threshold_met?
     users.count >= threshold
@@ -50,6 +55,10 @@ class Motion < ActiveRecord::Base
 
   def current?
     expires_at >= Time.now
+  end
+
+  def new_motion_email
+    account.users.each {|user| MotionMailer.notification_email(user, self).deliver if user.email_notify?}
   end
 
   def send_email

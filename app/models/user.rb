@@ -2,19 +2,20 @@
 #
 # Table name: users
 #
-#  id         :integer          not null, primary key
-#  account_id :integer
-#  name       :string(255)
-#  email      :string(255)
-#  team       :string(255)
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
-#  admin      :boolean          default(FALSE)
+#  id           :integer          not null, primary key
+#  account_id   :integer
+#  name         :string(255)
+#  email        :string(255)
+#  team         :string(255)
+#  created_at   :datetime         not null
+#  updated_at   :datetime         not null
+#  admin        :boolean          default(FALSE)
+#  email_notify :boolean          default(TRUE)
 #
 
 class User < ActiveRecord::Base
  require 'csv'
-  attr_accessible :account_id, :admin, :email, :name, :team
+  attr_accessible :account_id, :admin, :email, :name, :team, :email_notify
 
   email_format = /[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
 

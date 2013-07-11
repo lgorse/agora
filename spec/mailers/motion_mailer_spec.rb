@@ -34,4 +34,12 @@ describe MotionMailer do
     end
 
   end
+
+  describe "notify email" do
+    before(:each) do
+      @user = FactoryGirl.create(:user)
+      @motion = FactoryGirl.create(:motion, :account_id => @user.account_id)
+    end
+
+  end
 end

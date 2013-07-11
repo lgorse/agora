@@ -15,11 +15,12 @@ end
 
 FactoryGirl.define do
 	factory :user do
-		name		"tester"
-		email		{generate(:email)}
-		team		"team"
-		admin		false
-		association :account
+		name			"tester"
+		email			{generate(:email)}
+		team			"team"
+		admin			false
+		association 	:account
+		email_notify	true
 	end
 
 end
@@ -37,9 +38,9 @@ FactoryGirl.define do
 		association	:account
 		created_by	2
 		expires_at	{Time.now.since(5.minutes)}
-		threshold		10
-		title	"Create"
-		details	"Join"
+		threshold	10
+		title		"Create"
+		details		"Join"
 		email_sent	false
 		email_time	""
 	end

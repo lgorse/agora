@@ -160,7 +160,7 @@ describe Motion do
 	end
 
 
-	describe "e-mail" do
+	describe "send e-mail" do
 		before(:each) do
 			@user = FactoryGirl.create(:user)
 			@user2 = FactoryGirl.create(:user, :account_id => @user.account_id)
@@ -174,8 +174,8 @@ describe Motion do
 
 		it "should send an e-mail to every user in the account" do
 			lambda do
-			@motion.send_email
-		end.should change(ActionMailer::Base.deliveries, :count).by(@motion.account.users.count)
+				@motion.send_email
+			end.should change(ActionMailer::Base.deliveries, :count).by(@motion.account.users.count)
 		end
 
 		it "should not send an e-mail if one has already been sent" do
@@ -183,8 +183,6 @@ describe Motion do
 			lambda do
 				@motion.send_email
 			end.should change(ActionMailer::Base.deliveries, :count).by(0)
-
-
 		end
 
 		it "should have an e-mail sent attribute" do
@@ -200,7 +198,7 @@ describe Motion do
 			@motion.email_time.should == nil
 		end
 
-		it "should fill email_time iwth the e-mail time if an e-mail has been sent" do
+		it "should fill email_time with the e-mail time if an e-mail has been sent" do
 			Timecop.freeze
 			lambda do
 				@motion.send_email
@@ -220,34 +218,80 @@ describe Motion do
 
 	end
 
-	describe "delayed e-mail job" do
+	describe "notification e-mail" do
+		before(:each) do
+			@user = FactoryGirl.create(:user)
+			@user2 = FactoryGirl.create(:user, :account_id => @user.account_id)
+			@user_shy = FactoryGirl.create(:user, :account_id => @user.account_id, :email_notify => false)
+			@motion = FactoryGirl.create(:motion, :account_id => @user.account_id, :threshold => 2)
+		end
+
+		it 'should send the e-mail to all users except those with a false email-notify' do
+			lambda do
+				@motion.new_motion_email
+			end.should change(ActionMailer::Base.deliveries, :count).by(@motion.account.users.count-1)
+		end
+
+	end
+
+	describe "create" do
 		before(:each) do
 			@user = FactoryGirl.create(:user)
 		end
 
-		it "should add the e-mail send to the queue" do
-			lambda do
-				@motion = FactoryGirl.create(:motion, :account_id => @user.account_id, 
-											 :created_by => @user.id, :threshold => 2)
-			end.should change(ExpirationWorker.jobs, :size).by(1)
+		describe "notification e-mail" do
+			before(:each) do
+				@new_motion_notify = NewMotionWorker.new
+
+			end
+			it 'should start an asynchrous motion notification job' do
+				lambda do
+					@motion = FactoryGirl.create(:motion, :account_id => @user.account_id, 
+						:created_by => @user.id)
+				end.should change(NewMotionWorker.jobs, :size).by(@user.account.users.count)
+			end
+
+
+			it "should only start an asynchronous job if the user has email_notify to true" do
+				user2 = FactoryGirl.create(:user, :account_id  => @user.id, :email_notify => false)
+				lambda do
+					@motion = FactoryGirl.create(:motion, :account_id => @user.account_id, 
+						:created_by => @user.id)
+				end.should change(NewMotionWorker.jobs, :size).by(@user.account.users.count-1)
+			end
+
+			it 'new motion worker should send a new e-mail' do
+				motion = FactoryGirl.create(:motion, :account_id => @user.account_id, 
+					:created_by => @user.id)
+				lambda do
+					@new_motion_notify.perform(motion.id)
+				end.should change(ActionMailer::Base.deliveries, :count).by(@user.account.users.count)
+
+			end
+
 		end
 
-		it "should time the e-mail to the expires_at value of the motion" do
-			@motion = FactoryGirl.create(:motion, :account_id => @user.account_id, 
-											 :created_by => @user.id, :threshold => 2)
-			ExpirationWorker.should have_queued_job_at(@motion.expires_at, 1)
 
-		end
-
-		describe "when executed" do
+		describe "delayed e-mail" do
 			before(:each) do
 				@user2 = FactoryGirl.create(:user, :account_id => @user.account_id)
 				@motion = FactoryGirl.create(:motion, :account_id => @user.account_id, 
-											 :created_by => @user.id, :threshold => 2)
+					:created_by => @user.id, :threshold => 2)
 				@email_sender = ExpirationWorker.new
 			end
 
-			it "should send an e-mail if the threshold is met" do
+			it "should queue a delayed e-mail that is sent on expiration" do
+				lambda do
+					motion = FactoryGirl.create(:motion, :account_id => @user.account_id, 
+						:created_by => @user.id, :threshold => 2)
+				end.should change(ExpirationWorker.jobs, :size).by(1)
+			end
+
+			it "should time the e-mail to the expires_at value of the motion" do
+				ExpirationWorker.should have_queued_job_at(@motion.expires_at, 1)
+			end
+
+			it "should be sent if the threshold is met" do
 				@user2.join(@motion)
 				lambda do
 					@email_sender.perform(@motion.id)
@@ -255,7 +299,7 @@ describe Motion do
 
 			end
 
-			it "should not send an e-mail if the threshold is not met" do
+			it "should not be sent if the threshold is not met" do
 				lambda do
 					@email_sender.perform(@motion.id)
 				end.should change(ActionMailer::Base.deliveries, :count).by(0)
@@ -264,6 +308,5 @@ describe Motion do
 		end
 
 	end
-
 
 end

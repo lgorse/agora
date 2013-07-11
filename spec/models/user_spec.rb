@@ -2,14 +2,15 @@
 #
 # Table name: users
 #
-#  id         :integer          not null, primary key
-#  account_id :integer
-#  name       :string(255)
-#  email      :string(255)
-#  team       :string(255)
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
-#  admin      :boolean          default(FALSE)
+#  id           :integer          not null, primary key
+#  account_id   :integer
+#  name         :string(255)
+#  email        :string(255)
+#  team         :string(255)
+#  created_at   :datetime         not null
+#  updated_at   :datetime         not null
+#  admin        :boolean          default(FALSE)
+#  email_notify :boolean          default(TRUE)
 #
 
 require 'spec_helper'
@@ -62,8 +63,13 @@ describe User do
 			user = User.create!(@attr)
 			user2 = User.new(@attr.merge(:email => "TEST@TESTER.COM"))
 			user2.should_not be_valid
-
 		end
+
+		it "should set email_notify to true by default" do
+			user = User.create!(@attr)
+			user.email_notify.should == true
+		end
+
 
 	end
 
@@ -107,7 +113,7 @@ describe User do
 	describe "method joined?" do
 		before(:each) do
 			@user = FactoryGirl.create(:user)
-			@motion = FactoryGirl.create(:motion, :account_id => @user.id)
+			@motion = FactoryGirl.create(:motion, :account_id => @user.account_id)
 		end
 
 		it "should be true if the user has joined the motion" do
@@ -155,10 +161,10 @@ describe User do
 		before(:each) do
 			@user = FactoryGirl.create(:user)
 			@motion1 = FactoryGirl.create(:motion, 
-										  :created_by => @user.id, 
-										  :account_id => @user.account_id)
+				:created_by => @user.id, 
+				:account_id => @user.account_id)
 			@motion2 = FactoryGirl.create(:motion, 
-										  :account_id => @user.account_id)
+				:account_id => @user.account_id)
 			@user.join(@motion2)
 		end
 
