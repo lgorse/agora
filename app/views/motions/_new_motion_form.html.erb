@@ -19,8 +19,8 @@
 </li>
 <li>
 	<p>
-		<%= motion.label :expires_at %>
-		<%= motion.select(:expires_at, expiration_times) %><%= "When should voting end?" %>
+		<%= motion.label :expires_at, "Expires in" %>
+		<%= motion.select(:expires_at, expiration_times, :selected => expiration_times[3]) %><%= "When should voting end?" %>
 	</p>
 </li>
 <li>
