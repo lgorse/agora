@@ -8,7 +8,8 @@ describe AccountMailer do
   		@account = FactoryGirl.create(:account)
   		@user =FactoryGirl.create(:user, :account_id => @account.id)
   		@text = "testing"
-  		@mailer = AccountMailer.account_user_email(@user, @text)
+      @subject = "subjecting"
+  		@mailer = AccountMailer.account_user_email(@user, @text, @subject)
   		@mailer.deliver
   	end
 

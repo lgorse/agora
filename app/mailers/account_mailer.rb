@@ -1,10 +1,10 @@
 class AccountMailer < ActionMailer::Base
   default from: "lgorse@mac.com"
 
-  def account_user_email(user, text)
+  def account_user_email(user, text, subject)
   	@user = user
   	@text = text
-  	mail(:to => @user.email, :subject => "News from Agora")
+  	mail(:to => @user.email, :subject => subject)
 
   end
 end
