@@ -185,6 +185,14 @@ describe Motion do
 			end.should change(ActionMailer::Base.deliveries, :count).by(0)
 		end
 
+		it "should not send an e-mail to a user who has opted out" do
+			user3 = FactoryGirl.create(:user, :account_id => @user.account_id, :email_notify => false)
+			lambda do
+				@motion.send_email
+			end.should change(ActionMailer::Base.deliveries, :count).by(@motion.account.users.count - 1)
+
+		end
+
 		it "should have an e-mail sent attribute" do
 			@motion.should respond_to(:email_sent)
 		end

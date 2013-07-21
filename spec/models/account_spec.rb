@@ -126,7 +126,29 @@ describe Account do
     end
 
     it "should return the sent motions of the day" do
-    @account.motions_of_the_day.count.should > 0
+      @account.motions_of_the_day.count.should > 0
+    end
+
+  end
+
+  describe "send email to users" do
+    before(:each) do
+      @account = FactoryGirl.create(:account)
+      @user1 = FactoryGirl.create(:user, :account_id => @account.id)
+      @text = "Hello everyone"
+    end
+
+    it "should send an e-mail to the users" do
+      lambda do
+        @account.email_members(@text)
+      end.should change(ActionMailer::Base.deliveries, :count).by(@account.users.count)
+    end
+
+    it "should not send an e-mail if the user has unsubscribed" do
+      user = FactoryGirl.create(:user, :account_id => @account.id, :email_notify => false)
+      lambda do
+        @account.email_members(@text)
+      end.should change(ActionMailer::Base.deliveries, :count).by(@account.users.select {|user| user.email_notify}.count)
     end
 
   end

@@ -33,4 +33,8 @@ class Account < ActiveRecord::Base
 		motions.where(:email_time => Time.now.beginning_of_day()..Time.now)
 	end
 
+	def email_members(text)
+		User.all.each {|user| AccountMailer.account_user_email(user, text).deliver if user.email_notify}
+	end
+
 end

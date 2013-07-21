@@ -32,7 +32,7 @@ describe "Motions" do
 		end
 
 		it 'should feature an expiration input' do
-			expect(page).to have_field("Expires at")
+			expect(page).to have_field("Expires")
 		end
 
 		it "should redirect to root path if the create button is clicked" do

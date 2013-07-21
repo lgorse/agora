@@ -30,7 +30,8 @@ Agora::Application.routes.draw do
 
 	resources :accounts do
 		member do
-			get :batch_members
+			get :batch_members, :email_members_form
+			post :email_members
 		end
 
 	end
@@ -43,7 +44,7 @@ Agora::Application.routes.draw do
 
 	resources :mailer_previews do
 		collection do
-			get :preview_motion_mail, :preview_notification_mail
+			get :preview_motion_mail, :preview_notification_mail, :preview_account_user_email
 		end
 	end
 

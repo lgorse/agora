@@ -17,6 +17,10 @@ module SessionsHelper
 	def authenticate_account_match
 		authenticate
 		authenticate_admin
-		redirect_to root_path unless @current_user.account == Account.find(params[:id])
+		if @current_user.account == Account.find(params[:id])
+			@account = @current_user.account
+		else
+			redirect_to root_path
+		end
 	end
 end

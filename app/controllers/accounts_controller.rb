@@ -1,14 +1,23 @@
 class AccountsController < ApplicationController
 	
 
-	before_filter :authenticate_account_match, :only => [:show, :batch_members]
+	before_filter :authenticate_account_match
 	
 	def show
-		@account = @current_user.account
+		
 	end
 
 	def batch_members
-		@account = @current_user.account
+		
+	end
+
+	def email_members_form
+
+	end
+
+	def email_members
+		@account.email_members(params[:text])
+		redirect_to(@account)
 	end
 
 end

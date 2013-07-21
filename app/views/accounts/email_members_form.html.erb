@@ -1,0 +1,4 @@
+<%= form_tag(email_members_account_path(@account), :method => :post) do %>
+<%= text_area_tag(:text, "", :size => "50x20") %>
+<%= submit_tag("Send E-mail") %>
+<% end %>
