@@ -16,7 +16,7 @@ class AccountsController < ApplicationController
 	end
 
 	def email_members
-		@account.email_members(params[:text], params[:subject])
+		AllUserEmailWorker.perform_async(@account.id, params[:text], params[:subject])
 		redirect_to(@account)
 	end
 
