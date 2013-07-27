@@ -34,7 +34,7 @@ class Account < ActiveRecord::Base
 	end
 
 	def email_members(text, subject)
-		User.all.each {|user| AccountMailer.account_user_email(user, text, subject).deliver if user.email_notify}
+		User.all.each {|user| AccountMailer.account_user_email(user, text, subject).deliver if user.email_notify?}
 	end
 
 end
