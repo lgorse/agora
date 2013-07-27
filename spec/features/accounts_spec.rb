@@ -69,4 +69,22 @@ describe "Accounts" do
 
 	end
 
+	describe 'POST /account/change' do
+		before(:each) do
+				@user = FactoryGirl.create(:user)
+				@account2 = FactoryGirl.create(:account)
+				@user.join(@account2)
+				visit root_path
+				fill_in 'Email', :with => @user.email
+				click_button 'Sign in'
+				select @account2.name, :from => "account_name_header"
+
+		end
+
+		it "should show the current account in the account bar" do
+			expect(page).to have_selector("#account_name_header", :text => @account2.name)
+		end
+
+	end
+
 end

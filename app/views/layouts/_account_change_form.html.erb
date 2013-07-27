@@ -1,0 +1,8 @@
+<%= form_tag(change_accounts_path) do %>
+<%= link_to APP_NAME, root_path, {:id => "app_name_header"} %>
+<%= select_tag "account_id", 
+				options_from_collection_for_select(@current_user.accounts, "id", "name", @account.id), 
+				{:id => "account_name_header", :onchange => 'this.form.submit();',
+					:url => change_accounts_path} %>
+<% end %>
+
