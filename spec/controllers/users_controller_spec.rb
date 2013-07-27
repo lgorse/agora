@@ -10,10 +10,10 @@ describe UsersController do
 			test_sign_in(@user)
 			@motion1 = FactoryGirl.create(:motion, 
 				:created_by => @user.id, 
-				:account_id => @user.account_id)
+				:account_id => @user.default_account)
 			@motion2 = FactoryGirl.create(:motion, 
-				:account_id => @user.account_id)
-			@user.join(@motion2)
+				:account_id => @user.default_account)
+			@user.vote(@motion2)
 			get :show, :id => session[:user_id]
 		end
 
@@ -46,7 +46,7 @@ describe UsersController do
 		end
 
 		it "should say which account the user is with" do
-			response.body.should have_css("p", :text => /#{@user.account.name}/i)
+			response.body.should have_css("p", :text => /#{@account.name}/i)
 		end
 
 		it "should say when the user joined the account" do
@@ -71,10 +71,10 @@ describe UsersController do
 			test_sign_in(@user)
 			@motion1 = FactoryGirl.create(:motion, 
 				:created_by => @user.id, 
-				:account_id => @user.account_id)
+				:account_id => @user.default_account)
 			@motion2 = FactoryGirl.create(:motion, 
-				:account_id => @user.account_id)
-			@user.join(@motion2)
+				:account_id => @user.default_account)
+			@user.vote(@motion2)
 			get :created, :id => session[:user_id]
 		end
 
@@ -94,10 +94,10 @@ describe UsersController do
 			test_sign_in(@user)
 			@motion1 = FactoryGirl.create(:motion, 
 				:created_by => @user.id, 
-				:account_id => @user.account_id)
+				:account_id => @user.default_account)
 			@motion2 = FactoryGirl.create(:motion, 
-				:account_id => @user.account_id)
-			@user.join(@motion2)
+				:account_id => @user.default_account)
+			@user.vote(@motion2)
 			get :motions, :id => session[:user_id]
 		end
 
@@ -148,7 +148,7 @@ describe UsersController do
 			file = File.open('/home/lgorse/www/agora/doc/sample.csv')
 			@file_path = ActionDispatch::Http::UploadedFile.new(:tempfile => file, :filename => File.basename(file))
 			@account = FactoryGirl.create(:account)
-			@user = FactoryGirl.create(:user, :account_id => @account.id, :admin => true)
+			@user = FactoryGirl.create(:user, :default_account => @account.id, :admin => true)
 			test_sign_in(@user)
 		end
 
@@ -216,7 +216,7 @@ describe UsersController do
 			end
 
 			it 'should have the current user account as a hidden field' do
-				response.body.should have_selector("input#user_account[value=\'"+@user.account_id.to_s+"\']")
+				response.body.should have_selector("input#user_account[value=\'"+@user.default_account.to_s+"\']")
 			end
 
 		end
@@ -230,7 +230,7 @@ describe UsersController do
 			before(:each) do
 				@user = FactoryGirl.create(:user, :admin => false)
 				test_sign_in(@user)
-				@attr = {:name => "tester", :email => "test@tester.edu", :admin => false,  :team => "test", :account => @user.account_id}
+				@attr = {:name => "tester", :email => "test@tester.edu", :admin => false,  :team => "test", :account => @user.default_account}
 				post :create, :user => @attr
 			end
 
@@ -253,7 +253,7 @@ describe UsersController do
 
 			describe "if the input is well formed" do
 				before(:each) do
-					@attr = {:name => "tester", :email => "test75@tester.edu", :admin => false,  :team => "test", :account => @user.account_id}
+					@attr = {:name => "tester", :email => "test75@tester.edu", :admin => false,  :team => "test", :account => @user.default_account}
 				end
 
 				it "should create a new user" do
@@ -271,7 +271,7 @@ describe UsersController do
 
 			describe "if the input is badly formed" do
 				before(:each) do
-					@attr = {:name => "tester", :email => "test@tester", :admin => false,  :team => "test", :account => @user.account_id}
+					@attr = {:name => "tester", :email => "test@tester", :admin => false,  :team => "test", :account => @user.default_account}
 					post :create, :user => @attr
 				end
 

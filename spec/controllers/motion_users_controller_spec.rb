@@ -6,9 +6,9 @@ describe MotionUsersController do
 	describe "DELETE 'destroy'" do
 		before(:each) do
 			@user = FactoryGirl.create(:user)
-			@motion = FactoryGirl.create(:motion, :account_id => @user.account_id)
 			test_sign_in(@user)
-			@user.join(@motion)
+			@motion = FactoryGirl.create(:motion, :account_id => @account.id)
+			@user.vote(@motion)
 		end
 
 		it "should reduce the motion_User count by 1" do
@@ -24,8 +24,8 @@ describe MotionUsersController do
 		describe "if threshold has been met" do
 			before(:each) do
 				@user = FactoryGirl.create(:user)
-				@user2 = FactoryGirl.create(:user, :account_id => @user.account_id)
-				@motion = FactoryGirl.create(:motion, :account_id => @user.account_id, :threshold => 2)
+				@user2 = FactoryGirl.create(:user, :default_account => @user.default_account)
+				@motion = FactoryGirl.create(:motion, :account_id => @user.default_account, :threshold => 2)
 				test_sign_in(@user)
 				@motion_user = {:user_id => @user2.id, :motion_id => @motion.id}
 			end
@@ -42,8 +42,8 @@ describe MotionUsersController do
 		describe 'if threshold has not been met' do
 			before(:each) do
 				@user = FactoryGirl.create(:user)
-				@user2 = FactoryGirl.create(:user, :account_id => @user.account_id)
-				@motion = FactoryGirl.create(:motion, :account_id => @user.account_id, :threshold => 3)
+				@user2 = FactoryGirl.create(:user, :default_account => @user.default_account)
+				@motion = FactoryGirl.create(:motion, :account_id => @user.default_account, :threshold => 3)
 				test_sign_in(@user)
 				@motion_user = {:user_id => @user2.id, :motion_id => @motion.id}
 			end

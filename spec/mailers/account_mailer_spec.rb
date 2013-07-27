@@ -6,7 +6,7 @@ describe AccountMailer do
   describe "user_emails" do
   	before(:each) do
   		@account = FactoryGirl.create(:account)
-  		@user =FactoryGirl.create(:user, :account_id => @account.id)
+  		@user =FactoryGirl.create(:user, :default_account => @account.id)
   		@text = "testing"
       @subject = "subjecting"
   		@mailer = AccountMailer.account_user_email(@user, @text, @subject)

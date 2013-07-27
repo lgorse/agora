@@ -2,15 +2,15 @@
 #
 # Table name: users
 #
-#  id           :integer          not null, primary key
-#  account_id   :integer
-#  name         :string(255)
-#  email        :string(255)
-#  team         :string(255)
-#  created_at   :datetime         not null
-#  updated_at   :datetime         not null
-#  admin        :boolean          default(FALSE)
-#  email_notify :boolean          default(TRUE)
+#  id              :integer          not null, primary key
+#  default_account :integer
+#  name            :string(255)
+#  email           :string(255)
+#  team            :string(255)
+#  created_at      :datetime         not null
+#  updated_at      :datetime         not null
+#  admin           :boolean          default(FALSE)
+#  email_notify    :boolean          default(TRUE)
 #
 
 require 'spec_helper'
@@ -20,12 +20,7 @@ describe User do
 	describe "validation" do
 		before(:each) do
 			@account = FactoryGirl.create(:account)
-			@attr = {:name => "tester", :email => "test@tester.com", :team => "team", :admin => false, :account_id => @account.id}
-		end
-
-		it "must have an account number" do
-			user = User.new(@attr.merge(:account_id => nil))
-			user.should_not be_valid
+			@attr = {:name => "tester", :email => "test@tester.com", :team => "team", :admin => false, :default_account => @account.id}
 		end
 
 		it "must have a name" do
@@ -70,42 +65,61 @@ describe User do
 			user.email_notify.should == true
 		end
 
-
 	end
 
 	describe "associations" do
 		before(:each) do
 			@user = FactoryGirl.create(:user)
-
 		end
 
-		it "should have an account attribute" do
-			@user.should respond_to(:account)
+		it "should have an accounts attribute" do
+			@user.should respond_to(:accounts)
 		end
 
 		it "should have a motion attribute" do
 			@user.should respond_to(:motions)
 		end
 
-		it "should join a motion" do
-			@motion = FactoryGirl.create(:motion)
-			lambda do
-				@user.join(@motion)
-			end.should change(MotionUser, :count).by(1)
+
+	end
+
+	describe "method create" do
+		before(:each) do
+			@user = FactoryGirl.build(:user)
 		end
 
-		it "should not join the same motion twice" do
-			@motion = FactoryGirl.create(:motion)
-			@user.join(@motion)
-			@user.join(@motion).should_not be_valid
+		it "should only connect the user to a single account" do
+			@user.save
+			@user.accounts.count.should == 1
+
 		end
 
-		it "should unjoin a motion" do
-			@motion = FactoryGirl.create(:motion)
-			@user.join(@motion)
-			lambda do
-				@user.unjoin(@motion)
-			end.should change(MotionUser, :count).by(-1)
+		it "should connect the user to his default account" do
+			@user.save
+			@user.accounts.first.should == Account.find(@user.default_account)
+		end
+
+	end
+
+	describe "method join" do
+		before(:each) do
+			@user = FactoryGirl.create(:user)
+			@account2 = FactoryGirl.create(:account)
+		end
+
+		it "should identify multiple accounts if the user has them" do
+			@user.join(@account2)
+			@user.accounts.count.should == 2
+		end
+
+		it "should add the account to the user's accounts" do
+			@user.join(@account2)
+			@user.accounts.should include(@account2)
+		end
+
+		it "should not allow the user to join an account twice" do
+			@user.join(@account2)
+			@user.join(@account2).should_not be_valid
 		end
 
 	end
@@ -113,16 +127,66 @@ describe User do
 	describe "method joined?" do
 		before(:each) do
 			@user = FactoryGirl.create(:user)
-			@motion = FactoryGirl.create(:motion, :account_id => @user.account_id)
+			@account2 = FactoryGirl.create(:account)
 		end
 
-		it "should be true if the user has joined the motion" do
-			@user.join(@motion)
-			@user.joined?(@motion).should == true
+		it "should not be the sane as the default acct" do
+			default = Account.find(@user.default_account)
+			default.should_not == @account2
 		end
 
-		it "should be false if the user has not joined the motion" do
-			@user.joined?(@motion).should == false
+		it "should be true if the user has joined the account" do
+			@user.join(@account2)
+			@user.joined?(@account2).should == true
+		end
+
+		it "should be false if the user has not joined the account" do
+			@user.joined?(@account2).should == false
+		end
+
+	end
+
+	describe "method vote" do
+		before(:each) do
+			@user = FactoryGirl.create(:user)
+		end
+
+		it "should vote a motion" do
+			@motion = FactoryGirl.create(:motion)
+			lambda do
+				@user.vote(@motion)
+			end.should change(MotionUser, :count).by(1)
+		end
+
+		it "should not vote the same motion twice" do
+			@motion = FactoryGirl.create(:motion)
+			@user.vote(@motion)
+			@user.vote(@motion).should_not be_valid
+		end
+
+		it "should unvote a motion" do
+			@motion = FactoryGirl.create(:motion)
+			@user.vote(@motion)
+			lambda do
+				@user.unvote(@motion)
+			end.should change(MotionUser, :count).by(-1)
+		end
+
+	end
+
+	describe "method voted?" do
+		before(:each) do
+			@user = FactoryGirl.create(:user)
+			@motion = FactoryGirl.create(:motion, :account_id => @user.accounts.first.id)
+		end
+
+		it "should be true if the user has voted the motion" do
+			@user.vote(@motion)
+			@user.voted?(@motion).should == true
+		end
+
+		it "should be false if the user has not voted the motion" do
+			@user.voted?(@motion).should == false
 
 		end
 
@@ -162,10 +226,10 @@ describe User do
 			@user = FactoryGirl.create(:user)
 			@motion1 = FactoryGirl.create(:motion, 
 				:created_by => @user.id, 
-				:account_id => @user.account_id)
+				:account_id => @user.accounts.first.id)
 			@motion2 = FactoryGirl.create(:motion, 
-				:account_id => @user.account_id)
-			@user.join(@motion2)
+				:account_id => @user.accounts.first.id)
+			@user.vote(@motion2)
 		end
 
 		it "should show only the motions created by the user" do

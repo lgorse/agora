@@ -1,5 +1,5 @@
 <h3 id = "current_motions_title">Active motions</h3>
-<% if @current_user.account.has_active_motions %>
+<% if @account.has_active_motions %>
 <div id = "current_motions" class = "motions"><%= render :partial => 'motions/motion', :collection => @active_motions, :as => :motion %></div>
 <% else %>
 <div class = "no_motions">

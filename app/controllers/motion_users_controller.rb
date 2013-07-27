@@ -5,12 +5,12 @@ class MotionUsersController < ApplicationController
 
 	def create
 		@motion = Motion.find(params[:motion_user][:motion_id])
-		@current_user.join(@motion)
+		@current_user.vote(@motion)
 	end
 
 	def destroy
 		@motion = MotionUser.find(params[:id]).motion
-		@current_user.unjoin(@motion)
+		@current_user.unvote(@motion)
 	end
 
 end

@@ -58,5 +58,7 @@ RSpec.configure do |config|
 
   def test_sign_in(user)
     session[:user_id] = user.id
+    session[:account_id] = user.default_account
+    @account = Account.find(session[:account_id])
   end
 end

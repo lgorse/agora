@@ -5,7 +5,7 @@ describe "Sessions" do
 		before(:each) do
 			@account = FactoryGirl.create(:account)
 			@user = FactoryGirl.create(:user, 
-									   :account_id => @account.id,
+									   :default_account => @account.id,
 									   :email => "test@tester.com")
 			visit root_path
 		end

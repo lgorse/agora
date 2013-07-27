@@ -50,8 +50,8 @@ describe MotionsController do
 
 
 		it "should show the motions title" do
-			motion = FactoryGirl.create(:motion, :account_id => @user.account_id)
-			@user.join(motion)
+			motion = FactoryGirl.create(:motion, :account_id => session[:account_id])
+			@user.vote(motion)
 			get :index
 			response.body.should have_content(motion.title)
 		end
@@ -62,8 +62,9 @@ describe MotionsController do
 		describe "if there are active motions" do
 			before(:each) do
 				@user = FactoryGirl.create(:user)
-				@motion = FactoryGirl.create(:motion, :account_id => @user.account_id)
 				test_sign_in(@user)
+				@motion = FactoryGirl.create(:motion, :account_id => session[:account_id])
+				
 				get :current
 			end
 
@@ -104,7 +105,7 @@ describe MotionsController do
 		before(:each) do
 			@user = FactoryGirl.create(:user)
 			test_sign_in(@user)
-			@motion_expired = FactoryGirl.create(:motion, :expires_at => Time.now.since(1.seconds), :account_id => @user.account_id)
+			@motion_expired = FactoryGirl.create(:motion, :expires_at => Time.now.since(1.seconds), :account_id => session[:account_id])
 			new_time = Time.now.since(5.minutes)
 			Timecop.freeze(new_time)
 		end

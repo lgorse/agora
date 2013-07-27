@@ -5,7 +5,7 @@
 <%= link_to 'Update my profile', edit_user_path(@current_user.id) %>
 <% end %>
 </div>
-<p><%= "Member at #{@user.account.name}" %></p>
+<p><%= "Member at #{@account.name}" %></p>
 <p><%= "On Agora  since #{@user.created_at.strftime('%A %B %d %Y')}" %></p>
 <p><%= "Created "+ pluralize(@user.created_motions.count, "motion") %></p>
 <p><%= "Joined "+ pluralize(@user.motions.count, "motion") %></p>

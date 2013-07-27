@@ -80,8 +80,8 @@ describe Motion do
 		end
 
 		it "must be ordered by expiration date" do
-			motion1 = FactoryGirl.create(:motion, :account_id => @user.account_id, :expires_at => Time.now.since(5.minutes))
-			motion2 = FactoryGirl.create(:motion, :account_id => @user.account_id, :expires_at => Time.now.since(2.minutes))
+			motion1 = FactoryGirl.create(:motion, :account_id => @user.default_account, :expires_at => Time.now.since(5.minutes))
+			motion2 = FactoryGirl.create(:motion, :account_id => @user.default_account, :expires_at => Time.now.since(2.minutes))
 			Motion.first.should == motion2
 
 		end
@@ -117,8 +117,8 @@ describe Motion do
 	describe "check threshold" do
 		before(:each) do
 			@user = FactoryGirl.create(:user)
-			@motion = FactoryGirl.create(:motion, :account_id => @user.account_id, :threshold => 2)
-			@user2 = FactoryGirl.create(:user, :account_id => @user.account_id)
+			@motion = FactoryGirl.create(:motion, :account_id => @user.default_account, :threshold => 2)
+			@user2 = FactoryGirl.create(:user, :default_account => @user.default_account)
 		end
 
 		it "should have a check threshold method" do
@@ -126,8 +126,8 @@ describe Motion do
 		end
 
 		it "should return true if the threshold is met" do
-			@user.join(@motion)
-			#@user2.join(@motion)
+			@user.vote(@motion)
+			#@user2.vote(@motion)
 			@motion.threshold_met?.should == true
 		end
 
@@ -163,9 +163,9 @@ describe Motion do
 	describe "send e-mail" do
 		before(:each) do
 			@user = FactoryGirl.create(:user)
-			@user2 = FactoryGirl.create(:user, :account_id => @user.account_id)
-			@motion = FactoryGirl.create(:motion, :account_id => @user.account_id, :threshold => 2)
-			@user.join(@motion)
+			@user2 = FactoryGirl.create(:user, :default_account => @user.default_account)
+			@motion = FactoryGirl.create(:motion, :account_id => @user.default_account, :threshold => 2)
+			@user.vote(@motion)
 		end
 
 		it "should have a send_email method" do
@@ -186,7 +186,7 @@ describe Motion do
 		end
 
 		it "should not send an e-mail to a user who has opted out" do
-			user3 = FactoryGirl.create(:user, :account_id => @user.account_id, :email_notify => false)
+			user3 = FactoryGirl.create(:user, :default_account => @user.default_account, :email_notify => false)
 			lambda do
 				@motion.send_email
 			end.should change(ActionMailer::Base.deliveries, :count).by(@motion.account.users.count - 1)
@@ -229,9 +229,9 @@ describe Motion do
 	describe "notification e-mail" do
 		before(:each) do
 			@user = FactoryGirl.create(:user)
-			@user2 = FactoryGirl.create(:user, :account_id => @user.account_id)
-			@user_shy = FactoryGirl.create(:user, :account_id => @user.account_id, :email_notify => false)
-			@motion = FactoryGirl.create(:motion, :account_id => @user.account_id, :threshold => 2)
+			@user2 = FactoryGirl.create(:user, :default_account => @user.default_account)
+			@user_shy = FactoryGirl.create(:user, :default_account => @user.default_account, :email_notify => false)
+			@motion = FactoryGirl.create(:motion, :account_id => @user.default_account, :threshold => 2)
 		end
 
 		it 'should send the e-mail to all users except those with a false email-notify' do
@@ -245,6 +245,7 @@ describe Motion do
 	describe "create" do
 		before(:each) do
 			@user = FactoryGirl.create(:user)
+			@account = Account.find(@user.default_account)
 		end
 
 		describe "notification e-mail" do
@@ -254,26 +255,26 @@ describe Motion do
 			end
 			it 'should start an asynchrous motion notification job' do
 				lambda do
-					@motion = FactoryGirl.create(:motion, :account_id => @user.account_id, 
+					@motion = FactoryGirl.create(:motion, :account_id => @user.default_account, 
 						:created_by => @user.id)
-				end.should change(NewMotionWorker.jobs, :size).by(@user.account.users.count)
+				end.should change(NewMotionWorker.jobs, :size).by(@account.users.count)
 			end
 
 
 			it "should only start an asynchronous job if the user has email_notify to true" do
-				user2 = FactoryGirl.create(:user, :account_id  => @user.id, :email_notify => false)
+				user2 = FactoryGirl.create(:user, :default_account  => @user.id, :email_notify => false)
 				lambda do
-					@motion = FactoryGirl.create(:motion, :account_id => @user.account_id, 
+					@motion = FactoryGirl.create(:motion, :account_id => @user.default_account, 
 						:created_by => @user.id)
-				end.should change(NewMotionWorker.jobs, :size).by(@user.account.users.count-1)
+				end.should change(NewMotionWorker.jobs, :size).by(@account.users.count-1)
 			end
 
 			it 'new motion worker should send a new e-mail' do
-				motion = FactoryGirl.create(:motion, :account_id => @user.account_id, 
+				motion = FactoryGirl.create(:motion, :account_id => @user.default_account, 
 					:created_by => @user.id)
 				lambda do
 					@new_motion_notify.perform(motion.id)
-				end.should change(ActionMailer::Base.deliveries, :count).by(@user.account.users.count)
+				end.should change(ActionMailer::Base.deliveries, :count).by(@account.users.count)
 
 			end
 
@@ -282,15 +283,15 @@ describe Motion do
 
 		describe "delayed e-mail" do
 			before(:each) do
-				@user2 = FactoryGirl.create(:user, :account_id => @user.account_id)
-				@motion = FactoryGirl.create(:motion, :account_id => @user.account_id, 
+				@user2 = FactoryGirl.create(:user, :default_account => @user.default_account)
+				@motion = FactoryGirl.create(:motion, :account_id => @user.default_account, 
 					:created_by => @user.id, :threshold => 2)
 				@email_sender = ExpirationWorker.new
 			end
 
 			it "should queue a delayed e-mail that is sent on expiration" do
 				lambda do
-					motion = FactoryGirl.create(:motion, :account_id => @user.account_id, 
+					motion = FactoryGirl.create(:motion, :account_id => @user.default_account, 
 						:created_by => @user.id, :threshold => 2)
 				end.should change(ExpirationWorker.jobs, :size).by(1)
 			end
@@ -300,7 +301,7 @@ describe Motion do
 			end
 
 			it "should be sent if the threshold is met" do
-				@user2.join(@motion)
+				@user2.vote(@motion)
 				lambda do
 					@email_sender.perform(@motion.id)
 				end.should change(ActionMailer::Base.deliveries, :count).by(@motion.account.users.count)

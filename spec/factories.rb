@@ -3,7 +3,6 @@ FactoryGirl.define do
 	factory :account do 
 		name	{generate(:name)}
 	end
-
 end
 
 FactoryGirl.define do
@@ -19,10 +18,9 @@ FactoryGirl.define do
 		email			{generate(:email)}
 		team			"team"
 		admin			false
-		association 	:account
+		default_account {FactoryGirl.create(:account).id}
 		email_notify	true
 	end
-
 end
 
 FactoryGirl.define do
@@ -52,5 +50,12 @@ FactoryGirl.define do
 		user_id		12
 		motion_id	2
 	end
+end
 
+FactoryGirl.define do
+	factory :account_user do
+		user_id		1
+		account_id	10
 	end
+
+end

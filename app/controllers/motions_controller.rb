@@ -5,7 +5,7 @@ class MotionsController < ApplicationController
 
 	def create
 		@motion = Motion.new(:created_by => @current_user.id, 
-			:account_id => @current_user.account.id, 
+			:account_id => session[:account_id], 
 			:expires_at => params[:motion][:expires_at],
 			:threshold => params[:motion][:threshold],
 			:title => params[:motion][:title],
@@ -26,7 +26,7 @@ class MotionsController < ApplicationController
 	end
 
 	def index
-		@active_motions = @current_user.account.active_motions		
+		@active_motions = @account.active_motions		
 	end
 
 	def show
@@ -35,10 +35,10 @@ class MotionsController < ApplicationController
 	end
 
 	def current
-		@active_motions = @current_user.account.active_motions
+		@active_motions = @account.active_motions
 	end
 
 	def expired
-		@expired_motions = @current_user.account.expired_motions.reverse
+		@expired_motions = @account.expired_motions.reverse
 	end
 end

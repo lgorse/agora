@@ -21,7 +21,7 @@ class UsersController < ApplicationController
 
 	def create
 		@user = User.new(:name => params[:user][:name],
-						 :account_id => params[:user][:account],
+						 :default_account => params[:user][:account],
 						 :team => params[:user][:team], 
 						 :email => params[:user][:email])
 		if @user.save

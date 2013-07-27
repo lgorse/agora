@@ -27,7 +27,7 @@ describe SessionsController do
 		describe "if there is a session" do
 			before(:each) do
 				@account = FactoryGirl.create(:account)
-				@user = FactoryGirl.create(:user, :account_id => @account.id)
+				@user = FactoryGirl.create(:user, :default_account => @account.id)
 				test_sign_in(@user)
 			end
 
@@ -43,7 +43,7 @@ describe SessionsController do
 	describe "POST 'create'" do
 		before(:each) do
 			@account = FactoryGirl.create(:account)
-			@user1 = FactoryGirl.create(:user, :account_id => @account.id)
+			@user1 = FactoryGirl.create(:user, :default_account => @account.id)
 		end
 
 		describe "success" do
@@ -54,8 +54,7 @@ describe SessionsController do
 
 			it "should create a new session based on the user id" do
 				post :create, :session => @attr
-				session[:user_id].should == @user1.id
-				
+				session[:user_id].should == @user1.id		
 			end
 
 			it "should find the correct user" do
@@ -66,7 +65,6 @@ describe SessionsController do
 			it "should redirect to the user's page" do
 				post :create, :session => @attr
 				response.should redirect_to motions_path
-
 			end
 
 		end
@@ -94,7 +92,7 @@ describe SessionsController do
 	describe "delete 'destroy'" do
 		before(:each) do
 			@account = FactoryGirl.create(:account)
-			@user = FactoryGirl.create(:user, :account_id => @account.id)
+			@user = FactoryGirl.create(:user, :default_account => @account.id)
 			test_sign_in(@user)
 		end
 

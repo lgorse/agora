@@ -8,7 +8,6 @@ describe AccountsController do
 		describe 'if the user is an admin of this account' do
 			before(:each) do
 				@user = FactoryGirl.create(:user, :admin => true)
-				@account = @user.account
 				test_sign_in(@user)
 			end
 
@@ -22,12 +21,12 @@ describe AccountsController do
 		describe 'if the user is an admin but not of this account' do
 			before(:each) do
 				@user = FactoryGirl.create(:user, :admin => true)
-				@account = FactoryGirl.create(:account)
 				test_sign_in(@user)
+				@false_account = FactoryGirl.create(:account)
 			end
 
 			it "should not allow a user to be on an account page" do
-				get :show, :id => @account.id
+				get :show, :id => @false_account.id
 				response.should_not be_successful
 			end
 
@@ -36,7 +35,6 @@ describe AccountsController do
 		describe 'if the user is not an admin' do
 			before(:each) do
 				@user = FactoryGirl.create(:user, :admin => false)
-				@account = @user.account
 				test_sign_in(@user)
 
 			end
@@ -57,8 +55,7 @@ describe AccountsController do
 
 	describe 'GET /account' do
 		before(:each) do
-			@account = FactoryGirl.create(:account)
-			@user = FactoryGirl.create(:user, :account_id => @account.id, :admin => true)
+			@user = FactoryGirl.create(:user, :admin => true)
 			test_sign_in(@user)
 			get :show, :id => @account.id
 		end
@@ -88,8 +85,8 @@ describe AccountsController do
 	describe 'GET /account/batch_members' do
 
 		before(:each) do
-			@account = FactoryGirl.create(:account)
-			@user = FactoryGirl.create(:user, :account_id => @account.id, :admin => true)
+			
+			@user = FactoryGirl.create(:user, :admin => true)
 			test_sign_in(@user)
 			get :batch_members, :id => @account.id
 		end

@@ -9,6 +9,7 @@ class SessionsController < ApplicationController
 		@user = User.find_by_email(user_email.downcase)
 		if @user
 			session[:user_id] = @user.id
+			session[:account_id] = @user.default_account
 			redirect_to motions_path
 		else
 			flash.now[:error] = "Invalid email."

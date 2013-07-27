@@ -11,7 +11,10 @@
 class Account < ActiveRecord::Base
 	attr_accessible :name
 	validates :name, :presence => true, :uniqueness => true
-	has_many :users
+
+	has_many :account_users
+	has_many :users, :through => :account_users
+
 	has_many :motions, :dependent => :destroy
 
 

@@ -3,8 +3,10 @@ module SessionsHelper
 	def authenticate
 		begin
 			@current_user = User.find(session[:user_id])
+			@account = Account.find(session[:account_id])
 		rescue
 			session[:user_id] = nil
+			session[:account_id] = nil
 			redirect_to root_path
 		end
 	end
@@ -17,10 +19,6 @@ module SessionsHelper
 	def authenticate_account_match
 		authenticate
 		authenticate_admin
-		if @current_user.account == Account.find(params[:id])
-			@account = @current_user.account
-		else
-			redirect_to root_path
-		end
+		redirect_to root_path unless @account == Account.find(params[:id])
 	end
 end

@@ -5,7 +5,7 @@ describe "Users" do
   	describe "GET /user" do
   		before(:each) do
         @account = FactoryGirl.create(:account)
-        @user = FactoryGirl.create(:user, :account_id => @account.id)
+        @user = FactoryGirl.create(:user, :default_account => @account.id)
         visit root_path
         fill_in 'Email', :with => @user.email
       end

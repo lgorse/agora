@@ -2,43 +2,53 @@
 #
 # Table name: users
 #
-#  id           :integer          not null, primary key
-#  account_id   :integer
-#  name         :string(255)
-#  email        :string(255)
-#  team         :string(255)
-#  created_at   :datetime         not null
-#  updated_at   :datetime         not null
-#  admin        :boolean          default(FALSE)
-#  email_notify :boolean          default(TRUE)
+#  id              :integer          not null, primary key
+#  default_account :integer
+#  name            :string(255)
+#  email           :string(255)
+#  team            :string(255)
+#  created_at      :datetime         not null
+#  updated_at      :datetime         not null
+#  admin           :boolean          default(FALSE)
+#  email_notify    :boolean          default(TRUE)
 #
 
 class User < ActiveRecord::Base
  require 'csv'
-  attr_accessible :account_id, :admin, :email, :name, :team, :email_notify
+  attr_accessible :default_account, :admin, :email, :name, :team, :email_notify
 
   email_format = /[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
 
   validates :email, :presence => true, :uniqueness => {:case_sensitive => false}, :format => {:with => email_format}
   validates :name, :presence => true
-  validates :account, :presence => true
+  validates :default_account, :presence => true
 
   before_validation :downcase_email
+  after_create :join_to_default_account
   
-
   has_many :motion_users
   has_many :motions, :through => :motion_users
-  belongs_to :account
 
-  def join(motion)
+  has_many :account_users
+  has_many :accounts, :through => :account_users
+
+  def join(account)
+    AccountUser.create(:user_id => id, :account_id => account.id)
+  end
+
+  def joined?(account)
+    account.users.include?(self)
+  end
+
+  def vote(motion)
   	MotionUser.create(:user_id => id, :motion_id => motion.id)
   end
 
-  def unjoin(motion)
+  def unvote(motion)
     motion_users.find_by_motion_id(motion).destroy
   end
 
-  def joined?(motion)
+  def voted?(motion)
     motion.users.include?(self)
   end
 
@@ -47,13 +57,13 @@ class User < ActiveRecord::Base
   end
 
   def self.create_from_csv(uploaded_file, account)
-    @account = account;
+    @account = account
     @new_user_list = []
     file_name = uploaded_file.tempfile.to_path.to_s
     file = File.read(file_name)
     csv = CSV.parse(file, :headers => false, :col_sep => "\t")
     csv.each do |row|
-      attribute = {:account_id => @account.id, :name => row[1].to_s, :email => row[3].to_s, :team => row[0].to_s, :admin => false}
+      attribute = {:default_account => @account.id, :name => row[1].to_s, :email => row[3].to_s, :team => row[0].to_s, :admin => false}
       new_user = User.create(attribute)
       @new_user_list << new_user
     end
@@ -62,6 +72,10 @@ class User < ActiveRecord::Base
 
   def downcase_email
     self.email = self.email.downcase if self.email.present?
+  end
+
+  def join_to_default_account
+    self.join(Account.find(self.default_account))
   end
 
 end

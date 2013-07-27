@@ -6,7 +6,7 @@ describe "Accounts" do
 		describe "if the user is an admin" do
 			before(:each) do
 				@account = FactoryGirl.create(:account)
-				@user = FactoryGirl.create(:user, :account_id => @account.id, :admin => true)
+				@user = FactoryGirl.create(:user, :default_account => @account.id, :admin => true)
 				visit root_path
 				fill_in 'Email', :with => @user.email
 				click_button 'Sign in'
@@ -33,7 +33,7 @@ describe "Accounts" do
 		describe "if user is not an admin" do
 			before(:each) do
 				@account = FactoryGirl.create(:account)
-				@user = FactoryGirl.create(:user, :account_id => @account.id, :admin => false)
+				@user = FactoryGirl.create(:user, :default_account => @account.id, :admin => false)
 				visit root_path
 				fill_in 'Email', :with => @user.email
 				click_button 'Sign in'
@@ -50,7 +50,7 @@ describe "Accounts" do
 	describe 'GET /account/batch_members' do
 		before(:each) do
 				@account = FactoryGirl.create(:account)
-				@user = FactoryGirl.create(:user, :account_id => @account.id, :admin => true)
+				@user = FactoryGirl.create(:user, :default_account => @account.id, :admin => true)
 				visit root_path
 				fill_in 'Email', :with => @user.email
 				click_button 'Sign in'

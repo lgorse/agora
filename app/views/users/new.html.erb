@@ -16,7 +16,7 @@
 	<%= user.label :admin? %>
 <%= user.check_box :admin %></li>
 <li>
-	<%= user.hidden_field :account, :value => @current_user.account_id %>
+	<%= user.hidden_field :account, :value => @account.id %>
 </li>
 <li>
 <%= user.submit "Add member" %></li>

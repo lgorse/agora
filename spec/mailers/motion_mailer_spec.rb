@@ -5,8 +5,8 @@ describe MotionMailer do
   describe "send email" do
   	before(:each) do
   		@user = FactoryGirl.create(:user)
-      @motion = FactoryGirl.create(:motion, :account_id => @user.account_id)
-      @user.join(@motion)
+      @motion = FactoryGirl.create(:motion, :account_id => @user.default_account)
+      @user.vote(@motion)
       @mailer = MotionMailer.motion_email(@user, @motion)
       @mailer.deliver
   	end
@@ -38,7 +38,7 @@ describe MotionMailer do
   describe "notify email" do
     before(:each) do
       @user = FactoryGirl.create(:user)
-      @motion = FactoryGirl.create(:motion, :account_id => @user.account_id)
+      @motion = FactoryGirl.create(:motion, :account_id => @user.default_account)
     end
 
   end
