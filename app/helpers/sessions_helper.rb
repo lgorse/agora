@@ -5,9 +5,8 @@ module SessionsHelper
 			@current_user = User.find(session[:user_id])
 			@account = Account.find(session[:account_id])
 		rescue
-			session[:user_id] = nil
-			session[:account_id] = nil
-			redirect_to root_path
+			reset_session
+			redirect_to root_path and return
 		end
 	end
 
@@ -20,5 +19,9 @@ module SessionsHelper
 		authenticate
 		authenticate_admin
 		redirect_to root_path unless @account == Account.find(params[:id])
+	end
+
+	def store_location
+		session[:return_to] = request.url
 	end
 end

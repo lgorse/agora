@@ -34,6 +34,11 @@ Agora::Application.routes.draw do
 			post :email_members
 		end
 
+		collection do
+			post :change
+
+		end
+
 	end
 
 	resources :pages, :only => [] do

@@ -13,6 +13,8 @@ class AccountUser < ActiveRecord::Base
   attr_accessible :user_id, :account_id
 
   validates_uniqueness_of :user_id, :scope => :account_id
+  validates :user_id, :presence => true
+  validates :account_id, :presence => true
 
   belongs_to :user
   belongs_to :account

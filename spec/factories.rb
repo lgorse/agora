@@ -54,8 +54,8 @@ end
 
 FactoryGirl.define do
 	factory :account_user do
-		user_id		1
-		account_id	10
+		association 	:user
+		association		:account
 	end
 
 end

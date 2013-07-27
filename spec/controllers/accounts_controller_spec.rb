@@ -97,5 +97,55 @@ describe AccountsController do
 
 	end
 
+	describe 'POST /account/change' do
+		before(:each) do
+			@user = FactoryGirl.create(:user)
+			@account2 = FactoryGirl.create(:account)
+			@user.join(@account2)
+			test_sign_in(@user)
+			session[:return_to] = (FULL_ROOT_URL + '/users/' + @user.id.to_s).to_s
+		end
+
+		describe 'if successful' do
+			before(:each) do
+				
+				post :change, :account_id => @account2.id
+			end
+
+			it "should change the session account" do
+				session[:account_id].to_i.should == @account2.id
+			end
+
+			it "should redirect to the root path" do
+				response.should redirect_to(current_motions_path)
+			end
+
+			it "should change the account instance variable" do
+				assigns(:account).should == @account2
+			end
+
+		end
+
+		describe 'if failed' do
+			before(:each) do
+				post :change, :account_id => (@account2.id+1)
+			end
+
+			it "should not change the account" do
+				session[:account_id].to_i.should == @user.default_account
+			end
+
+			it 'should redirect to the root path' do
+				response.should redirect_to(root_path)
+			end
+
+			it 'should show an error message' do
+				pending 'setting up a regular flash messaging format'
+			end
+
+		end
+
+	end
+
 
 end
