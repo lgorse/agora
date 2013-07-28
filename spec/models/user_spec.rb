@@ -80,6 +80,19 @@ describe User do
 			@user.should respond_to(:motions)
 		end
 
+		it "should have an invitations attribute" do
+			@user.should respond_to(:invitations)
+		end
+
+		it "should have an invitee method" do
+			@user.should respond_to(:invitees)
+		end
+
+		it "should have an invitors method" do
+			@user.should respond_to(:inviters)
+
+		end
+
 
 	end
 
@@ -238,5 +251,45 @@ describe User do
 
 	end
 
+	describe 'invitations' do
+		before(:each) do
+			@user = FactoryGirl.create(:user)
+			@invitee_email = "test@invitee.com"
+		end
+
+		it "should not add the invited user as an invitee " do
+			@user.invite(@invitee_email, @user.default_account)
+			@user.invitees.should_not include(@invitee)			
+		end
+
+		it "should add the inviter user as an inviter" do
+			user2 = FactoryGirl.create(:user)
+			user2.invite(@user.email, user2.default_account)
+			@user.inviters.should include(user2)
+		end
+
+		it "should succeed if an invitation has not already been sent" do
+			lambda do
+				@user.invite(@invitee_email, @user.default_account)
+			end.should change(Invitation, :count).by(1)
+
+		end
+
+		it "should fail if an invitation has already been sent" do
+			@user.invite(@invitee_email, @user.default_account)
+			lambda do
+				@user.invite(@invitee_email, @user.default_account)
+			end.should_not change(Invitation, :count)
+		end
+
+		it "should send an invitation e-mail" do
+			lambda do
+				@user.invite(@invitee_email, @user.default_account)
+			end.should change(InviteWorker.jobs, :size).by(1)
+		end
+
+		
+
+	end
 
 end
