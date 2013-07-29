@@ -15,6 +15,11 @@ module SessionsHelper
 		redirect_to root_path unless @current_user.admin? 
 	end
 
+	def signin_user
+		session[:user_id] = @user.id
+		session[:account_id] = @user.default_account
+	end
+
 	def authenticate_account_match
 		authenticate
 		authenticate_admin

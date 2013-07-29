@@ -1,0 +1,20 @@
+<%= form_for @user do |user| %>
+<h4>At this time, only invited users can join Agora.</h4>
+<%= render 'layouts/error_messages', :object => user.object %>
+<ul>
+	<li>
+		<%= user.label :name, "Name" %>
+<%= user.text_field :name, :placeholder => "Your name", :size => "40" %></li>
+<li>
+	
+	<%= user.label :email, "E-mail" %>
+<%= user.text_field :email, :placeholder => "Enter the e-mail where you got your invitation", :size => "40" %>
+
+</li>
+<li>
+<%= user.submit "Sign Up" %></li>
+</ul>
+<% end %>
+
+
+

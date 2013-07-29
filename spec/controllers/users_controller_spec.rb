@@ -167,13 +167,13 @@ describe UsersController do
 
 	end
 
-	describe 'GET "new"' do
+	describe 'GET "new_admin"' do
 
 		describe "if the user is NOT an admin" do
 			before(:each) do
 				@user = FactoryGirl.create(:user, :admin => false)
 				test_sign_in(@user)
-				get :new
+				get :new_admin
 			end
 
 			it "should not be successful" do
@@ -191,7 +191,7 @@ describe UsersController do
 			before(:each) do
 				@user = FactoryGirl.create(:user, :admin => true)
 				test_sign_in(@user)
-				get :new
+				get :new_admin
 			end
 
 			it "should be successful" do
@@ -223,74 +223,127 @@ describe UsersController do
 
 	end
 
-	describe 'POST "create"' do
+	describe 'POST "create_by_admin"' do
+		
+		before(:each) do
+			@user = FactoryGirl.create(:user)
+			test_sign_in(@user)
+		end
 
-		describe "if user is not an admin" do
-
+		describe "if the input is well formed" do
 			before(:each) do
-				@user = FactoryGirl.create(:user, :admin => false)
-				test_sign_in(@user)
-				@attr = {:name => "tester", :email => "test@tester.edu", :admin => false,  :team => "test", :account => @user.default_account}
+				@attr = {:name => "tester", :email => "test75@tester.edu", :admin => false,  :team => "test", :account => @user.default_account}
+			end
+
+			it "should create a new user" do
+				lambda do
+					post :create_by_admin, :user => @attr
+				end.should change(User, :count).by(1)
+			end
+
+			it "should redirect to the new user page" do
+				post :create_by_admin, :user => @attr
+				response.should redirect_to user_path(assigns(:user))
+			end
+
+		end
+
+		describe "if the input is badly formed" do
+			before(:each) do
+				@attr = {:name => "tester", :email => "test@tester", :admin => false,  :team => "test", :account => @user.default_account}
+				post :create_by_admin, :user => @attr
+			end
+
+			it "should not create a new user" do
+				lambda do
+					post :create_by_admin, :user => @attr
+				end.should_not change(User, :count)
+
+			end
+
+			it "should re-render the new page to show error messages" do
+				post :create_by_admin, :user => @attr
+				response.should render_template('new')
+			end
+		end
+
+	end
+
+	describe "POST 'create'" do
+		before(:each) do
+			@user1 = FactoryGirl.create(:user)
+			@email = "hello@laurent.com"
+			@name = "Larry"
+			@attr = {:email => @email, :name => @name}
+		end
+
+		describe "if the user was not invited" do
+
+
+			it "it should re-render the new page to show error messages" do
 				post :create, :user => @attr
+				response.should render_template('new')
+
 			end
 
-			it "should not be successful" do
-				response.should_not be_successful
+			it "should not create a new user" do
+				lambda do
+					post :create, :user => @attr
+				end.should_not change(User, :count)
 			end
 
-			it "should redirect the user to the root page" do
+		end
+
+		describe "if it fails to create the user" do
+			before(:each) do
+				@user1.invite(@email, @user1.default_account)
+			end
+
+			it "should re-render the new page to show error messages" do
+				post :create, :user => @attr.merge(:email => "hi.com")
+				response.should render_template('new')
+			end
+
+			it "should not create a new user" do
+				lambda do
+					post :create, :user => @attr.merge(:email => "hi.com")
+				end.should_not change(User, :count)
+			end
+
+		end
+
+		describe "if it succeeds" do
+			before(:each) do
+				@user1.invite(@email, @user1.default_account)
+			end
+
+			it "should find the user even if the email is a different case" do
+				post :create, :user => @attr.merge(:email => @email.upcase)
+				assigns(:invitation).should_not == nil
+
+			end
+
+			it "should create a new user" do
+				lambda do
+					post :create, :user => @attr
+				end.should change(User, :count).by(1)
+
+			end
+
+
+			it "should redirect to the account page" do
+				post :create, :user => @attr
 				response.should redirect_to root_path
 
 			end
 
-		end
+			it "should authenticate the user so that he does not have to log in again" do
+				post :create, :user => @attr
+				User.find(session[:user_id]).email.should == @email
 
-		describe "if user is an admin" do
-			before(:each) do
-				@user = FactoryGirl.create(:user, :admin => true)
-				test_sign_in(@user)
-			end
-
-			describe "if the input is well formed" do
-				before(:each) do
-					@attr = {:name => "tester", :email => "test75@tester.edu", :admin => false,  :team => "test", :account => @user.default_account}
-				end
-
-				it "should create a new user" do
-					lambda do
-						post :create, :user => @attr
-					end.should change(User, :count).by(1)
-				end
-
-				it "should redirect to the new user page" do
-					post :create, :user => @attr
-					response.should redirect_to user_path(assigns(:user))
-				end
-
-			end
-
-			describe "if the input is badly formed" do
-				before(:each) do
-					@attr = {:name => "tester", :email => "test@tester", :admin => false,  :team => "test", :account => @user.default_account}
-					post :create, :user => @attr
-				end
-
-				it "should not create a new user" do
-					lambda do
-						post :create, :user => @attr
-					end.should_not change(User, :count)
-
-				end
-
-				it "should re-render the new page to show error messages" do
-					post :create, :user => @attr
-					response.should render_template('new')
-				end
 			end
 
 		end
-
-
 
 	end
 
@@ -318,18 +371,18 @@ describe UsersController do
 			end
 
 			it 'should update the user\'s attributes' do
-			put :update, :id => @user.id, :user => @attr.merge(:email_notify => false)
-			user = assigns(:user)
-			@user.reload
-			@user.email_notify.should == @user.email_notify
+				put :update, :id => @user.id, :user => @attr.merge(:email_notify => false)
+				user = assigns(:user)
+				@user.reload
+				@user.email_notify.should == @user.email_notify
+			end
+
+			it "should redirect to the show page if successful" do
+				response.should redirect_to(@user)
+
+			end
+
 		end
-
-		it "should redirect to the show page if successful" do
-			response.should redirect_to(@user)
-
-		end
-
-	end
 
 	end
 

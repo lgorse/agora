@@ -135,3 +135,16 @@ input, select {
     border-radius: 10px;
     box-shadow: 0px;
  }
+
+::-webkit-input-placeholder { /* WebKit browsers */
+    color:    #595959;
+}
+:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+    color:    #595959;
+}
+::-moz-placeholder { /* Mozilla Firefox 19+ */
+    color:    #595959;
+}
+:-ms-input-placeholder { /* Internet Explorer 10+ */
+    color:    #595959;
+}

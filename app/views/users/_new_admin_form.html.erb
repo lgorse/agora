@@ -1,0 +1,22 @@
+<%= form_for @user, url: {action: "create_by_admin"} do |user| %>
+<%= render 'layouts/error_messages', :object => user.object %>
+<ul>
+	<li>
+		<%= user.label :name %>
+<%= user.text_field :name %></li>
+<li>
+	<%= user.label :team %>
+<%= user.text_field :team %></li>
+<li>
+	<%= user.label :email %>
+<%= user.text_field :email %></li>
+<li>
+	<%= user.label :admin? %>
+<%= user.check_box :admin %></li>
+<li>
+	<%= user.hidden_field :account, :value => @account.id %>
+</li>
+<li>
+<%= user.submit "Add member" %></li>
+</ul>
+<% end %>

@@ -19,7 +19,7 @@ describe "Accounts" do
 
 			it 'should allow the user to link to the new member page' do
 				click_link 'Add member'
-				current_path.should == '/users/new'
+				current_path.should == '/users/new_admin'
 
 			end
 

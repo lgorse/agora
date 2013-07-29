@@ -1,24 +1,10 @@
-<h4>Create a new member</h4>
+<div class = "new_user_body">
+<h2 class = "signup_message"><%= "Sign up on " + APP_NAME %></h2>
 
-<%= form_for @user do |user| %>
-<%= render 'layouts/error_messages', :object => user.object %>
-<ul>
-	<li>
-		<%= user.label :name %>
-<%= user.text_field :name %></li>
-<li>
-	<%= user.label :team %>
-<%= user.text_field :team %></li>
-<li>
-	<%= user.label :email %>
-<%= user.text_field :email %></li>
-<li>
-	<%= user.label :admin? %>
-<%= user.check_box :admin %></li>
-<li>
-	<%= user.hidden_field :account, :value => @account.id %>
-</li>
-<li>
-<%= user.submit "Add member" %></li>
-</ul>
-<% end %>
+<%= render 'users/new_user_form' %>
+
+
+
+
+
+</div>

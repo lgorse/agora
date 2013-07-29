@@ -13,7 +13,8 @@ Agora::Application.routes.draw do
 
 	resources :users do
 		collection do
-			post 'create_batch_members'
+			post 'create_batch_members', :create_by_admin
+			get :new_admin
 		end
 		member do
 			get 'created', 'motions'
@@ -58,5 +59,6 @@ Agora::Application.routes.draw do
 	match '/logout' => 'sessions#destroy'
 	match '/faq' => 'pages#faq'
 	match '/motions' => 'motions#current'
+	match '/signup' => 'users#new'
 
 end

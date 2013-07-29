@@ -4,18 +4,35 @@
 
 
 .welcome_body{
-	width: 600px;
+	width: 800px;
 	margin: 50px auto;
 
 	.welcome_message{
-		width: 350px;
+		width: 250px;
 		margin: auto;
 	}
 
 	.welcome_explain{
-	width: 550px;
-	margin: auto
-;	}
+	width: 425px;
+	margin: auto;
+	float: left;
+	border-right: 1px solid black;
+	}
+
+	.signup_landing{
+		float: left;
+		margin-left: 30px;
+
+		ul{
+			margin-bottom: 15px;
+		}
+
+
+	}
+
+	#signup_link{
+		font-size: 115%;
+	}
 }
 
 .login_form{
@@ -23,4 +40,10 @@
 	
 	width: 400px;
 	margin: 75px auto 50px;
+}
+
+.below_login_form{
+	width: 650px;
+	margin: auto;
+
 }

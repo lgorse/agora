@@ -1,4 +1,5 @@
 class SessionsController < ApplicationController
+	
 
 	def new
 		redirect_to motions_path if session[:user_id]
@@ -8,8 +9,7 @@ class SessionsController < ApplicationController
 		user_email = params[:session][:email]
 		@user = User.find_by_email(user_email.downcase)
 		if @user
-			session[:user_id] = @user.id
-			session[:account_id] = @user.default_account
+			signin_user
 			redirect_to motions_path
 		else
 			flash.now[:error] = "Invalid email."
