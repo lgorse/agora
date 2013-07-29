@@ -23,7 +23,26 @@
 		margin-top: 10px;
 	}
 
-
-
-
 }
+
+#valid_emails, #invalid_emails{
+	float: left;
+
+	
+	margin-right: 50px;
+
+	th{
+		padding-bottom: 10px;
+	}
+
+	.link{
+				
+			padding-top: 10px;
+	}
+	
+}
+
+#valid_emails{
+	margin-left: 50px;
+}
+

@@ -1,10 +1,11 @@
-<table id = "successful_emails">
+<table id = "valid_emails">
 	<tr><th>E-mails sent successfully</th></tr>
 	<%= render :partial => "emails_list", :collection => @valid_emails, :as => :email %>
+	<tr><td class = "link"><%= link_to "Invite more friends", new_invitation_path %></td></tr>
 </table>
-<%= link_to "Invite more friends", new_invitation_path %>
+
 <table id = "invalid_emails">
 	<tr><th>These e-mails failed!</th></tr>
 	<%= render :partial => "emails_list", :collection => @invalid_emails, :as => :email %>
+	<tr ><td class = "link"><%= link_to "Try again", new_invitation_path(:emails => @invalid_emails.join(",")) %></td></tr>
 </table>
-<%= link_to "Try again", new_invitation_path(:emails => @invalid_emails.join(",")) %>
