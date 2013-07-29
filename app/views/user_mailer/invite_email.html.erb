@@ -1,1 +1,34 @@
-<h1>Join Agora</h1>
+<div style="margin: auto auto 15px 50px"><h3><%= "#{@inviter.name} invited you to join #{@account.name} on Agora" %></h3>
+
+<p><%= "#{pluralize(@account.users.count, "member")} have already joined the #{@account.name} community" %></p>
+<% if @message %>
+<div style="border:1px solid grey; width:450px; margin-bottom: 10px; padding-left:5px; padding-right:10px;">
+<p style="font-weight:bold"><%= "#{@inviter.name} wrote: " %></p>
+<p style="margin-left:15px"><%= word_wrap("\"#{@message}\"") %></p>
+</div>
+<% end %>
+
+<%= link_to "Join #{@account.name} now",  FULL_ROOT_URL, {:style => 'font-size: 20px'} %>
+</div>
+
+<table border="1px black" cellpadding="15px"  >
+	<tr>
+		<td style="vertical-align:top">
+<h4>Agora gives power back to local communities</h4>
+<p>Propose or vote on motions.</p>
+<p>Rate how people in charge respond to your community's needs.</p>
+<p>Share advice, suggestions, and lists of your favorite things.</p>
+<h3>Agora gives a voice back to your community.</h3>
+
+<%= link_to "Join Agora now", FULL_ROOT_URL, {:style => 'font-size: 20px'} %>
+</td>
+
+<td style="vertical-align:top">
+	<h4>Start a community on Agora now</h4>
+	<p>Be the first to launch your community on Agora</p>
+	<p>Neighborhoods, offices, or associations work great on Agora.</p>
+	<h3>Give your community the voice it deserves</h3>
+	<%= link_to "Start a community on Agora now", FULL_ROOT_URL, {:style => 'font-size: 20px'} %>
+</td>
+</tr>
+</table>

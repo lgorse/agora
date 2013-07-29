@@ -2,7 +2,7 @@ Agora::Application.routes.draw do
 
 	root :to => 'sessions#new'
 
-	resources :motion_users
+	resources :motion_users, :invitations
 
 
 	resources :motions do
@@ -49,7 +49,8 @@ Agora::Application.routes.draw do
 
 	resources :mailer_previews do
 		collection do
-			get :preview_motion_mail, :preview_notification_mail, :preview_account_user_email
+			get :preview_motion_mail, :preview_notification_mail, :preview_account_user_email,
+				:preview_invite_email
 		end
 	end
 

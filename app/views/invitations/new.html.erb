@@ -1,0 +1,17 @@
+<h3>Invite new members to Agora</h3>
+<%= form_tag('/invitations', :method => :post, :id => "new_invitation_form") do %>
+<ul>
+	<li><%= label_tag "email_list", "Enter e-mail addresses separated by commas" %></li>
+	<li>
+<%= text_area_tag "email_list", params[:emails], {:placeholder => "Watch out for mistypes!", :size => "50x5"} %></li>
+<li>
+	<li>
+		<%= label_tag "message", "Enter a greeting message (optional but nice)" %>
+	</li>
+	<li>
+		<%= text_area_tag "message", nil, {:size => "50x10"} %>
+	</li>
+<%= submit_tag "Send invitations" %>
+</li>
+</ul>
+<% end %>

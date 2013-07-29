@@ -19,7 +19,7 @@ class User < ActiveRecord::Base
 
   email_format = /[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
 
-  validates :email, :presence => true, :uniqueness => {:case_sensitive => false}, :format => {:with => email_format}
+  validates :email, :presence => true, :uniqueness => {:case_sensitive => false}, :format => {:with => EMAIL_FORMAT}
   validates :name, :presence => true
   validates :default_account, :presence => true
 

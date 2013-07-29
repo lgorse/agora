@@ -8,6 +8,7 @@
 #  email      :string(255)
 #  accepted   :boolean
 #  invitee_id :integer
+#  message    :text
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #

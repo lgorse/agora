@@ -8,17 +8,18 @@
 #  email      :string(255)
 #  accepted   :boolean
 #  invitee_id :integer
+#  message    :text
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #
 
 class Invitation < ActiveRecord::Base
-  attr_accessible :inviter_id, :account_id, :email
+  attr_accessible :inviter_id, :account_id, :email, :message
 
-  email_format = /[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
+  
 
   validates :inviter_id, :presence => true
-  validates :email, :presence => true, :format => {:with => email_format}
+  validates :email, :presence => true, :format => {:with => EMAIL_FORMAT}
   validates :account_id, :presence => true
   validate :invitation_validations, :on => :create
 
