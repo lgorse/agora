@@ -13,4 +13,13 @@
 //= require jquery
 //= require jquery_ujs
 //= require_tree .
+//= require jquery.cookie
+
+$(function(){
+	var flash_notice = $(".flash_notice");
+	flash_notice.find("#close_flash_notice").click(function(e){
+		$.removeCookie('flash');
+		flash_notice.remove();
+	});
+});
 

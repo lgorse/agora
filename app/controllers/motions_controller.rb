@@ -26,7 +26,7 @@ class MotionsController < ApplicationController
 	end
 
 	def index
-		@active_motions = @account.active_motions		
+		@active_motions = @account.active_motions	
 	end
 
 	def show
@@ -36,6 +36,7 @@ class MotionsController < ApplicationController
 
 	def current
 		@active_motions = @account.active_motions
+
 	end
 
 	def expired

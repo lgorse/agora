@@ -64,7 +64,6 @@ describe MotionsController do
 				@user = FactoryGirl.create(:user)
 				test_sign_in(@user)
 				@motion = FactoryGirl.create(:motion, :account_id => session[:account_id])
-				
 				get :current
 			end
 
@@ -94,6 +93,20 @@ describe MotionsController do
 			it "should show a prompt to start the first active motion" do
 				response.body.should have_content(/no active motions/i)
 
+
+			end
+		end
+
+		describe "if there is a flash cookie"  do
+			before(:each) do
+				@user = FactoryGirl.create(:user)
+				test_sign_in(@user)
+				cookies[:flash] = "test flash"
+				get :current
+			end
+
+			it "should show a notice flash" do
+				flash.now[:notice].should_not == nil
 
 			end
 

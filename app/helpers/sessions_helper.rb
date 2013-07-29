@@ -18,6 +18,7 @@ module SessionsHelper
 	def signin_user
 		session[:user_id] = @user.id
 		session[:account_id] = @user.default_account
+		cookies[:flash] = "flash me"
 	end
 
 	def authenticate_account_match

@@ -14,4 +14,7 @@
 	<%= link_to "Log out", logout_path %>
 </nav>
 	</div>
+	<% if flash[:notice] %>
+<%= render "layouts/flash_notice" %>
+<% end %>
 

@@ -33,7 +33,7 @@
  	.header_left{
  		width: auto;
  		display: inline-block;
- 		margin-left: 50px;
+ 		margin-left: 150px;
 
 
  		#app_name_header{
@@ -80,7 +80,7 @@
 	width: 200px;
 	height: 100%;
 	float: left;
-	padding: 15px 0px 0px 50px;
+	padding: 15px 0px 0px 150px;
 
 	.welcome_user{
 		margin-bottom: 30px;
@@ -103,5 +103,24 @@
 	min-width: 200px;
 	margin-top: 10px;
 	padding: 15px 0px 0px 35px;
+}
+
+.flash_notice{
+	background-color: #FAE48C;
+	color: black;
+	font-size: 110%;
+	height: 20px;
+	padding: 5px 50px 0px 150px;
+	border-bottom: 1px solid #C2C2CF;
+
+
+	#close_flash_notice{
+		margin-right: 20px;
+		float: left;
+		display: inline-block;
+		
+	}
+
+
 }
 

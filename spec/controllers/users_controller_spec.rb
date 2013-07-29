@@ -333,7 +333,7 @@ describe UsersController do
 
 			it "should redirect to the account page" do
 				post :create, :user => @attr
-				response.should redirect_to root_path
+				response.should redirect_to motions_path
 
 			end
 
@@ -341,6 +341,11 @@ describe UsersController do
 				post :create, :user => @attr
 				User.find(session[:user_id]).email.should == @email
 
+			end
+
+			it "should show a flash" do
+				post :create, :user => @attr
+				flash.now[:notice].should_not == nil
 			end
 
 		end

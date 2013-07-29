@@ -44,7 +44,7 @@ class UsersController < ApplicationController
 							 :email => params[:user][:email]}
 			if @user.save
 				signin_user
-				redirect_to root_path
+				redirect_to motions_path
 
 			else
 				render 'new'
