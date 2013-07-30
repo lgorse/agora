@@ -12,12 +12,13 @@
 #  email_sent :boolean          default(FALSE)
 #  expires_at :datetime
 #  email_time :datetime
+#  anonymous  :boolean          default(TRUE)
 #
 
 class Motion < ActiveRecord::Base
   attr_accessible :account_id, :title,  :details, 
-                  :created_by, :expires_at, :email_sent,
-                  :email_time
+  :created_by, :expires_at, :email_sent,
+  :email_time, :anonymous
 
   validates :created_by, :presence => true
   validates :account, :presence => true
@@ -45,6 +46,14 @@ class Motion < ActiveRecord::Base
   def add_motion_notification_to_email_queue
     NewMotionWorker.perform_async(self.id)
   end
+
+  def creator
+    if self.anonymous
+      User.new(:name => "Anonymous")
+    else
+      User.find(self.created_by)
+    end
+  end
   
 
   def current?
@@ -59,7 +68,7 @@ class Motion < ActiveRecord::Base
     unless email_sent == true
       account.users.each {|user| MotionMailer.motion_email(user, self).deliver unless user.email_notify == false}
       update_attributes(:email_sent => true, 
-                        :email_time => Time.now)
+        :email_time => Time.now)
     end
   end
 

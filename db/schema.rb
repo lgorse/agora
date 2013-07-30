@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130730010315) do
+ActiveRecord::Schema.define(:version => 20130730054319) do
 
   create_table "account_users", :force => true do |t|
     t.integer  "user_id"
@@ -54,6 +54,7 @@ ActiveRecord::Schema.define(:version => 20130730010315) do
     t.boolean  "email_sent", :default => false
     t.datetime "expires_at"
     t.datetime "email_time"
+    t.boolean  "anonymous",  :default => true
   end
 
   create_table "users", :force => true do |t|

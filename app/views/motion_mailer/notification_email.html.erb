@@ -2,8 +2,13 @@
 <p class = "email_intro_header" style = "font-weight: bold">
 	A new motion has been launched on Agora
 </p>
+<div class = "email_motion_content">
+	<p><b><%= "Subject: \"#{@motion.title}\"" %></b></p>
+	<p><%= "Details: \"#{@motion.details}\"" %></p>
+
+	</div>
 <div class = "email_intro">
-	<p>Members of your community are voting anonymously on this motion.
+	<p>Members of your community are now voting on this motion.
 	</p>
 </div>
 <%= link_to "Add your voice to theirs",  FULL_ROOT_URL, :class => "email_start_motion" %>

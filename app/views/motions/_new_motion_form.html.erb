@@ -7,11 +7,13 @@
 <li>
 	<%= motion.text_area :details, :placeholder => "Write details (max #{DETAILS_CHAR_MAX} characters)", :size => '50x10' %>
 </li>
-<li>
-	<p>
+<li>	
 		<%= motion.label :expires_at, "Expires in" %>
-		<%= motion.select(:expires_at, expiration_times, :selected => expiration_times[2]) %><%= "When should voting end?" %>
-	</p>
+		<%= motion.select(:expires_at, expiration_times, :selected => expiration_times[2]) %><%= "When should voting end?" %>	
+</li>
+<li>
+	<%= motion.check_box :anonymous, :value => true %><%= motion.label :anonymous, "Anonymous?" %><span class ="anonymous_toggle_text"><%= "No-one will know you started this motion" %></span>
+	
 </li>
 <li>
 <p><%= motion.submit "Create" %></p></li>

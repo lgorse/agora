@@ -6,6 +6,15 @@
 			<%= render 'motion_users/button', :motion => motion %>
 		</div>
 	</div>
+	
+		<div class = "created_by">
+			<% if motion.anonymous %>
+			<%= "#{motion.creator.name}" %>
+			<% else %>
+			<%= link_to " #{motion.creator.name}", motion.creator %>
+			<% end %>
+		</div>
+
 	<div class = "details">
 		<%= raw(truncate(motion.details, :length => 50, :omission => '...'+link_to("more", motion_path(motion),  :class => "more_details", :remote => true))) %>
 

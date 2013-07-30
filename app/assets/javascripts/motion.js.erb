@@ -4,6 +4,13 @@ $(function(){
 		$("#new_motion_holder").show();
 		$("#motion_title").focus();
 	});
+	$("#motion_anonymous").change(function(){
+		if(this.checked){
+			$(".anonymous_toggle_text").text("No-one will know you started this motion");
+		}else{
+			$(".anonymous_toggle_text").text("Your name will appear under this motion");
+		}
+	});
 
 
 });

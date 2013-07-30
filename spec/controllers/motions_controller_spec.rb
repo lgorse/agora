@@ -6,7 +6,8 @@ describe MotionsController do
 	describe 'POST "create"' do
 		before(:each) do
 			@user = FactoryGirl.create(:user)
-			@attr = {:title => "Hello", :details => "My friend", :expires_at => Time.now.since(1.hour)}
+			@attr = {:title => "Hello", :details => "My friend", 
+					 :expires_at => Time.now.since(1.hour), :anonymous => true}
 			test_sign_in(@user)
 		end
 
@@ -14,6 +15,18 @@ describe MotionsController do
 			lambda do
 				post :create, :motion => @attr
 			end.should change(Motion, :count).by(1)
+		end
+
+		it "should be anonymous by default" do
+			post :create, :motion => @attr
+			Motion.last.anonymous.should == true
+
+		end
+
+		it "should not be anonymous if the user decrees not" do
+			post :create, :motion => @attr.merge(:anonymous => false)
+			Motion.last.anonymous.should == false
+
 		end
 
 		it "should redirect home" do

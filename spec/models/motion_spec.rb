@@ -12,6 +12,7 @@
 #  email_sent :boolean          default(FALSE)
 #  expires_at :datetime
 #  email_time :datetime
+#  anonymous  :boolean          default(TRUE)
 #
 
 
@@ -56,7 +57,6 @@ describe Motion do
 
 		end
 
-
 		it "must have a title" do
 			motion = Motion.new(@attr.merge(:title => ""))
 			motion.should_not be_valid
@@ -80,6 +80,32 @@ describe Motion do
 
 		end
 
+
+	end
+ 
+	describe "attributes" do
+		before(:each) do
+			@user = FactoryGirl.create(:user)
+			@motion = FactoryGirl.create(:motion, :created_by => @user.id)
+		end
+
+		it "should have an anonymous attribute" do
+			@motion.should respond_to(:anonymous)
+		end
+
+		it "should have a creator attribute" do
+			@motion.should respond_to(:creator)
+		end
+
+		it "should return anonymous as the creator if the user wants it so" do
+			@motion.creator.name.should match(/Anonymous/i)
+		end
+
+		it "should return the user name if the user does not want to be anonymous" do
+			motion2 = FactoryGirl.create(:motion, :created_by => @user.id, :anonymous=> false)
+			motion2.creator.should == @user
+
+		end
 
 	end
 

@@ -8,7 +8,8 @@ class MotionsController < ApplicationController
 			:account_id => session[:account_id], 
 			:expires_at => params[:motion][:expires_at],
 			:title => params[:motion][:title],
-			:details => params[:motion][:details])
+			:details => params[:motion][:details],
+			:anonymous => params[:motion][:anonymous])
 		if @motion.save
 			redirect_to new_invitation_path(:motion => "sent")
 		else

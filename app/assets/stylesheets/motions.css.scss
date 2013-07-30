@@ -108,13 +108,19 @@
 		}
 	}
 
-	.top_row{
-		
+	.top_row{		
 
 	}
 
-	.bottom_row{
+	.created_by{
+		color: #606366;
+		font-size: 85%;
+		margin-bottom: 10px;
+		margin-left: 5px;
+	}
 
+	.bottom_row{
+		margin-top: 10px;
 		color: #606366;
 
 		div{
@@ -123,7 +129,7 @@
 	}
 
 	.details{
-		margin: 7px 10px 7px 15px;
+		margin: 7px 10px 7px 5px;
 		word-wrap: break-word;
 		font-size: 95%;
 
@@ -151,7 +157,15 @@
 		margin-left: 15px;
 	}
 
+}
 
+#expired_motions{
+
+	.motion{
+		.top_row{
+			margin-bottom: 7px;
+		}
+	}
 }
 
 .join{

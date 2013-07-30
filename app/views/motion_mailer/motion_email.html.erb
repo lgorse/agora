@@ -3,14 +3,15 @@
 	This is a motion from Agora
 </p>
 <div class = "email_intro">
-	<p>Members of your community have voted anonymously on this motion.
+	<p><%= "#{pluralize(@motion.users.count, "member")} of #{@motion.account.name} voted for this motion" %>
 	</p>
-	<p>This is their voice.</p>
 </div>
-<p class = "email_motion_content" style = 'font-weight:bold'><%= "\"#{@motion.details}\"" %>
-</p>
-<p class = "email_votes" style = "font-style:italic"><%= "#{pluralize(@motion.users.count, "member")} voted for this" %>
-</p>
+<p class = "email_motion_content" style = 'font-weight:bold'><%= "\"#{@motion.title}\"" %></p>
+<p><%= "\"#{@motion.details}\"" %></p>
+<p style = 'font-style: italic;'><%= "#{@motion.created_at.strftime("Created on %A %B %d")}" %></p>
+<p style = 'font-style: italic;'><%= "#{@motion.expires_at.strftime("Expired on %A %B %d at %H:%M")}" %></p>
+<p style = 'font-style: italic;'><%= "Created by #{@motion.creator.name}" %></p>
+<p></p>
 <%= link_to "Get your voice heard: start a new motion now.",  FULL_ROOT_URL, :class => "email_start_motion" %>
 </div>
 

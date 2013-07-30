@@ -2,13 +2,13 @@ class MailerPreviewsController < ApplicationController
 
 	def preview_motion_mail
 		@user = User.last
-		@motion = Motion.last
+		@motion = Motion.first
 		render :file => 'motion_mailer/motion_email.html.erb', :layout => 'mailer'
 	end
 
 	def preview_notification_mail
 		@user = User.first
-		@motion = Motion.last
+		@motion = Motion.all.sort_by{|motion| motion.users.count}.last
 		render :file => 'motion_mailer/notification_email.html.erb', :layout => 'mailer'
 	end
 
