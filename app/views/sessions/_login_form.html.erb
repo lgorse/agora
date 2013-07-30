@@ -4,6 +4,4 @@
 <%= session.text_field :email %>
 <%= session.submit "Sign in" %>
 <% end %>
-<% flash.each do |key, value| %>
-<%= value %>
-<% end %>
+<%= flash[:error] %>
