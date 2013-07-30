@@ -7,7 +7,6 @@ class MotionsController < ApplicationController
 		@motion = Motion.new(:created_by => @current_user.id, 
 			:account_id => session[:account_id], 
 			:expires_at => params[:motion][:expires_at],
-			:threshold => params[:motion][:threshold],
 			:title => params[:motion][:title],
 			:details => params[:motion][:details])
 		if @motion.save
@@ -37,7 +36,6 @@ class MotionsController < ApplicationController
 	def current
 		@motion = Motion.new
 		@active_motions = @account.active_motions
-
 	end
 
 	def expired

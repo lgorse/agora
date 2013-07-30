@@ -6,7 +6,7 @@ describe MotionsController do
 	describe 'POST "create"' do
 		before(:each) do
 			@user = FactoryGirl.create(:user)
-			@attr = {:title => "Hello", :details => "My friend", :threshold => 5, :expires_at => Time.now.since(1.hour)}
+			@attr = {:title => "Hello", :details => "My friend", :expires_at => Time.now.since(1.hour)}
 			test_sign_in(@user)
 		end
 

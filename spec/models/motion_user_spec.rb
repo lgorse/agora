@@ -14,7 +14,7 @@ require 'spec_helper'
 describe MotionUser do
   	before(:each) do
 		@user = FactoryGirl.create(:user)
-		@motion = FactoryGirl.create(:motion, :threshold => 2)
+		@motion = FactoryGirl.create(:motion)
 		@attr = {:motion_id => @motion.id, :user_id => @user.id}
 	end
 

@@ -16,13 +16,17 @@
 }
 
 #motion_explanations{
-	margin: 0px auto 30px 100px;
+	margin: 0px auto 30px 50px;
+}
+
+#new_motion_holder{
+	display: none;
 }
 
 .new_motion{
 	margin-left: 50px;
 	margin-bottom: 20px;
-	display: none;
+	//display: none;
 	background-color: #ecf2f8;
 	padding: 10px 10px 5px 10px;
 	width: 430px;

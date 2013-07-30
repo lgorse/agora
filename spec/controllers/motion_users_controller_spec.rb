@@ -25,7 +25,7 @@ describe MotionUsersController do
 			before(:each) do
 				@user = FactoryGirl.create(:user)
 				@user2 = FactoryGirl.create(:user, :default_account => @user.default_account)
-				@motion = FactoryGirl.create(:motion, :account_id => @user.default_account, :threshold => 2)
+				@motion = FactoryGirl.create(:motion, :account_id => @user.default_account)
 				test_sign_in(@user)
 				@motion_user = {:user_id => @user2.id, :motion_id => @motion.id}
 			end
@@ -43,7 +43,7 @@ describe MotionUsersController do
 			before(:each) do
 				@user = FactoryGirl.create(:user)
 				@user2 = FactoryGirl.create(:user, :default_account => @user.default_account)
-				@motion = FactoryGirl.create(:motion, :account_id => @user.default_account, :threshold => 3)
+				@motion = FactoryGirl.create(:motion, :account_id => @user.default_account)
 				test_sign_in(@user)
 				@motion_user = {:user_id => @user2.id, :motion_id => @motion.id}
 			end

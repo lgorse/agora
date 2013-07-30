@@ -1,0 +1,4 @@
+<% if (controller.controller_name == "motions" && ["current", "index", "expired"].include?(controller.action_name)) %>
+<%= render 'motions/new_motion_stub' %>
+<div id = "new_motion_holder"><%= render 'motions/new_motion_form' %></div>
+<% end %>

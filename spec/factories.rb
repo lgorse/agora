@@ -36,7 +36,6 @@ FactoryGirl.define do
 		association	:account
 		created_by	2
 		expires_at	{Time.now.since(5.minutes)}
-		threshold	10
 		title		"Create"
 		details		"Join"
 		email_sent	false

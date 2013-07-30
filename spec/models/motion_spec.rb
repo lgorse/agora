@@ -5,7 +5,6 @@
 #  id         :integer          not null, primary key
 #  created_by :integer
 #  account_id :integer
-#  threshold  :integer
 #  details    :string(255)
 #  title      :string(255)
 #  created_at :datetime         not null
@@ -29,7 +28,6 @@ describe Motion do
 			@attr = { :created_by => @user.id,
 				:account_id => @account.id,
 				:expires_at => Time.now.since(5.minutes),
-				:threshold => 5,
 				:title => "Create",
 				:details => "Join",
 			}
@@ -58,10 +56,6 @@ describe Motion do
 
 		end
 
-		it "must have a threshold" do
-			motion = Motion.new(@attr.merge(:threshold => ""))
-			motion.should_not be_valid
-		end
 
 		it "must have a title" do
 			motion = Motion.new(@attr.merge(:title => ""))
@@ -114,27 +108,6 @@ describe Motion do
 
 	end
 
-	describe "check threshold" do
-		before(:each) do
-			@user = FactoryGirl.create(:user)
-			@motion = FactoryGirl.create(:motion, :account_id => @user.default_account, :threshold => 2)
-			@user2 = FactoryGirl.create(:user, :default_account => @user.default_account)
-		end
-
-		it "should have a check threshold method" do
-			@motion.should respond_to(:threshold_met?)
-		end
-
-		it "should return true if the threshold is met" do
-			@user.vote(@motion)
-			#@user2.vote(@motion)
-			@motion.threshold_met?.should == true
-		end
-
-		it "should return false if the threshold is not met" do
-			@motion.threshold_met?.should == false
-		end
-	end
 
 	describe "current?" do
 		before(:each) do
@@ -164,7 +137,7 @@ describe Motion do
 		before(:each) do
 			@user = FactoryGirl.create(:user)
 			@user2 = FactoryGirl.create(:user, :default_account => @user.default_account)
-			@motion = FactoryGirl.create(:motion, :account_id => @user.default_account, :threshold => 2)
+			@motion = FactoryGirl.create(:motion, :account_id => @user.default_account)
 			@user.vote(@motion)
 		end
 
@@ -231,7 +204,7 @@ describe Motion do
 			@user = FactoryGirl.create(:user)
 			@user2 = FactoryGirl.create(:user, :default_account => @user.default_account)
 			@user_shy = FactoryGirl.create(:user, :default_account => @user.default_account, :email_notify => false)
-			@motion = FactoryGirl.create(:motion, :account_id => @user.default_account, :threshold => 2)
+			@motion = FactoryGirl.create(:motion, :account_id => @user.default_account)
 		end
 
 		it 'should send the e-mail to all users except those with a false email-notify' do
@@ -285,14 +258,14 @@ describe Motion do
 			before(:each) do
 				@user2 = FactoryGirl.create(:user, :default_account => @user.default_account)
 				@motion = FactoryGirl.create(:motion, :account_id => @user.default_account, 
-					:created_by => @user.id, :threshold => 2)
+					:created_by => @user.id)
 				@email_sender = ExpirationWorker.new
 			end
 
 			it "should queue a delayed e-mail that is sent on expiration" do
 				lambda do
 					motion = FactoryGirl.create(:motion, :account_id => @user.default_account, 
-						:created_by => @user.id, :threshold => 2)
+						:created_by => @user.id)
 				end.should change(ExpirationWorker.jobs, :size).by(1)
 			end
 
@@ -300,7 +273,7 @@ describe Motion do
 				ExpirationWorker.should have_queued_job_at(@motion.expires_at, 1)
 			end
 
-			it "should be sent if the threshold is met" do
+			it "should send the e-mail" do
 				@user2.vote(@motion)
 				lambda do
 					@email_sender.perform(@motion.id)
@@ -308,11 +281,6 @@ describe Motion do
 
 			end
 
-			it "should not be sent if the threshold is not met" do
-				lambda do
-					@email_sender.perform(@motion.id)
-				end.should change(ActionMailer::Base.deliveries, :count).by(0)
-			end
 
 		end
 

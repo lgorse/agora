@@ -1,4 +1,2 @@
-<%= render 'motions/new_motion_stub' %>
-<%= render 'motions/new_motion_form' %>
 <h3 id = "expired_motions_title">Expired motions</h3>
 <div id = "expired_motions" class = 'motions'><%= render :partial => 'motions/motion', :collection => @expired_motions[0..4], :as => :motion %></div>

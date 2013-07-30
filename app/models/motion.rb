@@ -5,7 +5,6 @@
 #  id         :integer          not null, primary key
 #  created_by :integer
 #  account_id :integer
-#  threshold  :integer
 #  details    :string(255)
 #  title      :string(255)
 #  created_at :datetime         not null
@@ -17,13 +16,12 @@
 
 class Motion < ActiveRecord::Base
   attr_accessible :account_id, :title,  :details, 
-                  :created_by, :expires_at, :threshold, :email_sent,
+                  :created_by, :expires_at, :email_sent,
                   :email_time
 
   validates :created_by, :presence => true
   validates :account, :presence => true
   validates :expires_at, :presence => true
-  validates :threshold, :presence => true
   validates :title, :presence => true, :length => {:maximum => TITLE_CHAR_MAX}
   validates :details, :length => {:within => 0..DETAILS_CHAR_MAX}
   validate :expires_at_cannot_be_in_the_past, :on => :create
@@ -49,10 +47,6 @@ class Motion < ActiveRecord::Base
   end
   
 
-  def threshold_met?
-    users.count >= threshold
-  end
-
   def current?
     expires_at >= Time.now
   end
@@ -74,12 +68,6 @@ class Motion < ActiveRecord::Base
       if expires_at < Time.now
         errors.add(:expires_at, "can't be in the past")
       end
-    end
-  end
-
-  def check_threshold_and_send_email
-    if threshold_met?
-      send_email
     end
   end
 
