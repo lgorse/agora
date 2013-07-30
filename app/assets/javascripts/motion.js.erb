@@ -1,38 +1,9 @@
-
-
-
-/*
 $(function(){
-	$("#motion").hover(function(){
-		var threshold = $(this).find(".joiners").attr('threshold');
-		var activity = $(this).attr("id");
-		show_activity_instructions(threshold, activity);
-	},
-	function(){
-		hide_activity_instructions($(this).attr('id'));
+	$(".motion_stub").click(function(e){
+		$(this).remove();
+		$(".new_motion").show();
+		$("#motion_title").focus();
 	});
+
+
 });
-
-function show_activity_instructions(threshold, activity){	
-	var title = $(".activity_info").find(".title");
-	var subtitle = $(".activity_info").find(".subtitle");
-	var content = $(".activity_info").find(".content");
-	if (threshold == ""){
-		threshold = "enough";
-	}
-	title.contents().replaceWith("Too noisy in the studio?");
-	subtitle.contents().replaceWith("Create a motion notice");
-	content.contents().replaceWith("Your community will get a polite e-mail when "+ threshold + " members have joined.");
-}
-
-function hide_activity_instructions(id){
-	$(".activity_info").find("h4").contents().replaceWith("bye!");
-	var title = $(".activity_info").find(".title");
-	var subtitle = $(".activity_info").find(".subtitle");
-	var content = $(".activity_info").find(".content");
-	title.contents().replaceWith("Give feedback to your community");
-	subtitle.contents().replaceWith("Roll over each notice for information");
-	content.contents().replaceWith("Click on the button to join or create a notice");
-}
-
-*/

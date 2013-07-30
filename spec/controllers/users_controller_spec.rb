@@ -343,11 +343,6 @@ describe UsersController do
 
 			end
 
-			it "should show a flash" do
-				post :create, :user => @attr
-				flash.now[:notice].should_not == nil
-			end
-
 		end
 
 	end

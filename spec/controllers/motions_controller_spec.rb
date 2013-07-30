@@ -18,7 +18,7 @@ describe MotionsController do
 
 		it "should redirect home" do
 			post :create, :motion => @attr
-			response.should redirect_to(root_path)
+			response.should redirect_to(new_invitation_path(:motion => "sent"))
 
 		end
 

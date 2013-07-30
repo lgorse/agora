@@ -4,6 +4,11 @@ class InvitationsController < ApplicationController
 
 
 	def new
+		if params[:motion] == 'sent'
+			@prompt = "Add new members who can vote on your motion"
+		else
+			@prompt = "Invite new members to Agora"
+		end
 		
 
 	end

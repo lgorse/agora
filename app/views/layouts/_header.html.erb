@@ -5,7 +5,6 @@
 		<%= render 'layouts/account_change_form' %>
 	</nav>
 	<nav class = "header_right">
-	<%= link_to "Start a motion", new_motion_path, :id => "new_motion" %>
 	<%= link_to "Invite", new_invitation_path, :id => "new_invite" %>
 	<% if @current_user.admin? %>
 	<%= link_to 'Admin', @account %>

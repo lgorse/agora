@@ -11,7 +11,7 @@ class MotionsController < ApplicationController
 			:title => params[:motion][:title],
 			:details => params[:motion][:details])
 		if @motion.save
-			redirect_to root_path
+			redirect_to new_invitation_path(:motion => "sent")
 		else
 			render 'motions/new'
 		end
@@ -26,20 +26,22 @@ class MotionsController < ApplicationController
 	end
 
 	def index
+		@motion = Motion.new
 		@active_motions = @account.active_motions	
 	end
 
 	def show
 		@motion = Motion.find(params[:id])
-
 	end
 
 	def current
+		@motion = Motion.new
 		@active_motions = @account.active_motions
 
 	end
 
 	def expired
+		@motion = Motion.new
 		@expired_motions = @account.expired_motions.reverse
 	end
 end

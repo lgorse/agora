@@ -20,11 +20,25 @@
 }
 
 .new_motion{
-	margin-left: 150px;
+	margin-left: 50px;
+	margin-bottom: 20px;
+	display: none;
+	background-color: #ecf2f8;
+	padding: 10px 10px 5px 10px;
+	width: 430px;
+
+	#motion_title{
+		padding: 5px;
+		font-size: 105%;
+	}
+
+	#motion_details{
+		padding: 5px;
+	}
 	
 
 	li{
-		margin-bottom: 20px;
+		margin-bottom: 15px;
 	}
 
 	label{
@@ -50,6 +64,28 @@
 		margin-right: 10px;
 	}
 
+}
+
+.motion_stub{
+	margin-left: 50px;
+	margin-bottom: 20px;
+	background-color: #ecf2f8;
+	padding: 5px;
+	width: 430px;
+
+	textarea{
+		resize: none;
+		disabled: true;
+		padding: 10px 0px 0px 5px;
+	}
+
+	textarea:disabled{
+		background-color: white;
+	}
+
+	textarea:hover{
+		cursor: pointer;
+	}
 }
 
 .motions{

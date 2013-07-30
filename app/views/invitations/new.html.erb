@@ -1,4 +1,4 @@
-<h3>Invite new members to Agora</h3>
+<h3><%= @prompt %></h3>
 <%= form_tag('/invitations', :method => :post, :id => "new_invitation_form") do %>
 <ul>
 	<li><%= label_tag "email_list", "Enter e-mail addresses separated by commas" %></li>
