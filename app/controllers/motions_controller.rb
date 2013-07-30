@@ -33,11 +33,6 @@ class MotionsController < ApplicationController
 		@motion = Motion.find(params[:id])
 	end
 
-	def current
-		@motion = Motion.new
-		@active_motions = @account.active_motions
-	end
-
 	def expired
 		@motion = Motion.new
 		@expired_motions = @account.expired_motions.reverse

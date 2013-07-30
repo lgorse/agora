@@ -117,7 +117,7 @@ describe AccountsController do
 			end
 
 			it "should redirect to the root path" do
-				response.should redirect_to(current_motions_path)
+				response.should redirect_to(motions_path)
 			end
 
 			it "should change the account instance variable" do

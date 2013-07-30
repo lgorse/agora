@@ -41,10 +41,12 @@ describe MotionsController do
 		before(:each) do
 			@user = FactoryGirl.create(:user)
 			test_sign_in(@user)
+			@motion = FactoryGirl.create(:motion, :account_id => session[:account_id])
+			get :index
 		end
 
 		it "should be successful" do
-			get :index
+			
 			response.should be_successful
 		end
 
@@ -52,36 +54,13 @@ describe MotionsController do
 		it "should show the motions title" do
 			motion = FactoryGirl.create(:motion, :account_id => session[:account_id])
 			@user.vote(motion)
-			get :index
 			response.body.should have_content(motion.title)
 		end
 
-	end
-
-	describe 'GET "current"' do
-		describe "if there are active motions" do
-			before(:each) do
-				@user = FactoryGirl.create(:user)
-				test_sign_in(@user)
-				@motion = FactoryGirl.create(:motion, :account_id => session[:account_id])
-				get :current
-			end
-
-			it "should be successful" do
-				response.should be_successful
-
-			end
-
-			it "should respond to the active motions variable" do
-				assigns(:active_motions).first.should == @motion
-
-			end
-
-			it "should show the current motions" do
-				response.body.should have_content(@motion.title)
-			end
-
+		it "should respond to the active motions variable" do
+			assigns(:active_motions).first.should == @motion
 		end
+
 
 		describe "if there are no active motions" do
 			before(:each) do
@@ -92,8 +71,6 @@ describe MotionsController do
 
 			it "should show a prompt to start the first active motion" do
 				response.body.should have_content(/no active motions/i)
-
-
 			end
 		end
 

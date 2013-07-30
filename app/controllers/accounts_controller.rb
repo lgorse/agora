@@ -24,7 +24,7 @@ class AccountsController < ApplicationController
 	def change
 		if account = Account.find_by_id(params[:account_id])
 			session[:account_id] = params[:account_id]
-			redirect_to current_motions_path if authenticate
+			redirect_to motions_path if authenticate
 		else
 			redirect_to root_path
 		end

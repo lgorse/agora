@@ -7,7 +7,7 @@ Agora::Application.routes.draw do
 
 	resources :motions do
 		collection do
-			get :expired, :current
+			get :expired
 		end
 	end
 
