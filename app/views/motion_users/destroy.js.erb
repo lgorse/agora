@@ -1,5 +1,5 @@
 $(function(){
-	var motion = $(".motion#<%= @motion.id %>");
+	var motion = $("#<%= @motion.id %>.motion");
 	motion.find(".join").html("<%= escape_javascript(render 'motion_users/button', :motion => @motion) %>");
 	motion.find(".voter_count").html('<%= "#{@motion.users.count} voters" %>');
 });

@@ -9,12 +9,13 @@
 <body>
 <% if session[:user_id] %>
 	<%= render 'layouts/header' %>
-	
+	<div class = "container">
 	<%= render 'layouts/user_bar' %>
 	<div id = "page_content">
 		<%= render 'motions/new_motion_package' %>
 		<%= yield %>
 	</div>
+</div>
 
 <% else %>
 	<%= yield %>

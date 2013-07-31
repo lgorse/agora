@@ -50,6 +50,21 @@
 		display: block;
 	vertical-align: middle;
 
+	color: #3D7508;
+		border: 1px solid #B3CF99;
+		border-bottom-color: #83AB5E;
+		background: #B4F07D;
+		background: -moz-linear-gradient(top, #e1eef9 0%, #b4d9f8 100%);
+		background: -webkit-gradient(linear, left top, left bottom, color(0%, #e1eef9), color(100%, #b4d9f8));
+		background:-webkit-linear-gradient(top,#e1eef9 0%,#b4d9f8 100%); 
+		background:-o-linear-gradient(top,#e1eef9 0%,#b4d9f8 100%);
+		background:-ms-linear-gradient(top,#e1eef9 0%,#b4d9f8 100%);
+		background:linear-gradient(top,#e1eef9 0%,#b4d9f8 100%);
+
+	}
+
+	input[name="commit"]:hover{
+		cursor: pointer;
 	}
 
 	.reply_button_wrapper{
@@ -57,3 +72,5 @@
 		vertical-align: middle;
 	}
 }
+
+

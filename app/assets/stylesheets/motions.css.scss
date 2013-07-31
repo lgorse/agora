@@ -24,8 +24,7 @@
 }
 
 .new_motion{
-	margin-left: 50px;
-	margin-bottom: 20px;
+	margin: 0px auto 20px;
 	//display: none;
 	background-color: #ecf2f8;
 	padding: 10px 10px 5px 10px;
@@ -71,8 +70,8 @@
 }
 
 .motion_stub{
-	margin-left: 50px;
-	margin-bottom: 20px;
+	margin: 0px auto 20px;
+
 	background-color: #ecf2f8;
 	padding: 5px;
 	width: 430px;
@@ -95,6 +94,10 @@
 .motions{
 	
 
+}
+
+.example_motions{
+	
 }
 
 .motion_holder{
