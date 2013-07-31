@@ -1,0 +1,5 @@
+<%= form_for @reply, :remote => true do |reply| %>
+<%= reply.text_area :text, :size => "50x3" %>
+<%= reply.hidden_field :motion_id, :value => @motion.id %>
+<%= reply.submit "Reply" %>
+<% end %>

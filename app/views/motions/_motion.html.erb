@@ -1,12 +1,13 @@
-<div class = 'motion' id = "<%= motion.id %>">
-	<div class = "top_row">
-		<div class = 'title'><%= motion.title %></div>
-		<div class = 'voter_count'><%= pluralize(motion.users.count, "voter") %></div>
-		<div class = "join" id = "<%= motion.id %>">
-			<%= render 'motion_users/button', :motion => motion %>
+<div class = "motion_holder">
+	<div class = 'motion' id = "<%= motion.id %>">
+		<div class = "top_row">
+			<div class = 'title'><%= motion.title %></div>
+			<div class = 'voter_count'><%= pluralize(motion.users.count, "voter") %></div>
+			<div class = "join" id = "<%= motion.id %>">
+				<%= render 'motion_users/button', :motion => motion %>
+			</div>
 		</div>
-	</div>
-	
+
 		<div class = "created_by">
 			<% if motion.anonymous %>
 			<%= "#{motion.creator.name}" %>
@@ -15,20 +16,24 @@
 			<% end %>
 		</div>
 
-	<div class = "details">
-		<%= raw(truncate(motion.details, :length => 50, :omission => '...'+link_to("more", motion_path(motion),  :class => "more_details", :remote => true))) %>
+		<div class = "details">
+			<%= raw(truncate(motion.details, :length => 50, :omission => '...'+link_to("more", motion_path(motion),  :class => "more_details", :remote => true))) %>
 
-	</div>
-	<div class = "bottom_row">
-		<div class = 'created_at'><%= "#{motion.created_at.strftime("%A %B %d %Y")}" %></div>
-		<div class = "expires_at">
-			<% if motion.current? %>
-			<%= "Expires in #{distance_of_time_in_words(Time.now, motion.expires_at)}" %>
-			<% else %>
-			<%= "Expired #{time_ago_in_words(motion.expires_at)} ago" %>
-			<% end %>
 		</div>
-		
-	</div>
+		<div class = "bottom_row">
+			<div class = 'created_at'><%= "#{motion.created_at.strftime("%A %B %d %Y")}" %></div>
+			<div class = "expires_at">
+				<% if motion.current? %>
+				<%= "Expires in #{distance_of_time_in_words(Time.now, motion.expires_at)}" %>
+				<% else %>
+				<%= "Expired #{time_ago_in_words(motion.expires_at)} ago" %>
+				<% end %>
+			</div>
+			<div><%= link_to "reply", new_reply_path(:motion => motion.id), :remote => true, :class => "reply_link", :id => motion.id %></div>
 
+		</div>
+	</div>
+	<div class = "reply_list">
+		<%= render :partial => 'replies/reply', :collection => motion.replies, :as => :reply %>
+	</div>
 </div>

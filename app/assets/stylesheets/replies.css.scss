@@ -1,0 +1,33 @@
+// Place all the styles related to the Replies controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+.reply{
+	background-color: #ecf2f8;
+	border-bottom: 1px solid white;
+	margin-left: 10px;
+	margin-top: 1px;
+	padding: 5px;
+
+	.top_row, .bottom_row{
+		
+		margin-bottom: 5px;
+		color: #606366;
+		font-size: 85%;
+		div{
+			font-size: 85%;
+		}	
+	}
+
+	.bottom_row{
+		margin-left: 5px;
+	}
+
+	.text{
+		font-size: 95%;
+		margin-top: 5px;
+		margin-bottom: 10px;
+
+	}	
+
+}

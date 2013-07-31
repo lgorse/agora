@@ -59,7 +59,6 @@ describe MotionsController do
 		end
 
 		it "should be successful" do
-			
 			response.should be_successful
 		end
 

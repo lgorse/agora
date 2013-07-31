@@ -1,0 +1,11 @@
+<div class = "reply" id = "<%= reply.id %>">
+	<div class = "top_row"><%= link_to reply.user.name, reply.user %></div>
+	<div class = "text"><%= reply.text %></div>
+	<div class = "bottom_row">
+		<% if Time.now - reply.created_at > 6.hours %>
+		<%= reply.created_at.strftime("%A %B %d %Y") %>
+		<% else %>
+		<%= "#{distance_of_time_in_words(Time.now, reply.created_at)} ago" %>
+		<% end %>
+	</div>
+</div>
