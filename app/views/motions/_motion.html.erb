@@ -29,7 +29,7 @@
 				<%= "Expired #{time_ago_in_words(motion.expires_at)} ago" %>
 				<% end %>
 			</div>
-			<div><%= link_to "reply", new_reply_path(:motion => motion.id), :remote => true, :class => "reply_link", :id => motion.id %></div>
+			<div><%= link_to "#{motion.replies.count} replies", new_reply_path(:motion => motion.id), :remote => true, :class => "reply_link", :id => motion.id %></div>
 
 		</div>
 	</div>

@@ -100,12 +100,16 @@
 .motion_holder{
 	border-bottom: 1px solid #C2C2CF;
 	padding: 15px 5px 10px 15px;
+
+	.reply_list{
+		display: none;
+		width: 460px;
+	}
 }
 
 .motion{
-	
-	
-	margin-bottom: 15px;
+	width: 470px;
+	margin-bottom: 10px;
 
 	.top_row, .bottom_row{
 		div{
@@ -161,7 +165,6 @@
 		font-size: 90%;
 		margin-left: 15px;
 	}
-
 }
 
 #expired_motions{

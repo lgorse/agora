@@ -1,10 +1,9 @@
 $(function(){
-	var motion = $(".motion#<%= params[:reply][:motion_id] %>");
-	motion.find("#new_reply").remove();
-	motion.parent().find(".reply_list").
+	var motion = $("#<%= params[:reply][:motion_id] %>.motion");
+	var motion_holder = motion.parent();
+	motion_holder.find(".new_reply").remove();
+	motion_holder.find(".reply_list").
 		html("<%= escape_javascript(render :partial => 'replies/reply', :collection => @reply.motion.replies, :as => :reply) %>");
-	motion.find(".reply_link").click(function(e){
-		$(this).click();
-	});
+	
 
 });

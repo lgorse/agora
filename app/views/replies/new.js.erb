@@ -1,10 +1,15 @@
 $(function(){
-	var motion = $(".motion#<%= @motion.id %>");
-	motion.append("<%= escape_javascript(render 'replies/new_reply_form') %>");
+	var motion = $("#<%= @motion.id %>.motion");
+	var motion_holder = motion.parent();
+	var reply_list = motion_holder.find(".reply_list");
+	motion.after("<%= escape_javascript(render 'replies/new_reply_form') %>");
+	reply_list.show();
 	motion.find(".reply_link").click(function(e){
-		if (motion.find(".new_reply").length){
+		if (motion_holder.find('.reply_list').is(":visible")){
 			e.preventDefault();
 			e.stopPropagation();
+			motion_holder.find('.new_reply').remove();
+			reply_list.hide();
 		}
 	});
 });
