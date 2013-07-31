@@ -24,7 +24,6 @@ FactoryGirl.define do
 end
 
 FactoryGirl.define do
-
 	sequence :email do |n|
 		"test#{n}@tester.com"
 	end
@@ -55,6 +54,14 @@ FactoryGirl.define do
 	factory :account_user do
 		association 	:user
 		association		:account
+	end
+end
+
+FactoryGirl.define do
+	factory :reply do
+		association 	:user
+		association 	:motion
+		text			"Testing this text"
 	end
 
 end

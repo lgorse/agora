@@ -31,6 +31,8 @@ class Motion < ActiveRecord::Base
   has_many :users, :through => :motion_users
   belongs_to :account
 
+  has_many :replies
+
   after_create :add_motion_expiration_to_email_queue, :first_user, :add_motion_notification_to_email_queue
 
   default_scope :order => 'expires_at'
@@ -54,7 +56,10 @@ class Motion < ActiveRecord::Base
       User.find(self.created_by)
     end
   end
-  
+
+  def replies_by(user)
+    self.replies.where(:user_id => user.id)
+  end
 
   def current?
     expires_at >= Time.now

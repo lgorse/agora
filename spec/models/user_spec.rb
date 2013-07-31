@@ -90,6 +90,10 @@ describe User do
 
 		it "should have an invitors method" do
 			@user.should respond_to(:inviters)
+		end
+
+		it "should respond to the replies association" do
+			@user.should respond_to(:replies)
 
 		end
 

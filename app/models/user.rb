@@ -25,6 +25,8 @@ class User < ActiveRecord::Base
 
   before_validation :downcase_email
   after_create :join_to_default_account
+
+  has_many :replies
   
   has_many :motion_users
   has_many :motions, :through => :motion_users

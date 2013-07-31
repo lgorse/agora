@@ -97,6 +97,7 @@ describe Motion do
 			@motion.should respond_to(:creator)
 		end
 
+
 		it "should return anonymous as the creator if the user wants it so" do
 			@motion.creator.name.should match(/Anonymous/i)
 		end
@@ -131,6 +132,24 @@ describe Motion do
 			@motion.users.should include(@user)
 		end
 
+
+	end
+
+	describe "associations replies" do
+		before(:each) do
+			@motion = FactoryGirl.create(:motion)
+		end
+
+		it "should respond to the replies association" do
+			@motion.should respond_to(:replies)
+		end
+
+		it "should get all the replies by a specific user" do
+			user = FactoryGirl.create(:user)
+			reply = FactoryGirl.create(:reply, :user => user, :motion => @motion, :text => "Hello test")
+			@motion.replies_by(user).should include(reply)
+
+		end
 
 	end
 
