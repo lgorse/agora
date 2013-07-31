@@ -1,0 +1,8 @@
+$(function(){
+	var reply = $("#<%= @reply.id %>.reply");
+	var motion = $("#<%= @motion.id %>.motion");
+	motion.find("#<%= @motion.id %>.reply_link").text("<%= @motion.replies.count %> replies");
+	reply.hide('fast', function(){ 
+	reply.remove(); });
+	//motion.innerHTML("HI");
+});
