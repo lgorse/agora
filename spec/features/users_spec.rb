@@ -33,7 +33,7 @@ describe "Users" do
 
       it "motion button should link to join a new motion" do
         click_button 'Sign in'
-        click_button('Join')
+        click_button('Vote')
         current_path.should == '/motion_users'
       end
     end
@@ -42,7 +42,7 @@ describe "Users" do
       before(:each) do
         @motion = FactoryGirl.create(:motion, :account_id => @account.id)
         click_button 'Sign in'
-        click_button 'Join'
+        click_button 'Vote'
         visit root_path
         
       end

@@ -11,7 +11,8 @@
 	<li>
 		<%= text_area_tag "message", nil, {:size => "50x10"} %>
 	</li>
-<%= submit_tag "Send invitations" %>
+<li><%= submit_tag "Send invitations" %>
+<%= link_to "No thanks", motions_path, :class => "no_thanks" %></li>
 </li>
 </ul>
 <% end %>

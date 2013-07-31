@@ -11,4 +11,9 @@ class RepliesController < ApplicationController
 						   :text => params[:reply][:text])
 		render 'motions/index' unless @reply.save
 	end
+
+	def destroy
+		@reply = Reply.find(params[:id])
+		@reply.destroy
+	end
 end

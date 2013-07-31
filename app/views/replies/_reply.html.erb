@@ -1,5 +1,8 @@
 <div class = "reply" id = "<%= reply.id %>">
-	<div class = "top_row"><%= link_to reply.user.name, reply.user %></div>
+	<div class = "top_row"><%= link_to reply.user.name, reply.user %>
+		<% if reply.user == @current_user %>
+		<%= link_to image_tag("remove.png", :size => "8x8"), reply, :method => :delete, :remote => true, :class => "delete_reply"  %>
+		<% end %></div>
 	<div class = "text"><%= reply.text %></div>
 	<div class = "bottom_row">
 		<% if Time.now - reply.created_at > 6.hours %>
