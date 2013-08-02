@@ -1,6 +1,3 @@
-<table id = "account_members">
-	<tr><th>Name</th>
-		<th>Team</th>
-		<th>E-mail</th></tr>
+<ul class = "user_list">
 	<%= render :partial => 'users/user_summary', :collection => user_list, :as => :user %>
-</table>
+</ul>

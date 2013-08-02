@@ -1,7 +1,8 @@
 class AccountsController < ApplicationController
 	
 
-	before_filter :authenticate_account_match, :except => [:change]
+	before_filter :authenticate_account_match_for_admin, :except => [:change, :show]
+	before_filter :authenticate_account_match, :only => [:show]
 	
 	
 	def show

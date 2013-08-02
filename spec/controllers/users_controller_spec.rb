@@ -5,7 +5,8 @@ describe UsersController do
 
 	describe "get 'show'" do
 		
-		before(:each) do
+		describe 'if user is not an admin' do
+			before(:each) do
 			@user = FactoryGirl.create(:user)
 			test_sign_in(@user)
 			@motion1 = FactoryGirl.create(:motion, 
@@ -37,12 +38,12 @@ describe UsersController do
 			response.body.should have_link("About", user_path(@user))
 		end
 
-		it "should have a link to the user's created motions" do
-			response.body.should have_link("Motions created", created_user_path(@user.id))
+		it "should not have a link to the user's created motions" do
+			response.body.should_not have_link("Motions created", created_user_path(@user.id))
 		end
 
-		it "should have a link to the user's joined motions" do
-			response.body.should have_link("Motions joined", motions_user_path(@user))
+		it "should not have a link to the user's joined motions" do
+			response.body.should_not have_link("Motions joined", motions_user_path(@user))
 		end
 
 		it "should say which account the user is with" do
@@ -65,9 +66,34 @@ describe UsersController do
 
 	end
 
+		describe "if user is an admin" do
+			before(:each) do
+			@user = FactoryGirl.create(:user, :admin => true)
+			test_sign_in(@user)
+			@motion1 = FactoryGirl.create(:motion, 
+				:created_by => @user.id, 
+				:account_id => @user.default_account)
+			@motion2 = FactoryGirl.create(:motion, 
+				:account_id => @user.default_account)
+			@user.vote(@motion2)
+			get :show, :id => session[:user_id]
+		end
+
+		it "should not have a link to the user's created motions" do
+			response.body.should have_link("Motions created", created_user_path(@user.id))
+		end
+
+		it "should not have a link to the user's joined motions" do
+			response.body.should have_link("Motions joined", motions_user_path(@user))
+		end
+
+		end
+
+	end
+
 	describe 'GET "user/created' do
 		before(:each) do
-			@user = FactoryGirl.create(:user)
+			@user = FactoryGirl.create(:user, :admin => true)
 			test_sign_in(@user)
 			@motion1 = FactoryGirl.create(:motion, 
 				:created_by => @user.id, 
@@ -90,7 +116,7 @@ describe UsersController do
 
 	describe 'GET "user/joined"' do
 		before(:each) do
-			@user = FactoryGirl.create(:user)
+			@user = FactoryGirl.create(:user, :admin => true)
 			@other_user = FactoryGirl.create(:user)
 			test_sign_in(@user)
 			@motion1 = FactoryGirl.create(:motion, 

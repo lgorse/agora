@@ -23,6 +23,11 @@ module SessionsHelper
 
 	def authenticate_account_match
 		authenticate
+		redirect_to root_path unless @account == Account.find(params[:id])
+	end
+
+	def authenticate_account_match_for_admin
+		authenticate
 		authenticate_admin
 		redirect_to root_path unless @account == Account.find(params[:id])
 	end

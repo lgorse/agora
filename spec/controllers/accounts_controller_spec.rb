@@ -32,50 +32,65 @@ describe AccountsController do
 
 		end
 
-		describe 'if the user is not an admin' do
-			before(:each) do
-				@user = FactoryGirl.create(:user, :admin => false)
-				test_sign_in(@user)
-
-			end
-
-			it "should prevent the user from being on an account page" do
-				get :show, :id => @account.id
-				response.should_not be_successful
-			end
-
-			it "should redirect the user to the error page" do
-				get :show, :id => @account.id
-				response.should redirect_to(root_path)
-			end
-
-		end
-
 	end
 
 	describe 'GET /account' do
 		before(:each) do
-			@user = FactoryGirl.create(:user, :admin => true)
+			@user = FactoryGirl.create(:user, :admin => false)
 			test_sign_in(@user)
+			@user2 = FactoryGirl.create(:user)
+			@user2.join(Account.find(@user.default_account))
 			get :show, :id => @account.id
-		end
-
-		describe "nav bar" do
-
-			it "should have a new user link" do
-				response.body.should have_link('Add member')
-			end
-
-			it "should have a batch users link" do
-				response.body.should have_link('Batch members')
-			end
 
 		end
+
+		describe 'if the user is an admin' do
+			before(:each) do
+				@user.update_attributes(:admin => true)
+				get :show, :id => @account.id
+			end
+
+			describe "nav bar" do
+
+				it "should have a new user link" do
+					response.body.should have_link('Add member')
+				end
+
+				it "should have a batch users link" do
+					response.body.should have_link('Batch members')
+				end
+
+			end
+		end
+
+		describe 'if the user is not an admin' do
+			before(:each) do
+				get :show, :id => @account.id
+			end
+
+			describe 'nav bar' do
+
+				it "should not have a new user link" do
+					response.body.should_not have_link('Add member')
+				end
+
+				it "should not have a batch users link" do
+					response.body.should_not have_link('Batch members')
+				end
+
+			end
+
+		end
+		
 
 		describe "view" do
+			before(:each) do
+				get :show, :id => @account.id
+
+			end
 
 			it "should show the account users" do
-				response.body.should have_content('Account members')
+				response.body.should have_content(@user2.name)
 			end
 
 		end

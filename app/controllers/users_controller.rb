@@ -3,7 +3,7 @@ class UsersController < ApplicationController
 	require 'csv'
 	
 	before_filter :authenticate, :except => [:create_batch_members, :new, :create]
-	before_filter :authenticate_admin, :only => [:create_batch_members, :new_admin]
+	before_filter :authenticate_admin, :only => [:create_batch_members, :new_admin, :created, :motions]
 
 	def create_batch_members
 		@account = Account.find(params[:account_id])

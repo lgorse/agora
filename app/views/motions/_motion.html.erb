@@ -8,7 +8,7 @@
 			</div>
 		</div>
 
-		<div class = "created_by">
+		<div class = "created_by small_grey">
 			<% if motion.anonymous %>
 			<%= "#{motion.creator.name}" %>
 			<% else %>
@@ -20,7 +20,7 @@
 			<%= raw(truncate(motion.details, :length => 50, :omission => '...'+link_to("more", motion_path(motion),  :class => "more_details", :remote => true))) %>
 
 		</div>
-		<div class = "bottom_row">
+		<div class = "bottom_row small_grey">
 			<div class = 'created_at'><%= "#{motion.created_at.strftime("%A %B %d %Y")}" %></div>
 			<div class = "expires_at">
 				<% if motion.current? %>

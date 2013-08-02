@@ -1,10 +1,12 @@
 <div id = "account_show">
+	<% if @current_user.admin? %>
 <nav>
 	<%= link_to "Add member", new_admin_users_path %>
 	<%= link_to "Batch members", batch_members_account_path(@account) %>
 	<%= link_to "E-mail members", email_members_form_account_path(@account) %>
 
 </nav>
-<h5 id = 'account_members_title'>Account members</h5>
+<% end %>
+<h3 id = 'account_members_title'><%= "#{pluralize(@account.users.count, 'member')} on #{@account.name}" %></h3>
 <%= render 'users/user_list', :user_list => @account.users %>
 </div>

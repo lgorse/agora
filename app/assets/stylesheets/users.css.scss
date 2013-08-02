@@ -3,7 +3,7 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 .new_user_body{
-width: 800px;
+	width: 800px;
 	margin: 50px auto;
 
 	.signup_message{
@@ -46,7 +46,7 @@ width: 800px;
 	#about_title{
 		display: inline-block;
 		border-bottom: 1px solid #C2C2CF;
-       
+		
 
 		h3, a{
 			display: inline-block;
@@ -110,6 +110,22 @@ width: 800px;
 		padding: 5px 10px;
 	}
 
+}
+
+.user_list{
+	display: inline-block;
+	
+	li{
+		margin-bottom: 5px;
+	}
+
+	.joined_at{
+		margin-left: 10px;
+	}
+
+	div{
+		display: inline-block;
+	}
 }
 
 
