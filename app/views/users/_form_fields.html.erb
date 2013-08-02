@@ -1,6 +1,11 @@
 <%= form_for @current_user do |user| %>
 <%= render 'layouts/error_messages', :object => user.object %>
 <ul>
+	<li>
+		<%= user.select :default_account, 
+				options_from_collection_for_select(@current_user.accounts, "id", "name", @current_user.default_account) %>
+		<%= user.label :default_account, "My default account" %>
+	</li>
 <li>
 <%= user.check_box :email_notify %>
 <%= user.label :email_notify, "Notify me when a motion is created" %>
