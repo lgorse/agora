@@ -54,7 +54,8 @@ describe MotionsController do
 		before(:each) do
 			@user = FactoryGirl.create(:user)
 			test_sign_in(@user)
-			@motion = FactoryGirl.create(:motion, :account_id => session[:account_id])
+			@motion = FactoryGirl.create(:motion, :account_id => session[:account_id],
+										 :created_by => @user.id)
 			get :index
 		end
 
@@ -107,7 +108,9 @@ describe MotionsController do
 		before(:each) do
 			@user = FactoryGirl.create(:user)
 			test_sign_in(@user)
-			@motion_expired = FactoryGirl.create(:motion, :expires_at => Time.now.since(1.seconds), :account_id => session[:account_id])
+			@motion_expired = FactoryGirl.create(:motion, :expires_at => Time.now.since(1.seconds), 
+												 :account_id => session[:account_id],
+												 :created_by => @user.id)
 			new_time = Time.now.since(5.minutes)
 			Timecop.freeze(new_time)
 		end

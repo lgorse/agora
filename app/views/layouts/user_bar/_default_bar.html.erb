@@ -1,5 +1,6 @@
 <ul>
 	<li><%= link_to "Current motions", motions_path %></li>
 	<li><%= link_to "Past motions", expired_motions_path %></li>
+	<li><%= link_to "Invitations(#{@current_user.pending_invitations.count})", invitations_path %></li>
 	<li><%= link_to "How it works", faq_path %></li>
 </ul>

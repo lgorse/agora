@@ -1,0 +1,7 @@
+<div class = "invitation" id = "<%= invitation.id %>">
+<div class = "invite_line"><%= link_to invitation.inviter.name, invitation.inviter %> <%= "invited you to" %>
+<b><%= "#{invitation.account.name}" %></b></div>
+<%= form_for invitation, {:url => accept_invitation_path(invitation.id)}  do |invitation| %>
+<%= invitation.submit "Accept" %>
+<% end %>
+</div>

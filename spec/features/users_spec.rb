@@ -28,7 +28,9 @@ describe "Users" do
 
     describe "when there is a motion session" do
        before(:each) do
-        @motion = FactoryGirl.create(:motion, :account_id => @account.id)
+        @creator = FactoryGirl.create(:user)
+        @motion = FactoryGirl.create(:motion, :account_id => @account.id,
+                                     :created_by => @creator.id)
        end
 
       it "motion button should link to join a new motion" do
@@ -40,7 +42,9 @@ describe "Users" do
 
     describe "when the user has already joined a motion" do
       before(:each) do
-        @motion = FactoryGirl.create(:motion, :account_id => @account.id)
+         @creator = FactoryGirl.create(:user)
+        @motion = FactoryGirl.create(:motion, :account_id => @account.id,
+                                     :created_by => @creator.id)
         click_button 'Sign in'
         click_button 'Vote'
         visit root_path

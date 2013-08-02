@@ -91,12 +91,14 @@ describe UsersController do
 	describe 'GET "user/joined"' do
 		before(:each) do
 			@user = FactoryGirl.create(:user)
+			@other_user = FactoryGirl.create(:user)
 			test_sign_in(@user)
 			@motion1 = FactoryGirl.create(:motion, 
 				:created_by => @user.id, 
 				:account_id => @user.default_account)
 			@motion2 = FactoryGirl.create(:motion, 
-				:account_id => @user.default_account)
+				:account_id => @user.default_account,
+				:created_by => @other_user.id)
 			@user.vote(@motion2)
 			get :motions, :id => session[:user_id]
 		end

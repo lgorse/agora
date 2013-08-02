@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130731004950) do
+ActiveRecord::Schema.define(:version => 20130802034833) do
 
   create_table "account_users", :force => true do |t|
     t.integer  "user_id"
@@ -30,11 +30,11 @@ ActiveRecord::Schema.define(:version => 20130731004950) do
     t.integer  "inviter_id"
     t.integer  "account_id"
     t.string   "email"
-    t.boolean  "accepted"
+    t.boolean  "accepted",   :default => false
     t.integer  "invitee_id"
     t.text     "message"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",                    :null => false
+    t.datetime "updated_at",                    :null => false
   end
 
   create_table "motion_users", :force => true do |t|
@@ -54,7 +54,7 @@ ActiveRecord::Schema.define(:version => 20130731004950) do
     t.boolean  "email_sent", :default => false
     t.datetime "expires_at"
     t.datetime "email_time"
-    t.boolean  "anonymous",  :default => true
+    t.boolean  "anonymous",  :default => false
   end
 
   create_table "replies", :force => true do |t|

@@ -6,7 +6,7 @@
 #  inviter_id :integer
 #  account_id :integer
 #  email      :string(255)
-#  accepted   :boolean
+#  accepted   :boolean          default(FALSE)
 #  invitee_id :integer
 #  message    :text
 #  created_at :datetime         not null
@@ -81,6 +81,11 @@ describe Invitation do
 
     it "should have an inviter attribute" do
       @invitation.should respond_to(:invitee)
+    end
+
+    it 'should have an account attribute' do
+      @invitation.should respond_to(:account)
+
     end
 
   end

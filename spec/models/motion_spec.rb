@@ -12,7 +12,7 @@
 #  email_sent :boolean          default(FALSE)
 #  expires_at :datetime
 #  email_time :datetime
-#  anonymous  :boolean          default(TRUE)
+#  anonymous  :boolean          default(FALSE)
 #
 
 
@@ -98,13 +98,13 @@ describe Motion do
 		end
 
 
-		it "should return anonymous as the creator if the user wants it so" do
-			@motion.creator.name.should match(/Anonymous/i)
+		it "should return anonymous as the creator if the user wants do be anonymous" do
+			motion_anonymous = FactoryGirl.create(:motion, :created_by => @user.id, :anonymous=> true)
+			motion_anonymous.creator.name.should match(/Anonymous/i)
 		end
 
 		it "should return the user name if the user does not want to be anonymous" do
-			motion2 = FactoryGirl.create(:motion, :created_by => @user.id, :anonymous=> false)
-			motion2.creator.should == @user
+			@motion.creator.should == @user
 
 		end
 

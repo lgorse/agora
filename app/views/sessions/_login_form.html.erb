@@ -3,5 +3,7 @@
 <%= session.label :email %>
 <%= session.text_field :email %>
 <%= session.submit "Sign in" %>
+<p><%= "Just get an invite? " %><%= link_to "Sign up here", signup_path %></p>
+<p><%= flash[:error] %></p>
 <% end %>
-<%= flash[:error] %>
+

@@ -36,14 +36,16 @@
 }
 
 .login_form{
-
-	
 	width: 400px;
-	margin: 75px auto 50px;
+	margin: 75px auto auto;
+
+	p{
+		margin-top: 5px;
+	}
 }
 
 .below_login_form{
 	width: 650px;
-	margin: auto;
+	margin: 50px auto auto;
 
 }

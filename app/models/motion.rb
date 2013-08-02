@@ -12,7 +12,7 @@
 #  email_sent :boolean          default(FALSE)
 #  expires_at :datetime
 #  email_time :datetime
-#  anonymous  :boolean          default(TRUE)
+#  anonymous  :boolean          default(FALSE)
 #
 
 class Motion < ActiveRecord::Base

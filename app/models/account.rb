@@ -17,6 +17,8 @@ class Account < ActiveRecord::Base
 
 	has_many :motions, :dependent => :destroy
 
+	has_many :invitations
+
 
 
 

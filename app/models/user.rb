@@ -26,16 +26,16 @@ class User < ActiveRecord::Base
   before_validation :downcase_email
   after_create :join_to_default_account
 
-  has_many :replies
+  has_many :replies, :dependent => :destroy
   
-  has_many :motion_users
+  has_many :motion_users, :dependent => :destroy
   has_many :motions, :through => :motion_users
 
-  has_many :account_users
+  has_many :account_users, :dependent => :destroy
   has_many :accounts, :through => :account_users
 
-  has_many :invitations, :foreign_key => "inviter_id"
-  has_many :reverse_invitations, :foreign_key => "invitee_id", :class_name => "Invitation"
+  has_many :invitations, :foreign_key => "inviter_id", :dependent => :destroy
+  has_many :reverse_invitations, :foreign_key => "invitee_id", :class_name => "Invitation",  :dependent => :destroy
   
   has_many :invitees, :through => :invitations, :source => :invitee
   has_many :inviters, :through => :reverse_invitations,:source => :inviter
@@ -62,6 +62,16 @@ class User < ActiveRecord::Base
 
   def invite(email, account_id)
     Invitation.create(:email => email, :account_id => account_id, :inviter_id => self.id)
+  end
+
+  def pending_invitations
+    Invitation.where(:invitee_id => self.id, :accepted => false)
+  end
+
+  def accept(invitation)
+    invitation.accepted = true
+    invitation.save
+    self.join(invitation.account)
   end
 
   def created_motions

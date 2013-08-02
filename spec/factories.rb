@@ -39,6 +39,7 @@ FactoryGirl.define do
 		details		"Join"
 		email_sent	false
 		email_time	""
+		anonymous	false
 	end
 
 end
@@ -62,6 +63,15 @@ FactoryGirl.define do
 		association 	:user
 		association 	:motion
 		text			"Testing this text"
+	end
+
+end
+
+FactoryGirl.define do
+	factory :invitation do
+		association 	:inviter
+		association 	:account
+		email 			"lgorse@test.com"
 	end
 
 end

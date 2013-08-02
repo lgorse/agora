@@ -51,7 +51,13 @@ Agora::Application.routes.draw do
 	resources :mailer_previews do
 		collection do
 			get :preview_motion_mail, :preview_notification_mail, :preview_account_user_email,
-				:preview_invite_email
+			:preview_invite_email
+		end
+	end
+
+	resources :invitations do
+		member do
+			put :accept
 		end
 	end
 

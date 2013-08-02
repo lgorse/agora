@@ -6,7 +6,7 @@
 #  inviter_id :integer
 #  account_id :integer
 #  email      :string(255)
-#  accepted   :boolean
+#  accepted   :boolean          default(FALSE)
 #  invitee_id :integer
 #  message    :text
 #  created_at :datetime         not null
@@ -25,6 +25,7 @@ class Invitation < ActiveRecord::Base
 
   belongs_to :inviter, :foreign_key => "inviter_id",  :class_name => "User"
   belongs_to :invitee, :foreign_key => "invitee_id", :class_name => "User"
+  belongs_to :account
 
   before_validation :downcase_email, :add_invitee_id_if_user
   after_create :email_invitee

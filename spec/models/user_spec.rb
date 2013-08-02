@@ -238,6 +238,52 @@ describe User do
 
 	end
 
+	describe "method accept invitation" do
+		before(:each) do
+			@inviter = FactoryGirl.create(:user)
+			@user = FactoryGirl.create(:user)
+			@invitation = Invitation.create(:inviter_id => @inviter.id, 
+											:email => @user.email,
+											:account_id => @inviter.default_account)
+			@user.accept(@invitation)
+		end
+
+		it "should add the account to the user" do
+			@user.accounts.should include(@invitation.account)
+
+		end
+
+		it "should set the invitation to accepted" do
+			@invitation.accepted.should == true
+
+		end
+
+	end
+
+	describe "pending invitations" do
+		before(:each) do
+			@inviter = FactoryGirl.create(:user)
+			@invitee = FactoryGirl.create(:user)
+			@invitation =  Invitation.create(:inviter_id => @inviter.id,
+											 :email => @invitee.email,
+											 :account_id => @inviter.default_account)
+		end
+
+		it "should show the user's unaccepted invitations" do
+			@invitee.pending_invitations.should include(@invitation)
+		end
+
+		it 'should not include accepted invitations' do
+			inviter2 = FactoryGirl.create(:user)
+			invitation2 = Invitation.create(:inviter_id => inviter2.id,
+											 :email => @invitee.email,
+											 :account_id => inviter2.default_account)
+			@invitee.accept(invitation2)
+			@invitee.pending_invitations.should_not include(invitation2)
+		end
+
+	end
+
 	describe "created motions" do
 		before(:each) do
 			@user = FactoryGirl.create(:user)

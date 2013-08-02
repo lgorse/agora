@@ -54,6 +54,10 @@ describe Account do
       Motion.find_by_id(@motion.id).should be_nil
     end
 
+    it 'should have an invitations attribute' do
+      @account.should respond_to(:invitations)
+    end
+
   end
 
   describe "has active motion" do
@@ -118,9 +122,11 @@ describe Account do
 
   describe "motions of the day" do
     before(:each) do
+      @creator = FactoryGirl.create(:user)
       @account = FactoryGirl.create(:account)
       @user = FactoryGirl.create(:user, :default_account =>@account.id)
-      @motion = FactoryGirl.create(:motion, :account_id => @account.id)
+      @motion = FactoryGirl.create(:motion, :account_id => @account.id,
+                                   :created_by => @creator.id)
       @user.vote(@motion)
       @motion.send_email
     end
@@ -153,4 +159,5 @@ describe Account do
     end
 
   end
+
 end

@@ -75,4 +75,21 @@ describe InvitationsController do
 
 	end
 
+	describe "GET /index" do
+		before(:each) do
+			@inviter = FactoryGirl.create(:user)
+			@user = FactoryGirl.create(:user)
+			@invitation =  Invitation.create(:inviter_id => @inviter.id,
+											 :email => @user.email,
+											 :account_id => @inviter.default_account)
+			test_sign_in(@user)
+		end
+
+		it "should show the user's pending invitations" do
+			get :index
+			assigns(:pending_invitations).should include(@invitation)
+		end
+
+	end
+
 end

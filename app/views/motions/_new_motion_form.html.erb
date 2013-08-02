@@ -12,7 +12,7 @@
 		<%= motion.select(:expires_at, expiration_times, :selected => expiration_times[2]) %><%= "When should voting end?" %>	
 </li>
 <li>
-	<%= motion.check_box :anonymous, :value => true %><%= motion.label :anonymous, "Anonymous?" %><span class ="anonymous_toggle_text"><%= "No-one will know you started this motion" %></span>
+	<%= motion.check_box :anonymous, :value => false %><%= motion.label :anonymous, "Anonymous?" %><span class ="anonymous_toggle_text"><%= "No-one will know you started this motion" %></span>
 	
 </li>
 <li>
